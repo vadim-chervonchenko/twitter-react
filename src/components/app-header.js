@@ -27,7 +27,7 @@ const AppHeader = ({user}) => {
                 {user && <TwitterAppNavBarItem className="nav-item">
                     <NavLink
                         className="nav-link"
-                        to="/logout" /* меняем state и перенаправляем на /login, где есть ссылка на регистрацию */
+                        to="/logout"
                     >Log out</NavLink>
                 </TwitterAppNavBarItem>}
             </TwitterAppNavBar>

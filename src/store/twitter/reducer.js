@@ -42,8 +42,7 @@ export const reducer = (state = initialState, action) => {
         case userConstants.LOGIN_REQUEST:
             return {
                 ...state,
-                user: action.payload.user,
-                token: action.payload.token
+                user: action.payload.user
             };
         default:
             return state;
