@@ -3,7 +3,8 @@ import { userConstants, alertConstants, tweetConstants } from '../../constants/c
 const initialState = {
     items: [],
     search: '',
-    user: false
+    user: false,
+    token: ''
 };
 
 export const reducer = (state = initialState, action) => {
@@ -35,12 +36,14 @@ export const reducer = (state = initialState, action) => {
         case userConstants.REGISTER_REQUEST:
             return {
                 ...state,
-                user: false
+                user: false,
+                token: action.payload.token
             };
         case userConstants.LOGIN_REQUEST:
             return {
                 ...state,
-                user: action.payload.user
+                user: action.payload.user,
+                token: action.payload.token
             };
         default:
             return state;

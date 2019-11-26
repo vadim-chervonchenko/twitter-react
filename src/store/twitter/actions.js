@@ -1,9 +1,18 @@
 import axios from "axios/index";
+import store from '../index'; // тут не понятно можно ли так делать или нет, и нужно разобратсья можно ли вообще так делать или нет
+
 import { userConstants, alertConstants, tweetConstants } from '../../constants/constants.js'
+
+axios.defaults.baseURL = '/api/';
+
+console.log(store.getState().mainState.token);
+console.log(axios.defaults.headers.common['Authorization']);
+axios.defaults.headers.common['Authorization'] = 'bla bla bla';
 
 export const getListTwets = () => {
     return (dispatch) => {
-        return axios.get('/api/tweets').then(res => {
+        return axios.get('tweets'
+        ).then(res => {
             dispatch({
                 type: tweetConstants.GETALL_REQUEST,
                 payload: {
@@ -14,8 +23,12 @@ export const getListTwets = () => {
     };
 };
 export const addTweet = (content) => {
+
+    console.log(store.getState().mainState.token);
+    console.log(axios.defaults.headers.common);
+
     return (dispatch) => {
-        return axios.post('/api/tweets',
+        return axios.post('tweets',
             {
                 label: content
             }
@@ -34,7 +47,7 @@ export const delTweet = (id, state) => {
     return (dispatch) => {
         const idx = state.mainState.items.findIndex((item) => item.id === id);
 
-        return axios.delete(`/api/tweets/${id}`, {}).then(() => {
+        return axios.delete(`tweets/${id}`, {}).then(() => {
             dispatch({
                 type: tweetConstants.DELETE_REQUEST,
                 payload: {
@@ -52,7 +65,7 @@ export const updateTweet = (state, id, content) => {
         const item = {...state[idx], label: content};
 
         return axios.put(
-            `/api/tweets/${id}`,
+            `tweets/${id}`,
             {
                 label: content
             },
@@ -78,17 +91,25 @@ export const setSearchQuery = (searchQuery) => {
 export const registersUser = (formData) => {
     return (dispatch) => {
         return axios.post(
-            `/api/register/`,
+            `register/`,
             {
                 email: formData.userEmail,
                 name: formData.lastName,
                 password: formData.userPassword
             }
         ).then((response) => {
+
+            /* если все ок , тут можно чувака сразу логинить, важно только диспатчить нужное событие, типа зарегал чувака
+            *
+            * сразу нужно записать токен и использовать его при последующих запросах.
+            *
+            * */
+
             dispatch({
                 type: userConstants.REGISTER_REQUEST,
                 payload: {
-                    user: response.user
+                    user: response.user,
+                    token: response.data.access_token
                 }
             });
         })
@@ -97,17 +118,26 @@ export const registersUser = (formData) => {
 export const loginsUser = (formData) => {
     return (dispatch) => {
         return axios.post(
-            `/api/login/`,
+            `login/`,
             {
                 email: formData.userEmail,
                 password: formData.userPass
             }
         ).then((response) => {
 
+            /*
+             * если получаем токен, то записываем его в state. для конкретного пользователя, типа пользователь - token
+             * и потом во всех последующих операциях делаем запрос с этим токеном.
+              *
+              *
+              *
+              * */
+
             dispatch({
                 type: userConstants.LOGIN_REQUEST,
                 payload: {
-                    user: true
+                    user: true,
+                    token: response.data.access_token
                 }
             });
         })
