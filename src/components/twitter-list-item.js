@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ItemEditForm from './item-edit-form';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as actions from '../store/twitter/actions.js';
+import * as actions from '../store/twitter/actions/tweet-actions.js';
 
 import { TwitterListItemWrap } from '../styles/styles';
 

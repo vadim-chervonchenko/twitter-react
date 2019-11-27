@@ -10,13 +10,17 @@ import PrivateRoute from './private-route';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as actions from '../store/twitter/actions';
+import * as tweetActions from '../store/twitter/actions/tweet-actions.js';
+import * as authActions from '../store/twitter/actions/auth-actions.js';
 
 import { TwitterAppWrapper } from '../styles/styles.js';
 
 class AppNavigation extends Component {
     render () {
-        const user = this.props.state.mainState.user;
+
+        /*const user = this.props.state.auth.user.token;*/
+
+        const user = localStorage.getItem('access_token');
 
         return (
             <Router>
@@ -48,7 +52,8 @@ const mapStateToProps = (state) => {
     }
 };
 const mapDispatchToProps = (dispatch) => {
-    const {addTweet, registersUser, loginsUser} = bindActionCreators(actions, dispatch);
+    const {addTweet} = bindActionCreators(tweetActions, dispatch);
+    const {registersUser, loginsUser} = bindActionCreators(authActions, dispatch);
     return {
         addTweet,
         registersUser,

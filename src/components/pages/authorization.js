@@ -14,7 +14,7 @@ const LoginPage = (props) => {
 };
 
 export default reduxForm({
-    form: 'auth',
+    form: 'login',
     validate: validateReduxForm(rules),
     initialValues: {
         settings: {

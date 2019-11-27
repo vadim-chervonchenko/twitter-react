@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as actions from '../store/twitter/actions.js';
+import * as actions from '../store/twitter/actions/tweet-actions.js';
 
 
 class ItemEditForm extends Component {
@@ -14,7 +14,7 @@ class ItemEditForm extends Component {
         e.preventDefault();
 
         const {state, itemId, formVisibilityChange} = this.props;
-        this.props.updateTweet(state.mainState.items, itemId, this.state.label);
+        this.props.updateTweet(state.tweets.items, itemId, this.state.label);
 
         formVisibilityChange();
     };

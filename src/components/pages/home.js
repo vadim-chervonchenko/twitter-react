@@ -3,7 +3,7 @@ import ItemAddForm from '../item-add-form';
 import TwitterList from '../twitter-list';
 import SearchPanel from '../search-panel';
 import {connect} from 'react-redux';
-import * as actions from '../../store/twitter/actions.js';
+import * as actions from '../../store/twitter/actions/tweet-actions.js';
 import {bindActionCreators} from 'redux';
 
 class Home extends Component {
@@ -22,7 +22,7 @@ class Home extends Component {
     };
 
     render() {
-        const {items, search} = this.props.state.mainState;
+        const {items, search} = this.props.state.tweets;
         const filteredTweets = this.searchItems(items, search);
 
         return (

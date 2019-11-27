@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {bindActionCreators} from 'redux';
-import * as actions from '../store/twitter/actions.js';
+import * as actions from '../store/twitter/actions/tweet-actions.js';
 import {connect} from 'react-redux';
 
 class SearchPanel extends Component {

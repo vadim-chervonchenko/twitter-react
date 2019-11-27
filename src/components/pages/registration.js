@@ -16,7 +16,7 @@ const Registration = (props) => {
 };
 
 export default reduxForm({
-    form: 'signup',
+    form: 'register',
     validate: validateReduxForm(rules),
     initialValues: {
         settings: {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as actions from '../store/twitter/actions.js';
+import * as actions from '../store/twitter/actions/tweet-actions.js';
 import {bindActionCreators} from 'redux';
 
 import { TwitterAddForm, TwitterAddFormTextarea } from "../styles/styles";
