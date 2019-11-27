@@ -34,7 +34,6 @@ export const authReducer = (state = initialState, action) => {
         case userConstants.REGISTER_SUCCESS:
         case userConstants.LOGIN_SUCCESS:
             return {
-                // можно будет поменять активного юзера
                 ...state,
                 loading: false,
                 user: {

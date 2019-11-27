@@ -8,29 +8,29 @@ import { TwitterAddForm, TwitterAddFormTextarea } from "../styles/styles";
 class ItemAddForm extends Component {
 
     state = {
-        label: '',
+        content: '',
         alertType: ''
     };
 
     onLabelChange = (e) => {
-        this.setState({label: e.target.value});
+        this.setState({content: e.target.value});
     };
 
     onSubmit = (e) => {
         e.preventDefault();
 
-        const alertType = this.state.label ? 'is-valid' : 'is-invalid';
-        if (this.state.label) {
-            this.props.addTweet(this.state.label);
+        const alertType = this.state.content ? 'is-valid' : 'is-invalid';
+        if (this.state.content) {
+            this.props.addTweet(this.state.content);
         }
         this.setState({
-            label: '',
+            content: '',
             alertType: alertType
         });
     };
 
     render() {
-        const {label, alertType} = this.state;
+        const {content, alertType} = this.state;
 
         return (
             <div className="container p-0">
@@ -40,7 +40,7 @@ class ItemAddForm extends Component {
                               <TwitterAddFormTextarea
                                   onChange={this.onLabelChange}
                                   placeholder="Please enter your tweet"
-                                  value={label}
+                                  value={content}
                                   className={`form-control ${alertType}`}
                               > </TwitterAddFormTextarea>
                             <button className="btn btn-outline-primary">Add new Tweet</button>

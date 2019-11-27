@@ -8,16 +8,11 @@ import {connect} from 'react-redux';
 class AppHeader extends Component {
 
     logout = () => {
-
-
-
-
         localStorage.clear();
         this.props.logOut();
     };
 
     render () {
-
         const {user} = this.props;
 
         return (

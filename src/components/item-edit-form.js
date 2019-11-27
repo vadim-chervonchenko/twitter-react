@@ -7,21 +7,21 @@ import * as actions from '../store/twitter/actions/tweet-actions.js';
 class ItemEditForm extends Component {
 
     state = {
-        label: ''
+        content: ''
     };
 
     onUpdateItem = (e) => {
         e.preventDefault();
 
         const {state, itemId, formVisibilityChange} = this.props;
-        this.props.updateTweet(state.tweets.items, itemId, this.state.label);
+        this.props.updateTweet(state.tweets.items, itemId, this.state.content);
 
         formVisibilityChange();
     };
 
-    onLabelChange = (e) => {
+    onContentChange = (e) => {
         this.setState({
-            label: e.target.value
+            content: e.target.value
         });
     };
 
@@ -35,9 +35,9 @@ class ItemEditForm extends Component {
                 <div className="form-group row">
                     <div className="col-sm-12">
                         <input
-                            onChange={this.onLabelChange}
+                            onChange={this.onContentChange}
                             placeholder="Please edit your tweet"
-                            value={this.state.label}
+                            value={this.state.content}
                             className="form-control mb-3"
                         />
                         <button

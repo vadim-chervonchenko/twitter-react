@@ -47,7 +47,7 @@ export const tweetReducer = (state = initialState, action) => {
         case tweetConstants.ADD_SUCCESS:
             return {
                 ...state,
-                items: [...state.items, {label: action.payload.label, id: action.payload.id}]};
+                items: [...state.items, {content: action.payload.content, id: action.payload.id}]};
         case tweetConstants.DELETE_SUCCESS:
             return {
                 ...state,

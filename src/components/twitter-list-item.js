@@ -18,8 +18,8 @@ class TwitterListItem extends Component {
         });
     };
 
-    onUpdateItem = (label) => {
-        this.props.onUpdateItem(label);
+    onUpdateItem = (content) => {
+        this.props.onUpdateItem(content);
         this.setState({
             formVisibility: !this.state.formVisibility
         });
@@ -31,11 +31,11 @@ class TwitterListItem extends Component {
     };
 
     render() {
-        const {label, id} = this.props;
+        const {content, id} = this.props;
 
         return (
             <TwitterListItemWrap className="list-group-item twitter-item" key={id}>
-                <span>{label}</span>
+                <span>{content}</span>
                 <button onClick={this.deleteTweet}
                         className="btn btn-outline-danger btn-sm float-right">
                     <i className="fa fa-trash-o"></i>
@@ -50,7 +50,7 @@ class TwitterListItem extends Component {
                     formVisibilityChange={this.formVisibility}
                     formVisibility={this.state.formVisibility}
                     onUpdateItem={this.onUpdateItem}
-                    editLabel={label}
+                    editLabel={content}
                     itemId={id}
                 />
             </TwitterListItemWrap>

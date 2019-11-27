@@ -17,9 +17,6 @@ import { TwitterAppWrapper } from '../styles/styles.js';
 
 class AppNavigation extends Component {
     render () {
-
-        /*const user = this.props.state.auth.user.token;*/
-
         const user = localStorage.getItem('access_token');
 
         return (

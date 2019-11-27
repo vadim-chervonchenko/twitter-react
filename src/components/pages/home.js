@@ -17,7 +17,7 @@ class Home extends Component {
             return items;
         }
         return items.filter((item) => {
-            return item.label.toLowerCase().indexOf(search.toLowerCase()) > -1;
+            return item.content.toLowerCase().indexOf(search.toLowerCase()) > -1;
         });
     };
 
