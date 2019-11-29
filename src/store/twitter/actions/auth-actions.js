@@ -21,7 +21,12 @@ axios.defaults.baseURL = '/api/';
 export const registersUser = ( formData ) => {
 	return async ( dispatch ) => {
 		try {
-			/* loader and other */
+			/* loader and other , при вызове мы уже отправили запрос на изменение стэйта , поэтому этот вызов не обязательный
+			*
+			* что такое call и как работает, и почему и меня работало без отправки необходимых параметров.
+			*
+			*  асинхронщина , с ней нужно разобраться , че делать и когда делать, а то не понятно  ,че каво и зачем вообще происходит.
+			* */
 			dispatch( {
 				type: userConstants.REGISTER_REQUEST,
 				payload: {
