@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import Home from './pages/home';
 import About from './pages/about';
@@ -13,10 +13,10 @@ import {bindActionCreators} from 'redux';
 import * as tweetActions from '../store/twitter/actions/tweet-actions.js';
 import * as authActions from '../store/twitter/actions/auth-actions.js';
 
-import { TwitterAppWrapper } from '../styles/styles.js';
+import {TwitterAppWrapper} from '../styles/styles.js';
 
 class AppNavigation extends Component {
-    render () {
+    render() {
         const user = localStorage.getItem('access_token');
 
         return (

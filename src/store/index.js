@@ -7,6 +7,13 @@ import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import axios from "axios/index";
 
+import createSagaMiddleware from 'redux-saga';
+
+import {AllAuthSaga} from './twitter/sagas/auth-sagas.js';
+import {AllTweetSaga} from './twitter/sagas/tweet-sagas.js';
+
+const sagaMiddleware = createSagaMiddleware();
+
 const authTokenMiddleware = (store) => (next) => (action) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
     return next(action);
@@ -19,5 +26,9 @@ export default createStore(
         form: formReducer,
     }), applyMiddleware(
         thunkMiddleware,
-        authTokenMiddleware
+        authTokenMiddleware,
+        sagaMiddleware
     ));
+
+sagaMiddleware.run(AllAuthSaga);
+sagaMiddleware.run(AllTweetSaga);

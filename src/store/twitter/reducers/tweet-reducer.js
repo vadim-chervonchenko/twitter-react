@@ -1,22 +1,4 @@
-export const tweetConstants = {
-    GETALL_REQUEST: 'TWEET_GETALL_REQUEST',
-    GETALL_SUCCESS: 'TWEET_GETALL_SUCCESS',
-    GETALL_FAILURE: 'TWEET_GETALL_FAILURE',
-
-    ADD_REQUEST: 'TWEET_ADD_REQUEST',
-    ADD_SUCCESS: 'TWEET_ADD_SUCCESS',
-    ADD_FAILURE: 'TWEET_ADD_FAILURE',
-
-    UPDATE_REQUEST: 'TWEET_UPDATE_REQUEST',
-    UPDATE_SUCCESS: 'TWEET_UPDATE_SUCCESS',
-    UPDATE_FAILURE: 'TWEET_UPDATE_FAILURE',
-
-    DELETE_REQUEST: 'TWEET_DELETE_REQUEST',
-    DELETE_SUCCESS: 'TWEET_DELETE_SUCCESS',
-    DELETE_FAILURE: 'TWEET_DELETE_FAILURE',
-
-    SEARCH_QUERY: 'SET_SEARCH_QUERY'
-};
+import {tweetConstants} from '../../../types/constants.js';
 
 const initialState = {
     items: [],
@@ -26,6 +8,7 @@ const initialState = {
 };
 
 export const tweetReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case tweetConstants.ADD_REQUEST:
         case tweetConstants.DELETE_REQUEST:

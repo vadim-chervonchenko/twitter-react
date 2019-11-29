@@ -1,117 +1,18 @@
 import axios from 'axios';
-
-export const userConstants = {
-	REGISTER_REQUEST: 'USERS_REGISTER_REQUEST',
-	REGISTER_SUCCESS: 'USERS_REGISTER_SUCCESS',
-	REGISTER_FAILURE: 'USERS_REGISTER_FAILURE',
-
-	LOGIN_REQUEST: 'USERS_LOGIN_REQUEST',
-	LOGIN_SUCCESS: 'USERS_LOGIN_SUCCESS',
-	LOGIN_FAILURE: 'USERS_LOGIN_FAILURE',
-
-	LOGOUT: 'USERS_LOGOUT',
-
-	GETALL_REQUEST: 'USERS_GETALL_REQUEST',
-	GETALL_SUCCESS: 'USERS_GETALL_SUCCESS',
-	GETALL_FAILURE: 'USERS_GETALL_FAILURE'
-};
+import {userConstants} from '../../../types/constants.js';
 
 axios.defaults.baseURL = '/api/';
 
-export const registersUser = ( formData ) => {
-	return async ( dispatch ) => {
-		try {
-			/* loader and other , при вызове мы уже отправили запрос на изменение стэйта , поэтому этот вызов не обязательный
-			*
-			* что такое call и как работает, и почему и меня работало без отправки необходимых параметров.
-			*
-			*  асинхронщина , с ней нужно разобраться , че делать и когда делать, а то не понятно  ,че каво и зачем вообще происходит.
-			* */
-			dispatch( {
-				type: userConstants.REGISTER_REQUEST,
-				payload: {
-					loading: true
-				}
-			} );
+export const registersUser = (payload) => ({
+    type: userConstants.REGISTER_REQUEST,
+    payload
+});
 
-			const response = await axios
-				.post(
-					`register/`,
-					{
-						email: formData.userEmail,
-						name: formData.lastName,
-						password: formData.userPassword
-					} );
+export const loginsUser = (payload) => ({
+    type: userConstants.LOGIN_REQUEST,
+    payload
+});
 
-			localStorage.setItem( 'access_token', response.data.access_token );
-
-			dispatch( {
-				type: userConstants.REGISTER_SUCCESS,
-				payload: {
-					user: response.user,
-					token: response.data.access_token,
-					loading: false
-				}
-			} );
-
-		} catch ( error ) {
-			dispatch( {
-				type: userConstants.REGISTER_FAILURE,
-				payload: {
-					error
-				}
-			} );
-		}
-	}
-};
-export const loginsUser = ( formData ) => {
-	return async ( dispatch ) => {
-		try {
-
-			/* loader and other */
-			dispatch( {
-				type: userConstants.LOGIN_REQUEST,
-				payload: {
-					loading: true
-				}
-			} );
-
-			const response = await axios
-				.post(
-					`login/`,
-					{
-						email: formData.userEmail,
-						password: formData.userPass
-					}
-				);
-
-			localStorage.setItem( 'access_token', response.data.access_token );
-
-			dispatch( {
-				type: userConstants.LOGIN_SUCCESS,
-				payload: {
-					loading: false,
-					token: response.data.access_token
-				}
-			} );
-
-		} catch ( error ) {
-
-			dispatch( {
-				type: userConstants.LOGIN_FAILURE,
-				payload: {
-					error
-				}
-			} );
-		}
-	}
-};
-
-export const logOut = () => {
-	return {
-		type: userConstants.LOGOUT,
-		payload: {
-			user: false
-		}
-	}
-};
+export const logOut = () => ({
+    type: userConstants.LOGOUT
+});
