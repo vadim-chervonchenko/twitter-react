@@ -1,26 +1,22 @@
 import React, {Fragment} from 'react';
 import {reduxForm} from 'redux-form';
-import LoginForm from '../login-form.js';
+import LoginForm from '../LoginForm.js';
 import {Redirect} from 'react-router-dom';
-import { rules, validateReduxForm } from '../../utils/redux-form-validator'
+import AppHeader from '../Header';
 
 const LoginPage = (props) => {
+
+    const user = localStorage.getItem('access_token');
+
     return (
         <Fragment>
             {props.user && <Redirect to={'/'}/>}
+            <AppHeader user={user}/>
             <LoginForm {...props}/>
         </Fragment>
     );
 };
 
 export default reduxForm({
-    form: 'login',
-    validate: validateReduxForm(rules),
-    initialValues: {
-        settings: {
-            auto_sms: 1,
-            auto_mail: 1,
-        },
-    },
-    destroyOnUnmount: true
+    form: 'login'
 })(LoginPage);

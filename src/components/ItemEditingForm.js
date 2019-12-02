@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actions from '../store/twitter/actions/tweet-actions.js';
+import { updateTweet } from "../store/twitter/TweetActions";
 
-
-class ItemEditForm extends Component {
-
+class ItemEditingForm extends Component {
     state = {
         content: ''
     };
@@ -13,9 +10,11 @@ class ItemEditForm extends Component {
     onUpdateItem = (e) => {
         e.preventDefault();
 
-        const {state, itemId, formVisibilityChange} = this.props;
-        this.props.updateTweet(state.tweets.items, itemId, this.state.content);
-
+        const {itemId, formVisibilityChange} = this.props;
+        this.props.updateTweet(
+            itemId,
+            this.state.content
+        );
         formVisibilityChange();
     };
 
@@ -26,7 +25,8 @@ class ItemEditForm extends Component {
     };
 
     render() {
-        const formStyle = this.props.formVisibility ? '' : 'd-none';
+        const {formVisibilityToggle} = this.props;
+        const formStyle = formVisibilityToggle ? '' : 'd-none';
 
         return (
             <form onSubmit={(e) => {
@@ -51,16 +51,9 @@ class ItemEditForm extends Component {
     };
 }
 
-const mapStateToProps = (state) => {
-    return {
+export default connect(
+    state => ({
         state
-    }
-};
-const mapDispatchToProps = (dispatch) => {
-    const {updateTweet} = bindActionCreators(actions, dispatch);
-
-    return {
-        updateTweet
-    }
-};
-export default connect(mapStateToProps, mapDispatchToProps)(ItemEditForm);
+    }),
+    {updateTweet}
+)(ItemEditingForm);

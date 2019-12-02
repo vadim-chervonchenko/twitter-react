@@ -1,10 +1,8 @@
 import React from 'react';
-import TwitterListItem from './twitter-list-item';
+import TwitterListItem from './TweetListItem';
+import { TwitterListWrapper } from '../styles/globals.js';
 
-import { TwitterListWrapper } from '../styles/styles.js';
-
-
-const TwitterList = ({filteredTweets}) => {
+const TweetList = ({filteredTweets}) => {
     return (
         <TwitterListWrapper className="list-group">
             {
@@ -18,4 +16,4 @@ const TwitterList = ({filteredTweets}) => {
     );
 };
 
-export default TwitterList;
+export default TweetList;

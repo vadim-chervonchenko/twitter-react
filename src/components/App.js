@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import AppNavigation from './app-navigation.js';
+import AppNavigation from './Navigation.js';
 
 class App extends React.Component {
     render() {

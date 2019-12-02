@@ -1,10 +1,10 @@
 import React, {Fragment, Component} from 'react';
-import ItemAddForm from '../item-add-form';
-import TwitterList from '../twitter-list';
-import SearchPanel from '../search-panel';
+import ItemAddForm from '../ItemAddingForm';
+import TweetList from '../TweetList';
+import SearchPanel from '../SearchPanel';
 import {connect} from 'react-redux';
-import * as actions from '../../store/twitter/actions/tweet-actions.js';
-import {bindActionCreators} from 'redux';
+import { getListTwets } from '../../store/twitter/TweetActions.js';
+import AppHeader from '../Header';
 
 class Home extends Component {
 
@@ -23,13 +23,16 @@ class Home extends Component {
 
     render() {
         const {items, search} = this.props.state.tweets;
+
         const filteredTweets = this.searchItems(items, search);
+        const user = localStorage.getItem('access_token');
 
         return (
             <Fragment>
+                <AppHeader user={user}/>
                 <SearchPanel/>
                 <ItemAddForm/>
-                <TwitterList
+                <TweetList
                     filteredTweets={filteredTweets}
                 />
             </Fragment>
@@ -37,15 +40,9 @@ class Home extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
+export default connect(
+    state => ({
         state
-    }
-};
-const mapDispatchToProps = (dispatch) => {
-    const {getListTwets} = bindActionCreators(actions, dispatch);
-    return {
-        getListTwets
-    }
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+    }),
+    { getListTwets }
+)(Home);

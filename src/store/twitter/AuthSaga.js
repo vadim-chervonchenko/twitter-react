@@ -1,7 +1,9 @@
 import {takeEvery, spawn, all, put, call} from 'redux-saga/effects';
 import axios from 'axios';
-import {userConstants} from '../../../types/constants.js';
+import { LOGIN_REQUEST, REGISTER_REQUEST } from "./AuthActions";
 
+export const REGISTER_SUCCESS = 'USERS_REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'USERS_REGISTER_FAILURE';
 function* registerUser({payload: {userEmail, lastName, userPassword}}) {
     try {
         const {data: access_token, user} = yield call(axios.post, `register/`,
@@ -12,10 +14,10 @@ function* registerUser({payload: {userEmail, lastName, userPassword}}) {
             }
         );
 
-        localStorage.setItem('access_token', access_token); // тут подумать как лучше сделтаь ( мидлвары и прочую срань разобрать )
+        localStorage.setItem('access_token', access_token);
 
         yield  put({
-            type: userConstants.REGISTER_SUCCESS,
+            type: REGISTER_SUCCESS,
             payload: {
                 user,
                 token: access_token,
@@ -24,14 +26,15 @@ function* registerUser({payload: {userEmail, lastName, userPassword}}) {
         });
     } catch (error) {
         yield put({
-            type: userConstants.REGISTER_FAILURE,
+            type: REGISTER_FAILURE,
             payload: {
                 error
             }
         });
     }
 }
-
+export const LOGIN_SUCCESS = 'USERS_LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'USERS_LOGIN_FAILURE';
 function* loginUser({payload: {userEmail, userPass}}) {
     try {
         const {data: {access_token, error}} = yield call(axios.post, `login/`,
@@ -46,7 +49,7 @@ function* loginUser({payload: {userEmail, userPass}}) {
         }
 
         yield put({
-            type: userConstants.LOGIN_SUCCESS,
+            type: LOGIN_SUCCESS,
             payload: {
                 loading: false,
                 token: access_token
@@ -55,22 +58,19 @@ function* loginUser({payload: {userEmail, userPass}}) {
 
     } catch (error) {
         yield  put({
-            type: userConstants.LOGIN_FAILURE,
+            type: LOGIN_FAILURE,
             payload: {
                 error
             }
         });
     }
 }
-
 function* watchUserLogin() {
-    yield takeEvery(userConstants.LOGIN_REQUEST, loginUser);
+    yield takeEvery(LOGIN_REQUEST, loginUser);
 }
-
 function* watchUserRegister() {
-    yield takeEvery(userConstants.REGISTER_REQUEST, registerUser);
+    yield takeEvery(REGISTER_REQUEST, registerUser);
 }
-
 export const AllAuthSaga = function* () {
     yield all([
         spawn(watchUserLogin),

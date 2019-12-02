@@ -1,10 +1,8 @@
 import React, {Component, Fragment} from 'react';
-import {bindActionCreators} from 'redux';
-import * as actions from '../store/twitter/actions/tweet-actions.js';
 import {connect} from 'react-redux';
+import {setSearchQuery} from "../store/twitter/TweetActions";
 
 class SearchPanel extends Component {
-
     render() {
         const {setSearchQuery} = this.props;
 
@@ -23,17 +21,9 @@ class SearchPanel extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        counter: state.mainState
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    const {setSearchQuery} = bindActionCreators(actions, dispatch);
-    return {
-        setSearchQuery
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);
+export default connect(
+    state => ({
+        state
+    }),
+    { setSearchQuery }
+)(SearchPanel);

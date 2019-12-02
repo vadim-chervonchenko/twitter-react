@@ -1,113 +1,105 @@
 import {takeEvery, spawn, all, put, call} from 'redux-saga/effects';
 import axios from 'axios';
-import {tweetConstants} from '../../../types/constants.js';
+import './TweetActions';
+import { GETALL_REQUEST, ADD_REQUEST, DELETE_REQUEST, UPDATE_REQUEST} from "./TweetActions";
 
+export const GETALL_SUCCESS = 'TWEET_GETALL_SUCCESS';
+export const GETALL_FAILURE = 'TWEET_GETALL_FAILURE';
 function* getListTwets() {
     try {
         const {data} = yield call(axios.get, `tweets`);
 
         yield put({
-            type: tweetConstants.GETALL_SUCCESS,
+            type: GETALL_SUCCESS,
             payload: {
-                items: data,
-                loading: false
+                items: data
             }
         });
     } catch (error) {
         yield put({
-            type: tweetConstants.GETALL_FAILURE,
+            type: GETALL_FAILURE,
             payload: {
                 error
             }
         });
     }
 }
-
+export const ADD_SUCCESS = 'TWEET_ADD_SUCCESS';
+export const ADD_FAILURE = 'TWEET_ADD_FAILURE';
 function* addTweet({payload: {content}}) {
     try {
-        const {data: {id}} = yield call(axios.post, 'tweets', {content});
+        const { data: item } = yield call(axios.post, 'tweets', {content});
+
         yield put({
-            type: tweetConstants.ADD_SUCCESS,
+            type: ADD_SUCCESS,
             payload: {
-                content,
-                id,
-                loading: false
+                item
             }
         });
     } catch (error) {
         yield put({
-            type: tweetConstants.ADD_FAILURE,
+            type: ADD_FAILURE,
             payload: {
                 error
             }
         });
     }
 }
-
-function* delTweet({payload: {id, state}}) {
+export const DELETE_SUCCESS = 'TWEET_DELETE_SUCCESS';
+export const DELETE_FAILURE = 'TWEET_DELETE_FAILURE';
+function* delTweet({payload: {id}}) {
     try {
-        const idx = state.tweets.items.findIndex((item) => item.id === id);
         yield call(axios.delete, `tweets/${id}`, {});
 
         yield put({
-            type: tweetConstants.DELETE_SUCCESS,
+            type: DELETE_SUCCESS,
             payload: {
-                id: idx,
-                loading: false
+                id
             }
-        })
+        });
+
     } catch (error) {
         yield put({
-            type: tweetConstants.DELETE_FAILURE,
+            type: DELETE_FAILURE,
             payload: {
                 error
             }
         });
     }
 }
-
-function* updateTweet({payload: {state, id, content}}) {
+export const UPDATE_SUCCESS = 'TWEET_UPDATE_SUCCESS';
+export const UPDATE_FAILURE = 'TWEET_UPDATE_FAILURE';
+function* updateTweet({payload: {id, content}}) {
     try {
-        const idx = state.findIndex((item) => item.id === id);
-        const item = {...state[idx], content};
-
         yield call(axios.put, `tweets/${id}`, {content});
 
         yield put({
-            type: tweetConstants.UPDATE_SUCCESS,
+            type: UPDATE_SUCCESS,
             payload: {
-                item,
-                id: idx,
-                loading: false
+                id, content
             }
         });
-
     } catch (error) {
         yield put({
-            type: tweetConstants.UPDATE_FAILURE,
+            type: UPDATE_FAILURE,
             payload: {
                 error
             }
         });
     }
 }
-
 function* watchGetListTwets() {
-    yield takeEvery(tweetConstants.GETALL_REQUEST, getListTwets);
+    yield takeEvery(GETALL_REQUEST, getListTwets);
 }
-
 function* watchAddTweet() {
-    yield takeEvery(tweetConstants.ADD_REQUEST, addTweet);
+    yield takeEvery(ADD_REQUEST, addTweet);
 }
-
 function* watchDelTweet() {
-    yield takeEvery(tweetConstants.DELETE_REQUEST, delTweet);
+    yield takeEvery(DELETE_REQUEST, delTweet);
 }
-
 function* watchUpdateTweet() {
-    yield takeEvery(tweetConstants.UPDATE_REQUEST, updateTweet);
+    yield takeEvery(UPDATE_REQUEST, updateTweet);
 }
-
 export const AllTweetSaga = function* () {
     yield all([
         spawn(watchGetListTwets),

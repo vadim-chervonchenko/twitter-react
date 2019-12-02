@@ -1,4 +1,15 @@
-import {userConstants} from '../../../types/constants.js';
+import './AuthActions';
+import {
+    REGISTER_REQUEST,
+    LOGIN_REQUEST,
+    LOGOUT
+} from './AuthActions';
+import {
+    REGISTER_SUCCESS,
+    LOGIN_SUCCESS,
+    REGISTER_FAILURE,
+    LOGIN_FAILURE,
+} from './AuthSaga';
 
 const initialState = {
     user: {
@@ -11,14 +22,14 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case userConstants.REGISTER_REQUEST:
-        case userConstants.LOGIN_REQUEST:
+        case REGISTER_REQUEST:
+        case LOGIN_REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case userConstants.REGISTER_SUCCESS:
-        case userConstants.LOGIN_SUCCESS:
+        case REGISTER_SUCCESS:
+        case LOGIN_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -26,15 +37,15 @@ export const authReducer = (state = initialState, action) => {
                     token: action.payload.token
                 }
             };
-        case userConstants.REGISTER_FAILURE:
+        case REGISTER_FAILURE:
             return {
                 errors: 'register_failure'
             };
-        case userConstants.LOGIN_FAILURE:
+        case LOGIN_FAILURE:
             return {
                 errors: 'login_failure'
             };
-        case userConstants.LOGOUT:
+        case LOGOUT:
             return {
                 user: false
             };

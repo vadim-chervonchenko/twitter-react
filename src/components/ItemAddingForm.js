@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as actions from '../store/twitter/actions/tweet-actions.js';
-import {bindActionCreators} from 'redux';
 
-import { TwitterAddForm, TwitterAddFormTextarea } from "../styles/styles";
+import { TwitterAddForm, TwitterAddFormTextarea } from "../styles/globals";
+import {addTweet} from "../store/twitter/TweetActions";
 
-class ItemAddForm extends Component {
+class ItemAddingForm extends Component {
 
     state = {
         content: '',
@@ -18,7 +17,6 @@ class ItemAddForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-
         const alertType = this.state.content ? 'is-valid' : 'is-invalid';
         if (this.state.content) {
             this.props.addTweet(this.state.content);
@@ -52,15 +50,9 @@ class ItemAddForm extends Component {
     };
 }
 
-const mapStateToProps = (state) => {
-    return {
+export default connect(
+    state => ({
         state
-    }
-};
-const mapDispatchToProps = (dispatch) => {
-    const { addTweet } = bindActionCreators(actions, dispatch);
-    return {
-        addTweet
-    }
-};
-export default connect(mapStateToProps, mapDispatchToProps)(ItemAddForm);
+    }),
+    {addTweet}
+)(ItemAddingForm);

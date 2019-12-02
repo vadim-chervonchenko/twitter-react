@@ -3,9 +3,10 @@ import {Link} from 'react-router-dom';
 import {Field} from 'redux-form';
 
 const LoginForm = ({ ...props }) => {
+    const { handleSubmit, pristine, submitting } = props;
 
     return(
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label htmlFor="email">Email address:</label>
                 <div>
@@ -44,7 +45,7 @@ const LoginForm = ({ ...props }) => {
             </div>
             <button
                 type="submit"
-                disabled={props.pristine || props.submitting}
+                disabled={pristine || submitting}
                 className="btn btn-primary mr-2">Submit
             </button>
             <p className="d-inline ml-4">

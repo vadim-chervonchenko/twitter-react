@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
-import { TwitterAppNavBar, TwitterAppNavBarItem } from '../styles/styles';
-import * as actions from '../store/twitter/actions/auth-actions';
-import {bindActionCreators} from 'redux';
+import {TwitterAppNavBar, TwitterAppNavBarItem} from '../styles/globals';
 import {connect} from 'react-redux';
+import {logOut} from "../store/twitter/AuthActions";
 
-class AppHeader extends Component {
+class Header extends Component {
 
     logout = () => {
         localStorage.clear();
         this.props.logOut();
     };
 
-    render () {
+    render() {
         const {user} = this.props;
 
         return (
@@ -36,34 +35,32 @@ class AppHeader extends Component {
                             to="/about"
                         >About</NavLink>
                     </TwitterAppNavBarItem>
-                    { ! user && <TwitterAppNavBarItem className="nav-item">
-                        <NavLink
-                            className="nav-link"
-                            to="/auth"
-                        >Log in</NavLink>
-                    </TwitterAppNavBarItem>}
-                    { user && <TwitterAppNavBarItem className="nav-item">
-                        <NavLink
-                            className="nav-link"
-                            to="/auth"
-                            onClick={() => {this.logout()}}
-                        >Log out</NavLink>
-                    </TwitterAppNavBarItem>}
+                    {! user ?
+                        <TwitterAppNavBarItem className="nav-item">
+                            <NavLink
+                                className="nav-link"
+                                to="/auth"
+                            >Log in</NavLink>
+                        </TwitterAppNavBarItem> :
+                        <TwitterAppNavBarItem className="nav-item">
+                            <NavLink
+                                className="nav-link"
+                                to="/auth"
+                                onClick={() => {
+                                    this.logout()
+                                }}
+                            >Log out</NavLink>
+                        </TwitterAppNavBarItem>
+                    }
                 </TwitterAppNavBar>
             </nav>
         );
     };
 }
 
-const mapStateToProps = (state) => {
-    return {
+export default connect(
+    state => ({
         state
-    }
-};
-const mapDispatchToProps = (dispatch) => {
-    const {logOut} = bindActionCreators(actions, dispatch);
-    return {
-        logOut
-    }
-};
-export default connect(mapStateToProps, mapDispatchToProps)(AppHeader);
+    }),
+    {logOut}
+)(Header);

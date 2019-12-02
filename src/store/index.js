@@ -1,16 +1,15 @@
 import {reducer as formReducer} from "redux-form";
 
-import {authReducer} from './twitter/reducers/auth-reducer.js';
-import {tweetReducer} from './twitter/reducers/tweet-reducer.js';
+import {authReducer} from './twitter/AuthReducer.js';
+import {tweetReducer} from './twitter/TweetReducer.js';
 
 import {applyMiddleware, combineReducers, createStore} from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import axios from "axios/index";
 
 import createSagaMiddleware from 'redux-saga';
 
-import {AllAuthSaga} from './twitter/sagas/auth-sagas.js';
-import {AllTweetSaga} from './twitter/sagas/tweet-sagas.js';
+import {AllAuthSaga} from './twitter/AuthSaga.js';
+import {AllTweetSaga} from './twitter/TweetSaga.js';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -25,7 +24,6 @@ export default createStore(
         tweets: tweetReducer,
         form: formReducer,
     }), applyMiddleware(
-        thunkMiddleware,
         authTokenMiddleware,
         sagaMiddleware
     ));

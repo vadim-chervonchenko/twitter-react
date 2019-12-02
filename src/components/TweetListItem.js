@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import ItemEditForm from './item-edit-form';
+import ItemEditForm from './ItemEditingForm';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actions from '../store/twitter/actions/tweet-actions.js';
+import {TwitterListItemWrap} from '../styles/globals';
+import {delTweet} from "../store/twitter/TweetActions";
+import moment from 'moment';
 
-import { TwitterListItemWrap } from '../styles/styles';
-
-class TwitterListItem extends Component {
+class TweetListItem extends Component {
 
     state = {
         formVisibility: false
@@ -26,12 +25,11 @@ class TwitterListItem extends Component {
     };
 
     deleteTweet = () => {
-        const {id, state} = this.props;
-        this.props.delTweet(id, state)
+        this.props.delTweet(this.props.id)
     };
 
     render() {
-        const {content, id} = this.props;
+        const {content, id, user, created_at} = this.props;
 
         return (
             <TwitterListItemWrap className="list-group-item twitter-item" key={id}>
@@ -46,9 +44,11 @@ class TwitterListItem extends Component {
                         className="btn btn-outline-primary btn-sm mr-3 float-right">
                     <i className="fa fa-edit"></i>
                 </button>
+                <span className="pl-3">{user.name}</span>
+                <span className="pl-3">{moment(created_at).fromNow()}</span>
                 <ItemEditForm
                     formVisibilityChange={this.formVisibility}
-                    formVisibility={this.state.formVisibility}
+                    formVisibilityToggle={this.state.formVisibility}
                     onUpdateItem={this.onUpdateItem}
                     editLabel={content}
                     itemId={id}
@@ -58,15 +58,9 @@ class TwitterListItem extends Component {
     };
 }
 
-const mapStateToProps = (state) => {
-    return {
+export default connect(
+    state => ({
         state
-    }
-};
-const mapDispatchToProps = (dispatch) => {
-    const {delTweet} = bindActionCreators(actions, dispatch);
-    return {
-        delTweet
-    }
-};
-export default connect(mapStateToProps, mapDispatchToProps)(TwitterListItem);
+    }),
+    {delTweet}
+)(TweetListItem);
