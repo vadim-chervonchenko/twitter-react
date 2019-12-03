@@ -1,20 +1,39 @@
-import axios from 'axios';
-
-axios.defaults.baseURL = '/api/';
-
 export const REGISTER_REQUEST = 'USERS_REGISTER_REQUEST';
-export const registerUser = (payload) => ({
-    type: REGISTER_REQUEST,
-    payload
-});
-export const LOGIN_REQUEST = 'USERS_LOGIN_REQUEST';
-export const loginUser = (payload) => {
+export const registerUser = ( { userEmail, lastName, userPassword } ) => {
     return {
-        type: LOGIN_REQUEST,
-        payload
+        type: REGISTER_REQUEST,
+        request: {
+            url: 'register/',
+            method: 'post',
+            data: {
+                email: userEmail,
+                name: lastName,
+                password: userPassword
+            }
+        },
     }
 };
-export const LOGOUT = 'USERS_LOGOUT';
+
+export const LOGIN_REQUEST = 'USERS_LOGIN_REQUEST';
+export const loginUser = ({ userEmail, userPass }) => {
+    return {
+        type: LOGIN_REQUEST,
+        request: {
+            url: 'login/',
+            method: 'post',
+            data: {
+                email: userEmail,
+                password: userPass
+            }
+        },
+    }
+};
+
+export const USER_LOGOUT = 'USERS_LOGOUT';
 export const logOut = () => ({
-    type: LOGOUT
+    type: USER_LOGOUT,
+    request: {
+        url: 'logout/',
+        method: 'post'
+    }
 });

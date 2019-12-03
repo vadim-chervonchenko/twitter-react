@@ -29,23 +29,25 @@ class TweetListItem extends Component {
     };
 
     render() {
-        const {content, id, user, created_at} = this.props;
+        const {content, id, user, created_at, updated_at} = this.props;
 
         return (
             <TwitterListItemWrap className="list-group-item twitter-item" key={id}>
                 <span>{content}</span>
-                <button onClick={this.deleteTweet}
-                        className="btn btn-outline-danger btn-sm float-right">
-                    <i className="fa fa-trash-o"></i>
-                </button>
-                <button onClick={() => {
-                    this.formVisibility()
-                }}
-                        className="btn btn-outline-primary btn-sm mr-3 float-right">
-                    <i className="fa fa-edit"></i>
-                </button>
-                <span className="pl-3">{user.name}</span>
-                <span className="pl-3">{moment(created_at).fromNow()}</span>
+                {/* current_user === post_creator -> show buttons . I need current_user_session*/}
+                    <button onClick={this.deleteTweet}
+                            className="btn btn-outline-danger btn-sm float-right">
+                        <i className="fa fa-trash-o"></i>
+                    </button>
+                    <button onClick={() => {
+                        this.formVisibility()
+                    }}
+                            className="btn btn-outline-primary btn-sm mr-3 float-right">
+                        <i className="fa fa-edit"></i>
+                    </button>
+                <div className="pl-3">user : {user.name}</div>
+                <div className="pl-3">create post :  {moment(created_at).fromNow()}</div>
+                <div className="pl-3">update post : {moment(updated_at).fromNow()}</div>
                 <ItemEditForm
                     formVisibilityChange={this.formVisibility}
                     formVisibilityToggle={this.state.formVisibility}

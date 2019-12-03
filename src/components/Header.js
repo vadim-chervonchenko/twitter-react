@@ -7,7 +7,6 @@ import {logOut} from "../store/twitter/AuthActions";
 class Header extends Component {
 
     logout = () => {
-        localStorage.clear();
         this.props.logOut();
     };
 

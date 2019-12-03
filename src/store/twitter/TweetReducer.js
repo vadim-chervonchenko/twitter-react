@@ -44,10 +44,6 @@ export const tweetReducer = (state = initialState, action) => {
                 errors: action.payload.errors
             };
         case ADD_SUCCESS:
-
-            /*onsole.log([...state.items, action.payload.item]);*/
-            console.log(action.payload);
-
             return {
                 ...state,
                 items: [...state.items, action.payload.item],
@@ -62,7 +58,7 @@ export const tweetReducer = (state = initialState, action) => {
             };
         case UPDATE_SUCCESS:
             const updateItemId = state.items.findIndex((item) => item.id === action.payload.id);
-            const item = {...state.items[updateItemId], content: action.payload.content};
+            const item = {...state.items[updateItemId], content: action.payload.content, updated_at: action.payload.updated_at};
 
             return {
                 ...state,

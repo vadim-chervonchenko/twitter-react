@@ -17,8 +17,10 @@ import {TwitterAppWrapper} from '../styles/globals.js';
 
 class Navigation extends Component {
     render() {
-        const user = localStorage.getItem('access_token');
+        /*const user = localStorage.getItem('access_token');*/
         const {loginUser, registerUser} = this.props;
+
+        const user = this.props.state.auth.data.access_token;
 
         return (
             <Router>

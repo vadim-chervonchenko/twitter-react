@@ -1,9 +1,9 @@
 import React, {Fragment} from 'react';
 import AppHeader from '../Header';
 
-const About = () => {
+const About = ({user}) => {
 
-    const user = localStorage.getItem('access_token');
+    /*const user = localStorage.getItem('access_token');*/
 
     return (
         <Fragment>

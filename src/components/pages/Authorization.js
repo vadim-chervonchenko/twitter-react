@@ -6,11 +6,12 @@ import AppHeader from '../Header';
 
 const LoginPage = (props) => {
 
-    const user = localStorage.getItem('access_token');
+    /*const user = localStorage.getItem('access_token');*/
+    const {user} = props;
 
     return (
         <Fragment>
-            {props.user && <Redirect to={'/'}/>}
+            {user && <Redirect to={'/'}/>}
             <AppHeader user={user}/>
             <LoginForm {...props}/>
         </Fragment>

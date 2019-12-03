@@ -25,7 +25,9 @@ class Home extends Component {
         const {items, search} = this.props.state.tweets;
 
         const filteredTweets = this.searchItems(items, search);
-        const user = localStorage.getItem('access_token');
+        /*const user = localStorage.getItem('access_token');*/
+
+        const user = this.props.state.auth.data.access_token;
 
         return (
             <Fragment>
