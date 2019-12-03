@@ -1,4 +1,6 @@
 import './TweetActions';
+import { requestsReducer } from 'redux-saga-requests';
+
 import {
     ADD_REQUEST,
     DELETE_REQUEST,
@@ -6,80 +8,50 @@ import {
     GETALL_REQUEST,
     SEARCH_QUERY
 } from './TweetActions';
-import {
-    ADD_FAILURE,
-    DELETE_FAILURE,
-    UPDATE_FAILURE,
-    GETALL_FAILURE,
-    ADD_SUCCESS,
-    DELETE_SUCCESS,
-    UPDATE_SUCCESS,
-    GETALL_SUCCESS,
-} from './TweetSaga';
 
-const initialState = {
-    items: [],
-    search: '',
-    errors: '',
-    loading: false
-};
+export const tweetReducer = requestsReducer({
+    actionType: GETALL_REQUEST,
+    multiple: true,
+    mutations: {
+        [DELETE_REQUEST]: {
+            updateData : (state, action) => {
+                const deleteItemId = state.items.findIndex((item) => item.id === action.payload.id);
+                return {
+                    ...state,
+                    items: [...state.items.slice(0, deleteItemId), ...state.items.slice(deleteItemId + 1)],
+                    loading: false
+                };
+            }
+        },
+        [UPDATE_REQUEST]: {
+            updateData : (state, action) => {
+                const updateItemId = state.items.findIndex((item) => item.id === action.payload.id);
+                const item = {...state.items[updateItemId], content: action.payload.content, updated_at: action.payload.updated_at};
 
-export const tweetReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_REQUEST:
-        case DELETE_REQUEST:
-        case UPDATE_REQUEST:
-        case GETALL_REQUEST:
-            return {
-                ...state,
-                loading: true
-            };
-        case ADD_FAILURE:
-        case DELETE_FAILURE:
-        case UPDATE_FAILURE:
-        case GETALL_FAILURE:
-            return {
-                ...state,
-                loading: false,
-                errors: action.payload.errors
-            };
-        case ADD_SUCCESS:
-            return {
-                ...state,
-                items: [...state.items, action.payload.item],
-                loading: false
-            };
-        case DELETE_SUCCESS:
-            const deleteItemId = state.items.findIndex((item) => item.id === action.payload.id);
-            return {
-                ...state,
-                items: [...state.items.slice(0, deleteItemId), ...state.items.slice(deleteItemId + 1)],
-                loading: false
-            };
-        case UPDATE_SUCCESS:
-            const updateItemId = state.items.findIndex((item) => item.id === action.payload.id);
-            const item = {...state.items[updateItemId], content: action.payload.content, updated_at: action.payload.updated_at};
-
-            return {
-                ...state,
-                items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)],
-                loading: false
-            };
-        case GETALL_SUCCESS:
-
-            return {
-                ...state,
-                items: action.payload.items,
-                loading: false
-            };
-        case SEARCH_QUERY:
-            return {
-                ...state,
-                search: action.payload.searchQuery,
-                loading: false
-            };
-        default:
-            return state;
+                return {
+                    ...state,
+                    items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)],
+                    loading: false
+                };
+            }
+        },
+        [ADD_REQUEST]: {
+            updateData : (state, action) => {
+                return {
+                    ...state,
+                    items: [...state.items, action.payload.item],
+                    loading: false
+                };
+            }
+        },
+        [SEARCH_QUERY]: {
+            updateData : (state, action) => {
+                return {
+                    ...state,
+                    search: action.payload.searchQuery,
+                    loading: false
+                };
+            }
+        }
     }
-};
-
+});

@@ -22,7 +22,10 @@ class Home extends Component {
     };
 
     render() {
-        const {items, search} = this.props.state.tweets;
+
+        console.log(this.props.state);
+
+        const {items, search} = this.props.state.tweets.data;
 
         const filteredTweets = this.searchItems(items, search);
         /*const user = localStorage.getItem('access_token');*/

@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+axios.defaults.baseURL = '/api/';
+
 export const REGISTER_REQUEST = 'USERS_REGISTER_REQUEST';
 export const registerUser = ( { userEmail, lastName, userPassword } ) => {
     return {
@@ -10,10 +14,9 @@ export const registerUser = ( { userEmail, lastName, userPassword } ) => {
                 name: lastName,
                 password: userPassword
             }
-        },
+        }
     }
 };
-
 export const LOGIN_REQUEST = 'USERS_LOGIN_REQUEST';
 export const loginUser = ({ userEmail, userPass }) => {
     return {
@@ -25,10 +28,9 @@ export const loginUser = ({ userEmail, userPass }) => {
                 email: userEmail,
                 password: userPass
             }
-        },
+        }
     }
 };
-
 export const USER_LOGOUT = 'USERS_LOGOUT';
 export const logOut = () => ({
     type: USER_LOGOUT,
