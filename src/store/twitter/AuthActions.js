@@ -1,7 +1,3 @@
-import axios from 'axios';
-
-axios.defaults.baseURL = '/api/';
-
 export const REGISTER_REQUEST = 'USERS_REGISTER_REQUEST';
 export const registerUser = ( { userEmail, lastName, userPassword } ) => {
     return {
@@ -38,4 +34,8 @@ export const logOut = () => ({
         url: 'logout/',
         method: 'post'
     }
+});
+export const SET_JWT_TOKEN = 'SET_JWT_TOKEN';
+export const setJwtToken = () => ({
+    type: SET_JWT_TOKEN
 });

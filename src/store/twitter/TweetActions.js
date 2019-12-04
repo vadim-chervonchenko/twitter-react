@@ -1,12 +1,5 @@
-import axios from 'axios';
-
-axios.defaults.baseURL = '/api/';
-
 export const GETALL_REQUEST = 'TWEET_GETALL_REQUEST';
-export const getListTwets = () => {
-
-    console.log('tweets');
-
+export const getListTweets = () => {
     return {
         type: GETALL_REQUEST,
         request: {
@@ -21,7 +14,7 @@ export const addTweet = (content) => ({
         url: 'tweets/',
         method: 'post',
         data: {
-           content
+            content
         }
     }
 });
@@ -34,6 +27,9 @@ export const delTweet = (id) => ({
         data: {
             id
         }
+    },
+    meta: {
+        id
     }
 });
 export const UPDATE_REQUEST = 'TWEET_UPDATE_REQUEST';
@@ -45,6 +41,9 @@ export const updateTweet = (id, content) => ({
         data: {
             id, content
         }
+    },
+    meta: {
+        id
     }
 });
 export const SEARCH_QUERY = 'SET_SEARCH_QUERY';

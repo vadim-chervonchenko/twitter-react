@@ -3,16 +3,15 @@ import ItemAddForm from '../ItemAddingForm';
 import TweetList from '../TweetList';
 import SearchPanel from '../SearchPanel';
 import {connect} from 'react-redux';
-import { getListTwets } from '../../store/twitter/TweetActions.js';
+import {getListTweets} from '../../store/twitter/TweetActions';
 import AppHeader from '../Header';
 
 class Home extends Component {
-
     componentDidMount() {
-        this.props.getListTwets();
+        this.props.getListTweets();
     };
 
-    searchItems = (items, search) => {
+    searchItems = (items = [], search = '') => {
         if (search.length === 0) {
             return items;
         }
@@ -22,15 +21,10 @@ class Home extends Component {
     };
 
     render() {
+        const {data, search} = this.props.state.tweets;
+        const filteredTweets = this.searchItems(data, search);
 
-        console.log(this.props.state);
-
-        const {items, search} = this.props.state.tweets.data;
-
-        const filteredTweets = this.searchItems(items, search);
-        /*const user = localStorage.getItem('access_token');*/
-
-        const user = this.props.state.auth.data.access_token;
+        const user = this.props.state.auth.data.access_token; // token нужно брать нормально
 
         return (
             <Fragment>
@@ -49,5 +43,7 @@ export default connect(
     state => ({
         state
     }),
-    { getListTwets }
+    {
+        getListTweets
+    }
 )(Home);

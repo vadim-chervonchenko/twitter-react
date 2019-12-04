@@ -1,6 +1,5 @@
 import './TweetActions';
 import { requestsReducer } from 'redux-saga-requests';
-
 import {
     ADD_REQUEST,
     DELETE_REQUEST,
@@ -15,11 +14,9 @@ export const tweetReducer = requestsReducer({
     mutations: {
         [DELETE_REQUEST]: {
             updateData : (state, action) => {
-                const deleteItemId = state.items.findIndex((item) => item.id === action.payload.id);
+                const deleteItemId = state.data.findIndex((item) => item.id === action.meta.id);
                 return {
-                    ...state,
-                    items: [...state.items.slice(0, deleteItemId), ...state.items.slice(deleteItemId + 1)],
-                    loading: false
+                    ...state, data: [...state.data.slice(0, deleteItemId), ...state.data.slice(deleteItemId + 1)]
                 };
             }
         },

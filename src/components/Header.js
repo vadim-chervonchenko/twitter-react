@@ -7,12 +7,12 @@ import {logOut} from "../store/twitter/AuthActions";
 class Header extends Component {
 
     logout = () => {
+        localStorage.clear();
         this.props.logOut();
     };
 
     render() {
         const {user} = this.props;
-
         return (
             <nav className="navbar navbar-light bg-light mb-3">
                 <a className="navbar-brand" href="./">
@@ -45,9 +45,7 @@ class Header extends Component {
                             <NavLink
                                 className="nav-link"
                                 to="/auth"
-                                onClick={() => {
-                                    this.logout()
-                                }}
+                                onClick={ () => { this.logout() } }
                             >Log out</NavLink>
                         </TwitterAppNavBarItem>
                     }

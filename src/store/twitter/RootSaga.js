@@ -1,10 +1,9 @@
-import axios from 'axios';
 import {createRequestInstance, watchRequests} from 'redux-saga-requests';
 import { createDriver } from 'redux-saga-requests-axios';
 
-export const rootSaga = function* rootSaga() {
+export const rootSaga = function* rootSaga(axiosInstance) {
     yield createRequestInstance({
-        driver: createDriver(axios)
+        driver: createDriver(axiosInstance)
     });
     yield watchRequests();
 };
