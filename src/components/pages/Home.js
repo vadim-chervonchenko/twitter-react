@@ -11,7 +11,7 @@ class Home extends Component {
         this.props.getListTweets();
     };
 
-    searchItems = (items = [], search = '') => {
+    searchItems = (items, search = '') => {
         if (search.length === 0) {
             return items;
         }
@@ -23,8 +23,7 @@ class Home extends Component {
     render() {
         const {data, search} = this.props.state.tweets;
         const filteredTweets = this.searchItems(data, search);
-
-        const user = this.props.state.auth.data.access_token; // token нужно брать нормально
+        const user = this.props.state.auth.data.access_token;
 
         return (
             <Fragment>

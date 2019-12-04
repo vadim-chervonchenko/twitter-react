@@ -16,6 +16,9 @@ export const addTweet = (content) => ({
         data: {
             content
         }
+    },
+    meta: {
+        content
     }
 });
 export const DELETE_REQUEST = 'TWEET_DELETE_REQUEST';
@@ -49,7 +52,7 @@ export const updateTweet = (id, content) => ({
 export const SEARCH_QUERY = 'SET_SEARCH_QUERY';
 export const setSearchQuery = (searchQuery) => ({
     type: SEARCH_QUERY,
-    payload: {
+    meta: {
         searchQuery
     }
 });

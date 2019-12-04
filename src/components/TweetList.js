@@ -3,9 +3,6 @@ import TwitterListItem from './TweetListItem';
 import { TwitterListWrapper } from '../styles/globals.js';
 
 const TweetList = ({filteredTweets}) => {
-
-    console.log(filteredTweets);
-
     return (
         <TwitterListWrapper className="list-group">
             {

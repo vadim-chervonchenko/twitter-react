@@ -10,45 +10,41 @@ import {
 
 export const tweetReducer = requestsReducer({
     actionType: GETALL_REQUEST,
+    onSuccess: (state, action) => {
+        return {
+            ...state, data: [...action.data], search: ''
+        }
+    },
     multiple: true,
     mutations: {
         [DELETE_REQUEST]: {
             updateData : (state, action) => {
                 const deleteItemId = state.data.findIndex((item) => item.id === action.meta.id);
-                return {
-                    ...state, data: [...state.data.slice(0, deleteItemId), ...state.data.slice(deleteItemId + 1)]
-                };
+
+                return [...state.data.slice(0, deleteItemId), ...state.data.slice(deleteItemId + 1)];
             }
         },
         [UPDATE_REQUEST]: {
             updateData : (state, action) => {
-                const updateItemId = state.items.findIndex((item) => item.id === action.payload.id);
-                const item = {...state.items[updateItemId], content: action.payload.content, updated_at: action.payload.updated_at};
+                const updateItemId = state.data.findIndex((item) => item.id === action.meta.id);
+                const item = {...state.data[updateItemId], content: action.data.content, updated_at: action.data.updated_at};
 
-                return {
-                    ...state,
-                    items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)],
-                    loading: false
-                };
+                return [...state.data.slice(0, updateItemId), item, ...state.data.slice(updateItemId + 1)];
             }
         },
         [ADD_REQUEST]: {
             updateData : (state, action) => {
-                return {
-                    ...state,
-                    items: [...state.items, action.payload.item],
-                    loading: false
-                };
+
+                return [...state.data, action.data];
             }
         },
         [SEARCH_QUERY]: {
             updateData : (state, action) => {
                 return {
-                    ...state,
-                    search: action.payload.searchQuery,
-                    loading: false
-                };
-            }
+                    ...state, search: action.meta.searchQuery
+                }
+            },
+            local: true
         }
     }
 });
