@@ -5,9 +5,7 @@ import About from './pages/About';
 import LoginPage from './pages/Authorization';
 import SignUp from './pages/Registration';
 import PrivateRoute from './PrivateRoute';
-
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-
 import {connect} from 'react-redux';
 
 import {addTweet} from '../store/twitter/TweetActions.js';
