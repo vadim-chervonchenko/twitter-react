@@ -5,14 +5,14 @@ import {connect} from 'react-redux';
 import {logOut} from "../store/twitter/AuthActions";
 
 class Header extends Component {
-
     logout = () => {
         localStorage.clear();
         this.props.logOut();
     };
 
     render() {
-        const {user} = this.props;
+        const user = this.props.accessToken;
+
         return (
             <nav className="navbar navbar-light bg-light mb-3">
                 <a className="navbar-brand" href="./">
@@ -44,7 +44,7 @@ class Header extends Component {
                         <TwitterAppNavBarItem className="nav-item">
                             <NavLink
                                 className="nav-link"
-                                to="/auth"
+                                to="/logout"
                                 onClick={ () => { this.logout() } }
                             >Log out</NavLink>
                         </TwitterAppNavBarItem>
@@ -57,7 +57,7 @@ class Header extends Component {
 
 export default connect(
     state => ({
-        state
+        accessToken: state.auth.data.access_token
     }),
     {logOut}
 )(Header);

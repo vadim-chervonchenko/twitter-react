@@ -6,14 +6,12 @@ import RegisterForm from "../RegistrationForm";
 import AppHeader from '../Header';
 
 const Registration = (props) => {
-
-    /*const user = localStorage.getItem('access_token');*/
     const {user} = props;
 
     return (
         <Fragment>
             {user && <Redirect to='/'/>}
-            <AppHeader user={user}/>
+            <AppHeader/>
             <RegisterForm {...props}/>
         </Fragment>
     );

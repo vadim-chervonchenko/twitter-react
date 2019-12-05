@@ -5,14 +5,12 @@ import {Redirect} from 'react-router-dom';
 import AppHeader from '../Header';
 
 const LoginPage = (props) => {
-
-    /*const user = localStorage.getItem('access_token');*/
     const {user} = props;
 
     return (
         <Fragment>
             {user && <Redirect to={'/'}/>}
-            <AppHeader user={user}/>
+            <AppHeader/>
             <LoginForm {...props}/>
         </Fragment>
     );

@@ -11,7 +11,7 @@ class Home extends Component {
         this.props.getListTweets();
     };
 
-    searchItems = (items, search = '') => {
+    searchItems = (items = [], search = '') => {
         if (search.length === 0) {
             return items;
         }
@@ -21,13 +21,11 @@ class Home extends Component {
     };
 
     render() {
-        const {data, search} = this.props.state.tweets;
-        const filteredTweets = this.searchItems(data, search);
-        const user = this.props.state.auth.data.access_token;
-
+        const {items, search} = this.props.tweetsData;
+        const filteredTweets = this.searchItems(items, search);
         return (
             <Fragment>
-                <AppHeader user={user}/>
+                <AppHeader/>
                 <SearchPanel/>
                 <ItemAddForm/>
                 <TweetList
@@ -40,7 +38,8 @@ class Home extends Component {
 
 export default connect(
     state => ({
-        state
+        tweetsData: state.tweets.data,
+        authData: state.auth.data
     }),
     {
         getListTweets

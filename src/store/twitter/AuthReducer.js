@@ -10,24 +10,25 @@ import {
 export const authReducer = requestsReducer({
     actionType: LOGIN_REQUEST,
     onSuccess: (state, action) => {
-
         localStorage.setItem('access_token', action.data.access_token);
 
         return {
-            ...state.data, data: {...action.data}
+            ...state, data: {...action.data}
         }
     },
     multiple: true,
     mutations: {
         [REGISTER_REQUEST]: {
             updateData : (state, action) => {
+                localStorage.setItem('access_token', action.data.access_token);
+
                 return {
-                    ...state, items: {...action.response.data}
+                    ...state.data, ...action.data
                 }
             }
         },
         [USER_LOGOUT]: {
-            updateData: (state, action) => {
+            updateData: (state) => {
                 return {
                     ...state.data, access_token: ''
                 }

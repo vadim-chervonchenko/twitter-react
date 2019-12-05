@@ -17,25 +17,25 @@ import {TwitterAppWrapper} from '../styles/globals.js';
 
 class Navigation extends Component {
     render() {
-        const {loginUser, registerUser} = this.props;
+        const {loginUser, registerUser, accessToken} = this.props;
 
-        const user = this.props.state.auth.data.access_token;
         return (
             <Router>
                 <TwitterAppWrapper>
                     <Switch>
-                        <PrivateRoute path={'/'} exact component={Home} user={user}/>
+                        <PrivateRoute path={'/'} exact component={Home} user={accessToken}/>
                         <Route path={'/about'} component={About}/>
                         <Route path={'/auth'} children={() => {
-                            return <LoginPage user={user} onSubmit={(formData) => {
+                            return <LoginPage user={accessToken} onSubmit={(formData) => {
                                 loginUser(formData)
                             }}/>
                         }}/>
                         <Route path={'/signup'} children={() => {
-                            return <SignUp user={user} onSubmit={(formData) => {
+                            return <SignUp user={accessToken} onSubmit={(formData) => {
                                 registerUser(formData)
                             }}/>
                         }}/>
+                        <Route path={'/logout'} component={About}/>
                     </Switch>
                 </TwitterAppWrapper>
             </Router>
@@ -45,7 +45,7 @@ class Navigation extends Component {
 
 export default connect(
     state => ({
-        state
+        accessToken: state.auth.data.access_token
     }),
     {
         addTweet,

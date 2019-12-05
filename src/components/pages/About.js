@@ -1,13 +1,10 @@
 import React, {Fragment} from 'react';
 import AppHeader from '../Header';
 
-const About = ({user}) => {
-
-    /*const user = localStorage.getItem('access_token');*/
-
+const About = () => {
     return (
         <Fragment>
-            <AppHeader user={user}/>
+            <AppHeader/>
             <div className="jumbotron">
                 <h1 className="display-4">About us</h1>
                 <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
