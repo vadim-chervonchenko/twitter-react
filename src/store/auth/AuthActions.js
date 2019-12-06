@@ -35,6 +35,18 @@ export const logOut = () => ({
         method: 'post'
     }
 });
+
+export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
+export const fetchUser = (id) => {
+    return {
+        type: FETCH_USER_REQUEST,
+        request: {
+            url: `user/${id}`,
+            method: 'post'
+        },
+    }
+};
+
 export const SET_JWT_TOKEN = 'SET_JWT_TOKEN';
 export const setJwtToken = () => ({
     type: SET_JWT_TOKEN

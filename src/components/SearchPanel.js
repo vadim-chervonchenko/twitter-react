@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
-import {setSearchQuery} from "../store/twitter/TweetActions";
+import {setSearchQuery} from "../store/posts/TweetActions";
 
 class SearchPanel extends Component {
     render() {

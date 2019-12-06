@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
 import {TwitterAppNavBar, TwitterAppNavBarItem} from '../styles/globals';
 import {connect} from 'react-redux';
-import {logOut} from "../store/twitter/AuthActions";
+import {logOut} from "../store/auth/AuthActions";
 
 class Header extends Component {
     logout = () => {

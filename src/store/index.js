@@ -1,29 +1,26 @@
-import {reducer as formReducer} from "redux-form";
-import {authReducer} from './twitter/AuthReducer.js';
-import {tweetReducer} from './twitter/TweetReducer.js';
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import axios from "axios/index";
 import createSagaMiddleware from 'redux-saga';
-import {rootSaga} from './twitter/RootSaga.js';
+import {reducer as formReducer} from "redux-form";
+
+//reducers
+import {authReducer} from './auth/AuthReducer.js';
+import {tweetReducer} from './posts/TweetReducer.js';
+
+//sagas
+import TweetSaga from './posts/TweetSaga';
+import AuthSaga from './auth/AuthSaga';
+
+//middleware
+import { authTokenMiddleware, authMiddleware } from './auth/AuthMiddleware';
+import { tweetMiddleware } from './posts/TweetMiddleware';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const authTokenMiddleware = (store) => (next) => (action) => {
-    /* set jwt token */
-
-   if (action.type === 'SET_JWT_TOKEN') {
-       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-       action.access_token = localStorage.getItem('access_token');
-   }
-
-   if ( action.type === 'USERS_LOGIN_REQUEST_SUCCESS' || action.type === 'USERS_REGISTER_REQUEST_SUCCESS' ) {
-       axiosInstance.defaults.headers.common['Authorization'] = `Bearer${action.data.access_token}`;
-   }
-	return next( action );
-};
-
+//debug
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
+// create store
 export default createStore(
 	combineReducers({
 		auth: authReducer,
@@ -31,12 +28,16 @@ export default createStore(
 		form: formReducer,
 	}), composeEnhancers( applyMiddleware(
 		authTokenMiddleware,
-		sagaMiddleware
+		sagaMiddleware,
+        authMiddleware,
+        tweetMiddleware
 	))
 );
 
+// import from somewhere
 const axiosInstance = axios.create({
 	baseURL: '/api/',
-} );
+});
 
-sagaMiddleware.run(rootSaga, axiosInstance);
+sagaMiddleware.run(TweetSaga, axiosInstance);
+sagaMiddleware.run(AuthSaga, axiosInstance);
