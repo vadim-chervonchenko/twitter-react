@@ -1,43 +1,38 @@
-import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
-import axios from "axios/index";
-import createSagaMiddleware from 'redux-saga';
+/* reducers */
 import {reducer as formReducer} from "redux-form";
-
-//reducers
 import {authReducer} from './auth/AuthReducer.js';
-import {tweetReducer} from './posts/TweetReducer.js';
+import {tweetReducer} from './tweet/TweetReducer.js';
 
-//sagas
-import TweetSaga from './posts/TweetSaga';
-import AuthSaga from './auth/AuthSaga';
+/* middleware */
+import {authTokenMiddleware, authMiddleware, axiosInstance} from './auth/AuthMiddleware';
+import {tweetMiddleware} from './tweet/TweetMiddleware';
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 
-//middleware
-import { authTokenMiddleware, authMiddleware } from './auth/AuthMiddleware';
-import { tweetMiddleware } from './posts/TweetMiddleware';
+import createSagaMiddleware from 'redux-saga';
+import {requestsPromiseMiddleware} from 'redux-saga-requests';
+import {rootSaga} from './RootSaga.js';
 
 const sagaMiddleware = createSagaMiddleware();
 
-//debug
-const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+/* debug settings */
+const composeEnhancers = (
+	                         typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+                         ) || compose;
 
-// create store
 export default createStore(
-	combineReducers({
+	combineReducers( {
 		auth: authReducer,
 		tweets: tweetReducer,
 		form: formReducer,
 	}), composeEnhancers( applyMiddleware(
 		authTokenMiddleware,
+		authMiddleware,
+		tweetMiddleware,
 		sagaMiddleware,
-        authMiddleware,
-        tweetMiddleware
+		requestsPromiseMiddleware( {
+			auto: true
+		})
 	))
 );
 
-// import from somewhere
-const axiosInstance = axios.create({
-	baseURL: '/api/',
-});
-
-sagaMiddleware.run(TweetSaga, axiosInstance);
-sagaMiddleware.run(AuthSaga, axiosInstance);
+sagaMiddleware.run( rootSaga, axiosInstance );
