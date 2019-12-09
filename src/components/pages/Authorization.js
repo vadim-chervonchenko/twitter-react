@@ -10,7 +10,7 @@ const LoginPage = (props) => {
             {props.user && <Redirect to={'/'}/>}
             <AppHeader/>
             <TwitterAppWrapper>
-                <LoginForm/>
+                <LoginForm {...props}/>
             </TwitterAppWrapper>
         </Fragment>
     );

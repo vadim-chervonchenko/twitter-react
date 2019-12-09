@@ -21,14 +21,14 @@ class Navigation extends Component {
                     <PrivateRoute path={'/'} exact component={Home} user={accessToken}/>
                     <Route path={'/about'} component={About}/>
                     <Route path={'/auth'} children={() => {
-                        return <LoginPage user={accessToken} onSubmit={(formData) => {
+                        return <LoginPage user={accessToken} /*onSubmit={(formData) => {
                             loginUser(formData)
-                        }}/>
+                        }}*//>
                     }}/>
                     <Route path={'/signup'} children={() => {
-                        return <SignUp user={accessToken} onSubmit={(formData) => {
+                        return <SignUp user={accessToken} /*onSubmit={(formData) => {
                             registerUser(formData)
-                        }}/>
+                        }}*//>
                     }}/>
                     <Route path={'/logout'} component={About}/>
                 </Switch>

@@ -1,5 +1,8 @@
 export const REGISTER_REQUEST = 'USERS_REGISTER_REQUEST';
 export const registerUser = ( {userEmail, lastName, userPassword} ) => {
+
+	console.log(userEmail, lastName, userPassword);
+
 	return {
 		type: REGISTER_REQUEST,
 		request: {

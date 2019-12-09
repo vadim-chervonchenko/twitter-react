@@ -25,7 +25,6 @@ class ItemAddingForm extends Component {
 
     render() {
         const { TextArea } = Input;
-        const {alertType} = this.state;
         const {getFieldDecorator} = this.props.form;
 
         return (
@@ -42,7 +41,7 @@ class ItemAddingForm extends Component {
                                 placeholder="Put your text here"
                                 autoFocus
                                 onPressEnter = {this.onPressEnter}
-                                className={`form-control ${alertType}`}
+                              /*  className={`form-control ${alertType}`}*/
                                 onChange={this.onLabelChange}
                             > </TextArea>
                         )}

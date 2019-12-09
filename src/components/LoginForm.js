@@ -3,20 +3,19 @@ import {Link} from 'react-router-dom';
 import 'antd/dist/antd.css';
 import {Form, Input, Button, Icon} from 'antd';
 
-import { loginUser } from '../store/auth/AuthActions';
+import {loginUser} from '../store/auth/AuthActions';
+import {connect} from "react-redux";
 
 const LoginForm = (props) => {
     const {getFieldDecorator} = props.form;
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-
         props.form.validateFieldsAndScroll((err, values) => {
 
+            console.log(props);
 
-            console.log(values);
-
-            loginUser(values);
+            props.loginUser(values);
         });
     };
 
@@ -54,6 +53,11 @@ const LoginForm = (props) => {
     );
 };
 
-export default Form.create({
-    name: 'loginForm'
-})(LoginForm);
+export default connect(
+    state => ({
+       state
+    }),
+    {
+        loginUser
+    }
+)(Form.create({name: 'loginForm'})(LoginForm));

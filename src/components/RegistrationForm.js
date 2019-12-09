@@ -1,54 +1,52 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import {Form, Input, Button, Icon} from 'antd';
+import {connect} from "react-redux";
+import {registerUser} from "../store/auth/AuthActions";
 
 const RegisterForm = (props) => {
-    const {handleSubmit} = props;
     const {getFieldDecorator} = props.form;
+
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+        props.form.validateFieldsAndScroll((err, values) => {
+            props.registerUser(values);
+        });
+    };
 
     return (
         <Form
-            onSubmit={handleSubmit}>
+            onSubmit={onFormSubmit}>
             <Form.Item>
-                {getFieldDecorator('username', {
-                    rules: [{required: true, message: 'Please input your username!'}],
+                {getFieldDecorator('userEmail', {
+                    rules: [{required: true, message: 'Please input your UserEmail!'}],
                 })(
                     <Input
                         prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                        placeholder="Username"
+                        type="text"
+                        placeholder="UserEmail"
                     />,
                 )}
             </Form.Item>
             <Form.Item>
-                {getFieldDecorator('password', {
+                {getFieldDecorator('lastName', {
+                    rules: [{required: true, message: 'Please input your Name!'}],
+                })(
+                    <Input
+                        prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                        type="text"
+                        placeholder="lastName"
+                    />,
+                )}
+            </Form.Item>
+            <Form.Item>
+                {getFieldDecorator('userPassword', {
                     rules: [{required: true, message: 'Please input your Password!'}],
                 })(
                     <Input
                         prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                         type="password"
-                        placeholder="Password"
-                    />,
-                )}
-            </Form.Item>
-            <Form.Item>
-                {getFieldDecorator('password', {
-                    rules: [{required: true, message: 'Please input your Password!'}],
-                })(
-                    <Input
-                        prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                        type="password"
-                        placeholder="Password"
-                    />,
-                )}
-            </Form.Item>
-            <Form.Item>
-                {getFieldDecorator('password', {
-                    rules: [{required: true, message: 'Please input your Password!'}],
-                })(
-                    <Input
-                        prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                        type="password"
-                        placeholder="Password"
+                        placeholder="userPassword"
                     />,
                 )}
             </Form.Item>
@@ -59,6 +57,11 @@ const RegisterForm = (props) => {
     );
 };
 
-export default Form.create({
-    name: 'registerForm'
-})(RegisterForm);
+export default connect(
+    state => ({
+        state
+    }),
+    {
+        registerUser
+    }
+)(Form.create({name: 'registerForm'})(RegisterForm));
