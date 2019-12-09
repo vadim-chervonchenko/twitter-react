@@ -1,21 +1,19 @@
 import React, {Fragment} from 'react';
-import {reduxForm} from 'redux-form';
 import LoginForm from '../LoginForm.js';
 import {Redirect} from 'react-router-dom';
 import AppHeader from '../Header';
+import {TwitterAppWrapper} from '../../styles/globals';
 
 const LoginPage = (props) => {
-    const {user} = props;
-
     return (
         <Fragment>
-            {user && <Redirect to={'/'}/>}
+            {props.user && <Redirect to={'/'}/>}
             <AppHeader/>
-            <LoginForm {...props}/>
+            <TwitterAppWrapper>
+                <LoginForm/>
+            </TwitterAppWrapper>
         </Fragment>
     );
 };
 
-export default reduxForm({
-    form: 'login'
-})(LoginPage);
+export default LoginPage

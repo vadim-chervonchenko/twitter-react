@@ -5,8 +5,10 @@ import SearchPanel from '../SearchPanel';
 import {connect} from 'react-redux';
 import {getListTweets} from '../../store/tweet/TweetActions';
 import AppHeader from '../Header';
+import {TwitterAppWrapper} from '../../styles/globals';
 
 class Home extends Component {
+
     componentDidMount() {
         this.props.getListTweets();
     };
@@ -22,15 +24,16 @@ class Home extends Component {
 
     render() {
         const {items, search} = this.props.tweetsData;
-        const filteredTweets = this.searchItems(items, search);
         return (
             <Fragment>
                 <AppHeader/>
-                <SearchPanel/>
-                <ItemAddForm/>
-                <TweetList
-                    filteredTweets={filteredTweets}
-                />
+                <TwitterAppWrapper>
+                    <SearchPanel/>
+                    <ItemAddForm/>
+                    <TweetList
+                        filteredTweets={this.searchItems(items, search)}
+                    />
+                </TwitterAppWrapper>
             </Fragment>
         );
     }
@@ -38,7 +41,7 @@ class Home extends Component {
 
 export default connect(
     state => ({
-        tweetsData: state.tweets.data,
+        tweetsData: state.tweets,
         authData: state.auth.data
     }),
     {

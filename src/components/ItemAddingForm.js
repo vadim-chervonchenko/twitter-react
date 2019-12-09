@@ -1,51 +1,57 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 
-import { TwitterAddForm, TwitterAddFormTextarea } from "../styles/globals";
+import 'antd/dist/antd.css';
+import {Form, Input, Button} from 'antd';
 import {addTweet} from "../store/tweet/TweetActions";
 
 class ItemAddingForm extends Component {
-
-    state = {
-        content: '',
-        alertType: ''
-    };
-
     onLabelChange = (e) => {
-        this.setState({content: e.target.value});
+        this.setState({
+            content: e.target.value
+        });
     };
-
-    onSubmit = (e) => {
+    handleSubmit = (e) => {
         e.preventDefault();
-        const alertType = this.state.content ? 'is-valid' : 'is-invalid';
+
         if (this.state.content) {
             this.props.addTweet(this.state.content);
         }
-        this.setState({
-            content: '',
-            alertType: alertType
-        });
+        this.props.form.resetFields();
+    };
+    onPressEnter = (e) => {
+        console.log(e);
     };
 
     render() {
-        const {content, alertType} = this.state;
+        const { TextArea } = Input;
+        const {alertType} = this.state;
+        const {getFieldDecorator} = this.props.form;
 
         return (
-            <div className="container p-0">
-                <TwitterAddForm onSubmit={this.onSubmit}>
-                    <div className="form-group row">
-                        <div className="col-sm-12">
-                              <TwitterAddFormTextarea
-                                  onChange={this.onLabelChange}
-                                  placeholder="Please enter your tweet"
-                                  value={content}
-                                  className={`form-control ${alertType}`}
-                              > </TwitterAddFormTextarea>
-                            <button className="btn btn-outline-primary">Add new Tweet</button>
-                        </div>
-                    </div>
-                </TwitterAddForm>
-            </div>
+            <Fragment>
+                <Form
+                    onSubmit={this.handleSubmit}>
+                    <Form.Item>
+                        {getFieldDecorator('content', {
+                            rules: [{ required: true, message: 'Please input post content', whitespace: true, min: 1 }],
+                            initialValue: ''
+                        })(
+                            <TextArea
+                                autoSize = { {minRows: 4, maxRows: 10} }
+                                placeholder="Put your text here"
+                                autoFocus
+                                onPressEnter = {this.onPressEnter}
+                                className={`form-control ${alertType}`}
+                                onChange={this.onLabelChange}
+                            > </TextArea>
+                        )}
+                    </Form.Item>
+                    <Form.Item style={{ textAlign: 'center' }}>
+                        <Button type="primary" htmlType="submit">Add Post</Button>
+                    </Form.Item>
+                </Form>
+            </Fragment>
         );
     };
 }
@@ -55,4 +61,4 @@ export default connect(
         state
     }),
     {addTweet}
-)(ItemAddingForm);
+)(Form.create({name: 'addItem'})(ItemAddingForm));

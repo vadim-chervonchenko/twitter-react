@@ -29,9 +29,7 @@ export default createStore(
 		authMiddleware,
 		tweetMiddleware,
 		sagaMiddleware,
-		requestsPromiseMiddleware( {
-			auto: true
-		})
+		requestsPromiseMiddleware()
 	))
 );
 

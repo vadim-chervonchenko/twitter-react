@@ -1,24 +1,20 @@
 import {success} from "redux-saga-requests";
 import {
-	GETALL_REQUEST,
 	ADD_REQUEST,
 	DELETE_REQUEST,
 	UPDATE_REQUEST,
-	SEARCH_QUERY
+    getListTweets
 } from "./TweetActions";
 
-export const tweetMiddleware = ( {getState, dispatch} ) => ( next ) => ( action ) => {
+export const tweetMiddleware = ( {getState, dispatch} ) => ( next ) => async ( action ) => {
 	switch ( action.type ) {
-		case success( GETALL_REQUEST ):
-			break;
 		case success( ADD_REQUEST ):
+        case success( DELETE_REQUEST ):
+        case success( UPDATE_REQUEST ):
+
+            await dispatch(getListTweets());
 			break;
-		case success( DELETE_REQUEST ):
-			break;
-		case success( UPDATE_REQUEST ):
-			break;
-		case success( SEARCH_QUERY ):
-			break;
+
 		default:
 			break;
 	}

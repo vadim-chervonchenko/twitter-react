@@ -14,15 +14,15 @@ export const registerUser = ( {userEmail, lastName, userPassword} ) => {
 	}
 };
 export const LOGIN_REQUEST = 'USERS_LOGIN_REQUEST';
-export const loginUser = ( {userEmail, userPass} ) => {
+export const loginUser = ( {username, password} ) => {
 	return {
 		type: LOGIN_REQUEST,
 		request: {
 			url: 'login/',
 			method: 'post',
 			data: {
-				email: userEmail,
-				password: userPass
+				email: username,
+				password: password
 			}
 		}
 	}
@@ -43,3 +43,22 @@ export const setJwtToken = () => (
 		type: SET_JWT_TOKEN
 	}
 );
+export const FETCH_USER = 'FETCH_USER';
+export const fetchUser = () => {
+    return ({
+        type: FETCH_USER,
+        request: {
+            url: 'user/',
+            method: 'get'
+        },
+        meta: {
+            asPromise: true,
+        }
+    })
+};
+export const APP_INIT = 'APP_INIT'; // get user
+export const appInit = () => {
+    return ({
+        type: APP_INIT
+    })
+};

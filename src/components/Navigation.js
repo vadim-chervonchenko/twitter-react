@@ -11,31 +11,27 @@ import {connect} from 'react-redux';
 import {addTweet} from '../store/tweet/TweetActions.js';
 import {registerUser, loginUser} from '../store/auth/AuthActions.js';
 
-import {TwitterAppWrapper} from '../styles/globals.js';
-
 class Navigation extends Component {
     render() {
         const {loginUser, registerUser, accessToken} = this.props;
 
         return (
             <Router>
-                <TwitterAppWrapper>
-                    <Switch>
-                        <PrivateRoute path={'/'} exact component={Home} user={accessToken}/>
-                        <Route path={'/about'} component={About}/>
-                        <Route path={'/auth'} children={() => {
-                            return <LoginPage user={accessToken} onSubmit={(formData) => {
-                                loginUser(formData)
-                            }}/>
+                <Switch>
+                    <PrivateRoute path={'/'} exact component={Home} user={accessToken}/>
+                    <Route path={'/about'} component={About}/>
+                    <Route path={'/auth'} children={() => {
+                        return <LoginPage user={accessToken} onSubmit={(formData) => {
+                            loginUser(formData)
                         }}/>
-                        <Route path={'/signup'} children={() => {
-                            return <SignUp user={accessToken} onSubmit={(formData) => {
-                                registerUser(formData)
-                            }}/>
+                    }}/>
+                    <Route path={'/signup'} children={() => {
+                        return <SignUp user={accessToken} onSubmit={(formData) => {
+                            registerUser(formData)
                         }}/>
-                        <Route path={'/logout'} component={About}/>
-                    </Switch>
-                </TwitterAppWrapper>
+                    }}/>
+                    <Route path={'/logout'} component={About}/>
+                </Switch>
             </Router>
         );
     };
@@ -43,7 +39,7 @@ class Navigation extends Component {
 
 export default connect(
     state => ({
-        accessToken: state.auth.data.access_token
+        accessToken: state.auth.user.access_token
     }),
     {
         addTweet,

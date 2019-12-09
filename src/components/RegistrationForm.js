@@ -1,54 +1,64 @@
 import React from 'react';
-import {Field} from 'redux-form';
+import 'antd/dist/antd.css';
+import {Form, Input, Button, Icon} from 'antd';
 
-const RegisterForm = ({...props}) => {
-    const {handleSubmit, pristine, submitting} = props;
+const RegisterForm = (props) => {
+    const {handleSubmit} = props;
+    const {getFieldDecorator} = props.form;
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label htmlFor="email">Email address:</label>
-                <div>
-                    <Field
-                        name="userEmail"
-                        component="input"
-                        type="text"
-                        placeholder="First Name"
-                        className="form-control"
-                    />
-                </div>
-            </div>
-            <div className="form-group">
-                <label htmlFor="email">Last Name:</label>
-                <div>
-                    <Field
-                        name="lastName"
-                        component="input"
-                        type="text"
-                        placeholder="Last Name"
-                        className="form-control"
-                    />
-                </div>
-            </div>
-            <div className="form-group">
-                <label htmlFor="pwd">Password:</label>
-                <div>
-                    <Field
-                        name="userPassword"
-                        component="input"
-                        type="Password"
+        <Form
+            onSubmit={handleSubmit}>
+            <Form.Item>
+                {getFieldDecorator('username', {
+                    rules: [{required: true, message: 'Please input your username!'}],
+                })(
+                    <Input
+                        prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                        placeholder="Username"
+                    />,
+                )}
+            </Form.Item>
+            <Form.Item>
+                {getFieldDecorator('password', {
+                    rules: [{required: true, message: 'Please input your Password!'}],
+                })(
+                    <Input
+                        prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                        type="password"
                         placeholder="Password"
-                        className="form-control"
-                    />
-                </div>
-            </div>
-            <button
-                type="submit"
-                disabled={pristine || submitting}
-                className="btn btn-primary mr-2">Submit
-            </button>
-        </form>
+                    />,
+                )}
+            </Form.Item>
+            <Form.Item>
+                {getFieldDecorator('password', {
+                    rules: [{required: true, message: 'Please input your Password!'}],
+                })(
+                    <Input
+                        prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                        type="password"
+                        placeholder="Password"
+                    />,
+                )}
+            </Form.Item>
+            <Form.Item>
+                {getFieldDecorator('password', {
+                    rules: [{required: true, message: 'Please input your Password!'}],
+                })(
+                    <Input
+                        prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                        type="password"
+                        placeholder="Password"
+                    />,
+                )}
+            </Form.Item>
+            <Form.Item style={{textAlign: 'center'}}>
+                <Button type="primary" htmlType="submit">Sign up</Button>
+            </Form.Item>
+        </Form>
     );
 };
 
-export default RegisterForm;
+export default Form.create({
+    name: 'registerForm'
+})(RegisterForm);

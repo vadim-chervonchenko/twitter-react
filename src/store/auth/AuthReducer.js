@@ -1,46 +1,58 @@
 import './AuthActions';
-import {requestsReducer} from 'redux-saga-requests';
+import {success, error} from 'redux-saga-requests';
 import {
 	REGISTER_REQUEST,
 	LOGIN_REQUEST,
 	USER_LOGOUT,
-	SET_JWT_TOKEN
+	SET_JWT_TOKEN,
+    FETCH_USER
 } from './AuthActions';
 
-export const authReducer = requestsReducer( {
-	actionType: LOGIN_REQUEST,
-	onSuccess: ( state, action ) => {
-		localStorage.setItem( 'access_token', action.data.access_token );
+const initialState = {
+    user: {
+        name: '',
+        access_token: ''
+    },
+    pending: false,
+    errors: ''
+};
 
-		return {
-			...state, data: {...action.data}
-		}
-	},
-	multiple: true,
-	mutations: {
-		[REGISTER_REQUEST]: {
-			updateData: ( state, action ) => {
-				localStorage.setItem( 'access_token', action.data.access_token );
-
-				return {
-					...state.data, ...action.data
-				}
-			}
-		},
-		[USER_LOGOUT]: {
-			updateData: ( state ) => {
-				return {
-					...state.data, access_token: ''
-				}
-			}
-		},
-		[SET_JWT_TOKEN]: {
-			updateData: ( state, action ) => {
-				return {
-					...state.data, access_token: action.access_token
-				}
-			},
-			local: true
-		}
-	}
-} );
+export const authReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case REGISTER_REQUEST:
+        case LOGIN_REQUEST:
+            return {
+                ...state,
+                pending: true
+            };
+        case success(REGISTER_REQUEST):
+        case success(LOGIN_REQUEST):
+            localStorage.setItem( 'access_token', action.data.access_token );
+            return {
+                ...state,
+                pending: false,
+                user: {
+                    ...action.data, ...state.user,
+                }
+            };
+        case error(REGISTER_REQUEST):
+        case error(LOGIN_REQUEST):
+            return {
+                errors: 'Something went wrong'
+            };
+        case USER_LOGOUT:
+            return {
+                ...state, user: false
+            };
+        case SET_JWT_TOKEN:
+            return {
+                ...state, user: { ...state.user, access_token: action.access_token }
+            };
+        case success(FETCH_USER):
+            return {
+                ...state, user: { ...action.data }
+            };
+        default:
+            return state;
+    }
+};
