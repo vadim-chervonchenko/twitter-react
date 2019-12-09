@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ItemEditForm from './ItemEditingForm';
 import {connect} from 'react-redux';
 import {TwitterListItemWrap} from '../styles/globals';
-import {delTweet} from "../store/posts/TweetActions";
+import {delTweet} from "../store/tweet/TweetActions";
 import moment from 'moment';
 
 class TweetListItem extends Component {

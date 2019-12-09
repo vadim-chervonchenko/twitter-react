@@ -8,7 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {addTweet} from '../store/posts/TweetActions.js';
+import {addTweet} from '../store/tweet/TweetActions.js';
 import {registerUser, loginUser} from '../store/auth/AuthActions.js';
 
 import {TwitterAppWrapper} from '../styles/globals.js';

@@ -3,7 +3,7 @@ import ItemAddForm from '../ItemAddingForm';
 import TweetList from '../TweetList';
 import SearchPanel from '../SearchPanel';
 import {connect} from 'react-redux';
-import {getListTweets} from '../../store/posts/TweetActions';
+import {getListTweets} from '../../store/tweet/TweetActions';
 import AppHeader from '../Header';
 
 class Home extends Component {

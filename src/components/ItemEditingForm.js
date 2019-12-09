@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { updateTweet } from "../store/posts/TweetActions";
+import { updateTweet } from "../store/tweet/TweetActions";
 
 class ItemEditingForm extends Component {
     state = {

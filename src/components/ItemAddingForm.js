@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import { TwitterAddForm, TwitterAddFormTextarea } from "../styles/globals";
-import {addTweet} from "../store/posts/TweetActions";
+import {addTweet} from "../store/tweet/TweetActions";
 
 class ItemAddingForm extends Component {
 
