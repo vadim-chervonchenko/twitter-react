@@ -1,10 +1,7 @@
 import React, {Fragment} from 'react';
 import AppNavigation from './Navigation.js';
-import {setJwtToken} from "../store/auth/AuthActions";
-import {connect} from "react-redux";
-
-import {Layout, notification} from 'antd';
-const {Content} = Layout;
+import {setJwtToken} from '../store/auth/AuthActions';
+import {connect} from 'react-redux';
 
 class App extends React.Component {
     componentDidMount() {

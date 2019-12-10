@@ -8,7 +8,6 @@ import AppHeader from '../Header';
 import {TwitterAppWrapper} from '../../styles/globals';
 
 class Home extends Component {
-
     componentDidMount() {
         this.props.getListTweets();
     };
@@ -24,6 +23,7 @@ class Home extends Component {
 
     render() {
         const {items, search} = this.props.tweetsData;
+
         return (
             <Fragment>
                 <AppHeader/>

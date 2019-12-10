@@ -1,10 +1,10 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import {Form, Input, Button, Icon} from 'antd';
-import {connect} from "react-redux";
-import {registerUser} from "../store/auth/AuthActions";
+import {connect} from 'react-redux';
+import {registerUser} from '../store/auth/AuthActions';
 
-const RegisterForm = (props) => {
+const RegistrationForm = (props) => {
     const {getFieldDecorator} = props.form;
 
     const onFormSubmit = (e) => {
@@ -58,10 +58,8 @@ const RegisterForm = (props) => {
 };
 
 export default connect(
-    state => ({
-        state
-    }),
+    null,
     {
         registerUser
     }
-)(Form.create({name: 'registerForm'})(RegisterForm));
+)(Form.create({name: 'registerForm'})(RegistrationForm));

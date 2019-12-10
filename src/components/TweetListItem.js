@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import ItemEditForm from './ItemEditingForm';
 import {connect} from 'react-redux';
 import {TwitterListItemWrap} from '../styles/globals';
-import {delTweet} from "../store/tweet/TweetActions";
+import {delTweet} from '../store/tweet/TweetActions';
 import moment from 'moment';
 
 class TweetListItem extends Component {
-
     state = {
         formVisibility: false
     };
@@ -34,19 +33,18 @@ class TweetListItem extends Component {
         return (
             <TwitterListItemWrap className="list-group-item twitter-item" key={id}>
                 <span>{content}</span>
-                {/* current_user === post_creator -> show buttons . I need current_user_session*/}
-                    <button onClick={this.deleteTweet}
-                            className="btn btn-outline-danger btn-sm float-right">
-                        <i className="fa fa-trash-o"></i>
-                    </button>
-                    <button onClick={() => {
-                        this.formVisibility()
-                    }}
-                            className="btn btn-outline-primary btn-sm mr-3 float-right">
-                        <i className="fa fa-edit"></i>
-                    </button>
+                <button onClick={this.deleteTweet}
+                        className="btn btn-outline-danger btn-sm float-right">
+                    <i className="fa fa-trash-o"></i>
+                </button>
+                <button onClick={() => {
+                    this.formVisibility()
+                }}
+                        className="btn btn-outline-primary btn-sm mr-3 float-right">
+                    <i className="fa fa-edit"></i>
+                </button>
                 <div className="pl-3">user : {user.name}</div>
-                <div className="pl-3">create post :  {moment(created_at).fromNow()}</div>
+                <div className="pl-3">create post : {moment(created_at).fromNow()}</div>
                 <div className="pl-3">update post : {moment(updated_at).fromNow()}</div>
                 <ItemEditForm
                     formVisibilityChange={this.formVisibility}
@@ -61,8 +59,6 @@ class TweetListItem extends Component {
 }
 
 export default connect(
-    state => ({
-        state
-    }),
+    null,
     {delTweet}
 )(TweetListItem);

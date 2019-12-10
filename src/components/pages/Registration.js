@@ -1,9 +1,8 @@
 import React, {Fragment} from 'react';
 import {Redirect} from 'react-router-dom';
 import '../RegistrationForm.js';
-import RegisterForm from "../RegistrationForm";
+import RegistrationForm from '../RegistrationForm';
 import AppHeader from '../Header';
-
 import {TwitterAppWrapper} from '../../styles/globals';
 
 const Registration = (props) => {
@@ -12,7 +11,7 @@ const Registration = (props) => {
             {props.user && <Redirect to='/'/>}
             <AppHeader/>
             <TwitterAppWrapper>
-                <RegisterForm/>
+                <RegistrationForm/>
             </TwitterAppWrapper>
         </Fragment>
     );

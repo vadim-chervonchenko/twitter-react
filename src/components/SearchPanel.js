@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
-import {setSearchQuery} from "../store/tweet/TweetActions";
+import {setSearchQuery} from '../store/tweet/TweetActions';
 
 class SearchPanel extends Component {
     render() {
@@ -22,8 +22,6 @@ class SearchPanel extends Component {
 }
 
 export default connect(
-    state => ({
-        state
-    }),
-    { setSearchQuery }
+    null,
+    {setSearchQuery}
 )(SearchPanel);

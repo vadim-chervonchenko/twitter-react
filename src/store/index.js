@@ -1,7 +1,7 @@
 /* reducers */
-import {reducer as formReducer} from "redux-form";
-import {authReducer} from './auth/AuthReducer.js';
-import {tweetReducer} from './tweet/TweetReducer.js';
+import authReducer from './auth/AuthReducer';
+import tweetReducer from './tweet/TweetReducer';
+import errorReducer from './error/ErrorReducer';
 
 /* middleware */
 import {authTokenMiddleware, authMiddleware, axiosInstance} from './auth/AuthMiddleware';
@@ -23,7 +23,7 @@ export default createStore(
 	combineReducers( {
 		auth: authReducer,
 		tweets: tweetReducer,
-		form: formReducer,
+		errors: errorReducer
 	}), composeEnhancers( applyMiddleware(
 		authTokenMiddleware,
 		authMiddleware,

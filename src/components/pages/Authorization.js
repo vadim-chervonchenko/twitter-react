@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom';
 import AppHeader from '../Header';
 import {TwitterAppWrapper} from '../../styles/globals';
 
-const LoginPage = (props) => {
+const Authorization = (props) => {
     return (
         <Fragment>
             {props.user && <Redirect to={'/'}/>}
@@ -16,4 +16,4 @@ const LoginPage = (props) => {
     );
 };
 
-export default LoginPage
+export default Authorization

@@ -1,6 +1,6 @@
 import React from 'react';
 import TwitterListItem from './TweetListItem';
-import { TwitterListWrapper } from '../styles/globals.js';
+import {TwitterListWrapper} from '../styles/globals';
 
 const TweetList = ({filteredTweets}) => {
     return (

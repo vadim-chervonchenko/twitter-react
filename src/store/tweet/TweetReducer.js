@@ -1,21 +1,20 @@
 import './TweetActions';
-import { success, error } from 'redux-saga-requests';
+import {success} from 'redux-saga-requests';
 import {
-	ADD_REQUEST,
-	DELETE_REQUEST,
-	UPDATE_REQUEST,
-	GETALL_REQUEST,
-	SEARCH_QUERY
+    ADD_REQUEST,
+    DELETE_REQUEST,
+    UPDATE_REQUEST,
+    GETALL_REQUEST,
+    SEARCH_QUERY
 } from './TweetActions';
 
 const initialState = {
     items: [],
     search: '',
-    errors: '',
     pending: false
 };
 
-export const tweetReducer = (state = initialState, action) => {
+const Reducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_REQUEST:
         case DELETE_REQUEST:
@@ -24,15 +23,6 @@ export const tweetReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pending: true
-            };
-        case error(ADD_REQUEST):
-        case error(DELETE_REQUEST):
-        case error(UPDATE_REQUEST):
-        case error(GETALL_REQUEST):
-            return {
-                ...state,
-                pending: false,
-                errors: action.errors
             };
         case success(ADD_REQUEST):
             return {
@@ -72,3 +62,5 @@ export const tweetReducer = (state = initialState, action) => {
             return state;
     }
 };
+
+export default Reducer;
