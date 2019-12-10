@@ -10,20 +10,17 @@ import {
     appInit
 } from './AuthActions';
 
-import {SHOW_ERROR_MODAL} from '../error/ErrorActions';
+import {SHOW_ERROR_MODAL} from '../error/ErrorReducer';
 
 export const axiosInstance = axios.create({
     baseURL: '/api/',
 });
 
-export const authTokenMiddleware = ({getState, dispatch}) => (next) => (action) => {
+export const authTokenMiddleware = (store) => (next) => (action) => {
     switch (action.type) {
         case success(REGISTER_REQUEST):
         case success(LOGIN_REQUEST):
             axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${action.data.access_token}`;
-            break;
-        case error(REGISTER_REQUEST):
-        case error(LOGIN_REQUEST):
             break;
         case SET_JWT_TOKEN:
             axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
@@ -35,16 +32,16 @@ export const authTokenMiddleware = ({getState, dispatch}) => (next) => (action) 
     return next(action);
 };
 
-export const authMiddleware = ({getState, dispatch}) => next => async action => {
+export const authMiddleware = (store) => next => async action => {
     switch (action.type) {
         case success(REGISTER_REQUEST):
         case success(LOGIN_REQUEST):
-            /* get user */
-            await dispatch(fetchUser());
+
+            await next(fetchUser());
             break;
         case error(REGISTER_REQUEST):
         case error(LOGIN_REQUEST):
-            dispatch({
+            next({
                 type: SHOW_ERROR_MODAL,
                 payload: {
                     message: action.error.message

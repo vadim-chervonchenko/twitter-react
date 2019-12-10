@@ -1,7 +1,4 @@
-import './ErrorActions';
-import {
-    SHOW_ERROR_MODAL
-} from './ErrorActions';
+export const SHOW_ERROR_MODAL = 'SHOW_ERROR_MODAL';
 
 const initialState = {
     errors: ''

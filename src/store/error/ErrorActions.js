@@ -1,1 +1,1 @@
-export const SHOW_ERROR_MODAL = 'SHOW_ERROR_MODAL';
+

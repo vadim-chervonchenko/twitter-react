@@ -9,25 +9,18 @@ import {
 } from './AuthActions';
 
 const initialState = {
-    user: {},
-    pending: false,
-    errors: ''
+    user: {}
 };
 
 const Reducer = (state = initialState, action) => {
     switch (action.type) {
-        case REGISTER_REQUEST:
-        case LOGIN_REQUEST:
-            return {
-                ...state,
-                pending: true
-            };
         case success(REGISTER_REQUEST):
         case success(LOGIN_REQUEST):
+
             localStorage.setItem('access_token', action.data.access_token);
+
             return {
                 ...state,
-                pending: false,
                 user: {
                     ...action.data, ...state.user,
                 }

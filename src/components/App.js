@@ -4,24 +4,26 @@ import {setJwtToken} from '../store/auth/AuthActions';
 import {connect} from 'react-redux';
 
 class App extends React.Component {
-    componentDidMount() {
-        this.props.setJwtToken();
-    }
+	componentDidMount() {
+		this.props.setJwtToken();
+	}
 
-    render() {
-        return (
-            <Fragment>
-                <AppNavigation/>
-            </Fragment>
-        );
-    };
+	render() {
+		return (
+			<Fragment>
+				<AppNavigation/>
+			</Fragment>
+		);
+	};
 }
 
 export default connect(
-    state => ({
-        state
-    }),
-    {
-        setJwtToken
-    }
-)(App);
+	state => (
+		{
+			state
+		}
+	),
+	{
+		setJwtToken
+	}
+)( App );

@@ -3,16 +3,16 @@ import {Redirect} from 'react-router-dom';
 import '../RegistrationForm.js';
 import RegistrationForm from '../RegistrationForm';
 import AppHeader from '../Header';
-import {TwitterAppWrapper} from '../../styles/globals';
+import {PageContainer} from '../../styles/globals';
 
 const Registration = (props) => {
     return (
         <Fragment>
             {props.user && <Redirect to='/'/>}
             <AppHeader/>
-            <TwitterAppWrapper>
+            <PageContainer>
                 <RegistrationForm/>
-            </TwitterAppWrapper>
+            </PageContainer>
         </Fragment>
     );
 };

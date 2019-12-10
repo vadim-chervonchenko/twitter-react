@@ -10,32 +10,21 @@ import {
 
 const initialState = {
     items: [],
-    search: '',
-    pending: false
+    search: ''
 };
 
 const Reducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_REQUEST:
-        case DELETE_REQUEST:
-        case UPDATE_REQUEST:
-        case GETALL_REQUEST:
-            return {
-                ...state,
-                pending: true
-            };
         case success(ADD_REQUEST):
             return {
                 ...state,
-                items: [...state.items, action.data],
-                pending: false
+                items: [...state.items, action.data]
             };
         case success(DELETE_REQUEST):
             const deleteItemId = state.items.findIndex((item) => item.id === action.meta.id);
             return {
                 ...state,
-                items: [...state.items.slice(0, deleteItemId), ...state.items.slice(deleteItemId + 1)],
-                pending: false
+                items: [...state.items.slice(0, deleteItemId), ...state.items.slice(deleteItemId + 1)]
             };
         case success(UPDATE_REQUEST):
             const updateItemId = state.items.findIndex((item) => item.id === action.meta.id);
@@ -43,20 +32,17 @@ const Reducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)],
-                pending: false
+                items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)]
             };
         case success(GETALL_REQUEST):
             return {
                 ...state,
-                items: action.data,
-                pending: false
+                items: action.data
             };
         case SEARCH_QUERY:
             return {
                 ...state,
-                search: action.meta.searchQuery,
-                pending: false
+                search: action.meta.searchQuery
             };
         default:
             return state;

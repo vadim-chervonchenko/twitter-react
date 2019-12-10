@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const TwitterListWrapper = styled.ul`
     list-style: none;
 `;
-export const TwitterAppWrapper = styled.div`
+export const PageContainer = styled.div`
     margin: 2rem auto 0 auto;
     max-width: 500px;
 `;

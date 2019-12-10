@@ -4,64 +4,63 @@ import {updateTweet} from '../store/tweet/TweetActions';
 import {Button, Input, Form} from 'antd';
 
 class ItemEditingForm extends Component {
-    state = {
-        content: ''
-    };
 
-    onUpdateItem = (e) => {
-        e.preventDefault();
-        const {itemId, formVisibilityChange} = this.props;
+	state = {
+		content: ''
+	};
 
-        this.props.form.validateFields((err) => {
-            if (!err && this.state.content !== "") {
-                this.props.updateTweet(
-                    itemId,
-                    this.state.content
-                );
-            }
-        });
-        formVisibilityChange();
-    };
+	onUpdateItem = ( e ) => {
+		e.preventDefault();
+		const {itemId, formVisibilityChange} = this.props;
 
-    onContentChange = (e) => {
-        this.setState({
-            content: e.target.value
-        });
-    };
+		this.props.form.validateFields( ( err ) => {
+			if ( !err && this.state.content !== "" ) {
+				this.props.updateTweet(
+					itemId,
+					this.state.content
+				);
+			}
+		} );
+		formVisibilityChange();
+	};
 
-    render() {
-        const {formVisibilityToggle} = this.props;
-        const formStyle = formVisibilityToggle ? '' : 'd-none';
-        const {getFieldDecorator} = this.props.form;
+	onContentChange = ( e ) => {
+		this.setState( {
+			content: e.target.value
+		} );
+	};
 
-        return (
-            <Fragment>
-                <Form className={`pt-3 ${formStyle}`}
-                      onSubmit={this.onUpdateItem}>
-                    <Form.Item>
-                        {getFieldDecorator('content', {
-                            rules: [{required: true, message: 'Please input post content', whitespace: true, min: 1}],
-                            initialValue: ''
-                        })(
-                            <Input
-                                onChange={this.onContentChange}
-                                placeholder="Please edit your tweet"
-                                className="form-control mb-3"
-                                autoFocus
-                                onPressEnter={this.onPressEnter}
-                            />
-                        )}
-                    </Form.Item>
-                    <Form.Item style={{textAlign: 'center'}}>
-                        <Button type="primary" htmlType="submit">Edit tweet</Button>
-                    </Form.Item>
-                </Form>
-            </Fragment>
-        );
-    };
+	render() {
+		const {formVisibilityToggle} = this.props;
+		const formStyle = formVisibilityToggle ? '' : 'd-none';
+		const {getFieldDecorator} = this.props.form;
+
+		return (
+			<Form className={`pt-3 ${formStyle}`}
+			      onSubmit={this.onUpdateItem}>
+				<Form.Item>
+					{getFieldDecorator( 'content', {
+						rules: [{required: true, message: 'Please input post content', whitespace: true, min: 1}],
+						initialValue: ''
+					} )(
+						<Input
+							onChange={this.onContentChange}
+							placeholder="Please edit your tweet"
+							className="form-control mb-3"
+							autoFocus
+							onPressEnter={this.onPressEnter}
+						/>
+					)}
+				</Form.Item>
+				<Form.Item style={{textAlign: 'center'}}>
+					<Button type="primary" htmlType="submit">Edit tweet</Button>
+				</Form.Item>
+			</Form>
+		);
+	};
 }
 
 export default connect(
-    null,
-    {updateTweet}
-)(Form.create({name: 'editForm'})(ItemEditingForm));
+	null,
+	{updateTweet}
+)( Form.create( {name: 'editForm'} )( ItemEditingForm ) );

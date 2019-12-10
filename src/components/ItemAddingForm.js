@@ -4,69 +4,59 @@ import 'antd/dist/antd.css';
 import {Form, Input, Button} from 'antd';
 import {addTweet} from '../store/tweet/TweetActions';
 
-// autoComplete text area
-import AutocompleteTextField from "./AutoComplite";
-
-
 class ItemAddingForm extends Component {
-    onLabelChange = (e) => {
-        this.setState({
-            content: e.target.value
-        });
-    };
 
-    handleSubmit = (e) => {
-        e.preventDefault();
+	onLabelChange = ( e ) => {
+		this.setState( {
+			content: e.target.value
+		} );
+	};
 
-        this.props.form.validateFields((err) => {
-            if (!err && this.state.content !== "") {
-                this.props.addTweet(this.state.content);
-            }
-        });
-        this.props.form.resetFields();
-    };
+	handleSubmit = ( e ) => {
+		e.preventDefault();
 
-    onPressEnter = (e) => {
-        console.log(e);
-    };
+		this.props.form.validateFields( ( err ) => {
+			if ( !err && this.state.content !== "" ) {
+				this.props.addTweet( this.state.content );
+			}
+		} );
+		this.props.form.resetFields();
+	};
 
-    render() {
-        const {TextArea} = Input;
-        const {getFieldDecorator} = this.props.form;
+	onPressEnter = ( e ) => {
+		/* спиздить у брата */
+	};
 
-        return (
-            <Fragment>
-                <Form
-                    onSubmit={this.handleSubmit}>
-                    <Form.Item>
-                        {getFieldDecorator('content', {
-                            rules: [{required: true, message: 'Please input post content', whitespace: true, min: 1}],
-                            initialValue: ''
-                        })(
-                            <TextArea
-                                autoSize={{minRows: 4, maxRows: 10}}
-                                placeholder="Put your text here"
-                                autoFocus
-                                onPressEnter={this.onPressEnter}
-                                onChange={this.onLabelChange}
-                            > </TextArea>
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        <AutocompleteTextField options={["stats", "dima", "misha", "vadim"]} trigger="#" />
-                    </Form.Item>
-                    <Form.Item style={{textAlign: 'center'}}>
-                        <Button type="primary" htmlType="submit">Add Post</Button>
-                    </Form.Item>
-                </Form>
-            </Fragment>
-        );
-    };
+	render() {
+		const {TextArea} = Input;
+		const {getFieldDecorator} = this.props.form;
+
+		return (
+			<Form
+				onSubmit={this.handleSubmit}>
+				<Form.Item>
+					{getFieldDecorator( 'content', {
+						rules: [{required: true, message: 'Please input post content', whitespace: true, min: 1}],
+						initialValue: ''
+					} )(
+						<TextArea
+							autoSize={{minRows: 4, maxRows: 10}}
+							placeholder="Put your text here"
+							autoFocus
+							onPressEnter={this.onPressEnter}
+							onChange={this.onLabelChange}
+						> </TextArea>
+					)}
+				</Form.Item>
+				<Form.Item style={{textAlign: 'center'}}>
+					<Button type="primary" htmlType="submit">Add Post</Button>
+				</Form.Item>
+			</Form>
+		);
+	};
 }
 
 export default connect(
-    state => ({
-        state
-    }),
-    {addTweet}
-)(Form.create({name: 'addItem'})(ItemAddingForm));
+	null,
+	{addTweet}
+)( Form.create( {name: 'addPost'} )( ItemAddingForm ) );

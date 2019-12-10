@@ -56,7 +56,7 @@ export const fetchUser = () => {
         }
     })
 };
-export const APP_INIT = 'APP_INIT'; // get user
+export const APP_INIT = 'APP_INIT';
 export const appInit = () => {
     return ({
         type: APP_INIT
