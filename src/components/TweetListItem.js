@@ -47,7 +47,7 @@ class TweetListItem extends Component {
                 <div className="pl-3">create post : {moment(created_at).fromNow()}</div>
                 <div className="pl-3">update post : {moment(updated_at).fromNow()}</div>
                 <ItemEditForm
-                    formVisibilityChange={this.formVisibility}
+                    formVisibilityChange={this.toggleFormVisibility}
                     formVisibilityToggle={this.state.formVisibility}
                     onUpdateItem={this.onUpdateItem}
                     editLabel={content}
