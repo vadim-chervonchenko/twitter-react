@@ -18,7 +18,7 @@ const Reducer = (state = initialState, action) => {
         case success(ADD_REQUEST):
             return {
                 ...state,
-                items: [...state.items, action.data]
+                items: [...state.items, action.payload.data]
             };
         case success(DELETE_REQUEST):
             const deleteItemId = state.items.findIndex((item) => item.id === action.meta.id);
@@ -28,7 +28,7 @@ const Reducer = (state = initialState, action) => {
             };
         case success(UPDATE_REQUEST):
             const updateItemId = state.items.findIndex((item) => item.id === action.meta.id);
-            const item = {...state.items[updateItemId], content: action.data.content};
+            const item = {...state.items[updateItemId], content: action.payload.data.content};
 
             return {
                 ...state,
@@ -37,12 +37,12 @@ const Reducer = (state = initialState, action) => {
         case success(GETALL_REQUEST):
             return {
                 ...state,
-                items: action.data
+                items: action.payload.data
             };
         case SEARCH_QUERY:
             return {
                 ...state,
-                search: action.meta.searchQuery
+                search: action.payload.searchQuery
             };
         default:
             return state;

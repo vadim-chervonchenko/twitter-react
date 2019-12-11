@@ -1,62 +1,59 @@
-import React, {Component, Fragment} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import 'antd/dist/antd.css';
 import {Form, Input, Button} from 'antd';
 import {addTweet} from '../store/tweet/TweetActions';
 
-class ItemAddingForm extends Component {
+const ItemAddingForm = (props) => {
 
-	onLabelChange = ( e ) => {
-		this.setState( {
-			content: e.target.value
-		} );
-	};
+    const {TextArea} = Input;
+    const {getFieldDecorator} = props.form;
 
-	handleSubmit = ( e ) => {
-		e.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        props.form.validateFields((err, values) => {
+            if (!err) {
+                props.addTweet(values.content);
+            }
+        });
+        props.form.resetFields();
+    };
 
-		this.props.form.validateFields( ( err ) => {
-			if ( !err && this.state.content !== "" ) {
-				this.props.addTweet( this.state.content );
-			}
-		} );
-		this.props.form.resetFields();
-	};
+    const onPressEnter = (e) => {
+        if (e.ctrlKey || e.metaKey) {
+            const value = props.form.getFieldValue('content');
+            props.form.setFieldsValue({
+                content: value + '\n',
+            });
+        } else {
+            handleSubmit(e);
+        }
+    };
 
-	onPressEnter = ( e ) => {
-		/* спиздить у брата */
-	};
-
-	render() {
-		const {TextArea} = Input;
-		const {getFieldDecorator} = this.props.form;
-
-		return (
-			<Form
-				onSubmit={this.handleSubmit}>
-				<Form.Item>
-					{getFieldDecorator( 'content', {
-						rules: [{required: true, message: 'Please input post content', whitespace: true, min: 1}],
-						initialValue: ''
-					} )(
-						<TextArea
-							autoSize={{minRows: 4, maxRows: 10}}
-							placeholder="Put your text here"
-							autoFocus
-							onPressEnter={this.onPressEnter}
-							onChange={this.onLabelChange}
-						> </TextArea>
-					)}
-				</Form.Item>
-				<Form.Item style={{textAlign: 'center'}}>
-					<Button type="primary" htmlType="submit">Add Post</Button>
-				</Form.Item>
-			</Form>
-		);
-	};
-}
+    return (
+        <Form
+            onSubmit={handleSubmit}>
+            <Form.Item>
+                {getFieldDecorator('content', {
+                    rules: [{required: true, message: 'Please input post content', whitespace: true, min: 1}],
+                    initialValue: ''
+                })(
+                    <TextArea
+                        autoSize={{minRows: 4, maxRows: 10}}
+                        placeholder="Put your text here"
+                        autoFocus
+                        onPressEnter={onPressEnter}
+                    > </TextArea>
+                )}
+            </Form.Item>
+            <Form.Item style={{textAlign: 'center'}}>
+                <Button type="primary" htmlType="submit">Add Post</Button>
+            </Form.Item>
+        </Form>
+    );
+};
 
 export default connect(
-	null,
-	{addTweet}
-)( Form.create( {name: 'addPost'} )( ItemAddingForm ) );
+    null,
+    {addTweet}
+)(Form.create({name: 'addPost'})(ItemAddingForm));

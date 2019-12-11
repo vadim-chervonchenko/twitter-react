@@ -10,7 +10,9 @@ const RegistrationForm = (props) => {
     const onFormSubmit = (e) => {
         e.preventDefault();
         props.form.validateFieldsAndScroll((err, values) => {
-            props.registerUser(values);
+            if (!err) {
+                props.registerUser(values);
+            }
         });
     };
 

@@ -1,4 +1,5 @@
 import {success, error} from "redux-saga-requests";
+import {SHOW_ERROR_MODAL} from '../error/ErrorReducer';
 import {
     ADD_REQUEST,
     DELETE_REQUEST,
@@ -6,7 +7,6 @@ import {
     GETALL_REQUEST,
     getListTweets
 } from './TweetActions';
-import {SHOW_ERROR_MODAL} from '../error/ErrorReducer';
 
 export const tweetMiddleware = (store) => (next) => async (action) => {
     switch (action.type) {

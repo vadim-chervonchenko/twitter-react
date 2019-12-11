@@ -8,7 +8,7 @@ const Reducer = (state = initialState, action) => {
     switch (action.type) {
         case SHOW_ERROR_MODAL:
             return {
-                ...state, errors: Math.random() /*action.payload.message*/
+                ...state, errors: Math.random()
             };
         default:
             return state;

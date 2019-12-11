@@ -4,39 +4,38 @@ import {success, error} from 'redux-saga-requests';
 import {
     REGISTER_REQUEST,
     LOGIN_REQUEST,
-    SET_JWT_TOKEN,
+    SET_AUTH_HEADER,
+    DELETE_AUTH_HEADER,
     fetchUser,
-    APP_INIT,
-    appInit
+    setAuthHeader
 } from './AuthActions';
-
 import {SHOW_ERROR_MODAL} from '../error/ErrorReducer';
 
 export const axiosInstance = axios.create({
     baseURL: '/api/',
 });
 
-export const authTokenMiddleware = (store) => (next) => (action) => {
+export const setAxiosDefaults = (store) => (next) => (action) => {
     switch (action.type) {
-        case success(REGISTER_REQUEST):
-        case success(LOGIN_REQUEST):
-            axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${action.data.access_token}`;
+        case SET_AUTH_HEADER:
+            axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${action.payload}`;
             break;
-        case SET_JWT_TOKEN:
-            axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-            action.access_token = localStorage.getItem('access_token');
+        case DELETE_AUTH_HEADER:
+            delete axiosInstance.defaults.headers.common['Authorization'];
             break;
         default:
+            axiosInstance.defaults.baseURL = 'http://127.0.0.1:8000/api/';
             break;
     }
-    return next(action);
+    return next(action)
 };
 
 export const authMiddleware = (store) => next => async action => {
     switch (action.type) {
         case success(REGISTER_REQUEST):
         case success(LOGIN_REQUEST):
-
+            localStorage.setItem('access_token', action.payload.data.access_token);
+            next(setAuthHeader(action.payload.data.access_token));
             await next(fetchUser());
             break;
         case error(REGISTER_REQUEST):

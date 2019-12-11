@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
 import {TwitterAppNavBar, TwitterAppNavBarItem} from '../styles/globals';
 import {connect} from 'react-redux';
@@ -18,7 +18,6 @@ class Header extends Component {
 		}
 	};
 
-	/*  от этого нужно избавиться + с ошибками решить вопрос */
 	logout = () => {
 		localStorage.clear();
 		this.props.logOut();
