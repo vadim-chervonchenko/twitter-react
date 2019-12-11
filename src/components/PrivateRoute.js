@@ -1,6 +1,8 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 
+//  тут за глаза будет , если просто разберусь.
+
 const PrivateRoute = ( {component: Component, ...rest} ) => (
 	<Route {...rest} render={props => (
 		rest.user

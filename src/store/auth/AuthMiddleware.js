@@ -15,6 +15,7 @@ export const axiosInstance = axios.create({
     baseURL: '/api/',
 });
 
+/* стоит ли выносить отдельно , пока не понятно */
 export const setAxiosDefaults = (store) => (next) => (action) => {
     switch (action.type) {
         case SET_AUTH_HEADER:
@@ -24,7 +25,7 @@ export const setAxiosDefaults = (store) => (next) => (action) => {
             delete axiosInstance.defaults.headers.common['Authorization'];
             break;
         default:
-            axiosInstance.defaults.baseURL = 'http://127.0.0.1:8000/api/';
+            axiosInstance.defaults.baseURL = 'http://127.0.0.1:8000/api/'; /* вынести в отдельный конфиг */
             break;
     }
     return next(action)
@@ -32,6 +33,8 @@ export const setAxiosDefaults = (store) => (next) => (action) => {
 
 export const authMiddleware = (store) => next => async action => {
     switch (action.type) {
+
+        /* экшны конечно по дерьмовому называются */
         case success(REGISTER_REQUEST):
         case success(LOGIN_REQUEST):
             localStorage.setItem('access_token', action.payload.data.access_token);

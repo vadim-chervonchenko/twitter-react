@@ -6,6 +6,9 @@ import {delTweet} from '../store/tweet/TweetActions';
 import moment from 'moment';
 
 class TweetListItem extends Component {
+
+
+    /* тут печаль беда с названиями переменных и прочей лобудой, не совсем понятно зачем эти функции и че они делают и логика стэйта непонятная */
     state = {
         formVisibility: false
     };
@@ -16,6 +19,7 @@ class TweetListItem extends Component {
         });
     };
 
+    /* эта логика меня немного напрягает */
     onUpdateItem = (content) => {
         this.props.onUpdateItem(content);
         this.setState({
@@ -23,6 +27,7 @@ class TweetListItem extends Component {
         });
     };
 
+    /* это тут нужно или нет , непонятно , можно сразу напрямую запилить и вызывать через стрелку */
     deleteTweet = () => {
         this.props.delTweet(this.props.id)
     };
@@ -31,6 +36,8 @@ class TweetListItem extends Component {
         const {content, id, user, created_at, updated_at} = this.props;
 
         return (
+
+            /* название этой обертки, просто бесит */
             <TwitterListItemWrap className="list-group-item twitter-item" key={id}>
                 <span>{content}</span>
                 <button onClick={this.deleteTweet}
@@ -47,6 +54,8 @@ class TweetListItem extends Component {
                 <div className="pl-3">create post : {moment(created_at).fromNow()}</div>
                 <div className="pl-3">update post : {moment(updated_at).fromNow()}</div>
                 <ItemEditForm
+
+                    {/* параметры по ебанатски называются, нужно чет более или менее понятно использовать */}
                     formVisibilityChange={this.toggleFormVisibility}
                     formVisibilityToggle={this.state.formVisibility}
                     onUpdateItem={this.onUpdateItem}
@@ -58,7 +67,4 @@ class TweetListItem extends Component {
     };
 }
 
-export default connect(
-    null,
-    {delTweet}
-)(TweetListItem);
+export default connect(null, {delTweet})(TweetListItem);

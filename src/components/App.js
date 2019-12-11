@@ -3,6 +3,7 @@ import Navigation from './Navigation.js';
 import {appInit} from '../store/auth/AuthActions';
 import {connect} from 'react-redux';
 
+
 class App extends React.Component {
     componentDidMount() {
         this.props.appInit();
@@ -15,13 +16,4 @@ class App extends React.Component {
     };
 }
 
-export default connect(
-    state => (
-        {
-            state
-        }
-    ),
-    {
-        appInit
-    }
-)(App);
+export default connect( null, { appInit } )(App);

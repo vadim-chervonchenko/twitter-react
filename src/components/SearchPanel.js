@@ -21,7 +21,4 @@ class SearchPanel extends Component {
 	}
 }
 
-export default connect(
-	null,
-	{setSearchQuery}
-)( SearchPanel );
+export default connect(null, {setSearchQuery})( SearchPanel );

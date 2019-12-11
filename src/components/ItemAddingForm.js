@@ -6,9 +6,8 @@ import {addTweet} from '../store/tweet/TweetActions';
 
 const ItemAddingForm = (props) => {
 
-    const {TextArea} = Input;
-    const {getFieldDecorator} = props.form;
 
+    /* обработчики для форм лучше вынести в отдельный файл и назвать их утилитами какими-то, а то чет они мне глаза мазолят */
     const handleSubmit = (e) => {
         e.preventDefault();
         props.form.validateFields((err, values) => {
@@ -30,6 +29,9 @@ const ItemAddingForm = (props) => {
         }
     };
 
+    const {TextArea} = Input;
+    const {getFieldDecorator} = props.form;
+
     return (
         <Form
             onSubmit={handleSubmit}>
@@ -44,6 +46,8 @@ const ItemAddingForm = (props) => {
                         autoFocus
                         onPressEnter={onPressEnter}
                     > </TextArea>
+
+                    /* тут как раз и будет размещать весь блок с автокомплитом, нужно подумать как это лучше сделать */
                 )}
             </Form.Item>
             <Form.Item style={{textAlign: 'center'}}>
@@ -53,7 +57,4 @@ const ItemAddingForm = (props) => {
     );
 };
 
-export default connect(
-    null,
-    {addTweet}
-)(Form.create({name: 'addPost'})(ItemAddingForm));
+export default connect( null, {addTweet} )( Form.create({name: 'addPost'} )(ItemAddingForm)); // длинная хуйня , может разобраться как лучше сократить и как лучше это сделать.

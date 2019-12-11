@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 const LoginForm = (props) => {
     const {getFieldDecorator} = props.form;
 
+    /* обработчики для форм лучше вынести в отдельный файл и назвать их утилитами какими-то, а то чет они мне глаза мазолят */
     const onFormSubmit = (e) => {
         e.preventDefault();
 
@@ -52,9 +53,4 @@ const LoginForm = (props) => {
     );
 };
 
-export default connect(
-    null,
-    {
-        loginUser
-    }
-)(Form.create({name: 'loginForm'})(LoginForm));
+export default connect(null, {loginUser})(Form.create({name: 'loginForm'})(LoginForm)); /* тоже переделать ,по возможности */

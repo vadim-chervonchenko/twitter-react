@@ -13,6 +13,8 @@ import createSagaMiddleware from 'redux-saga';
 import {requestsPromiseMiddleware} from 'redux-saga-requests';
 import {rootSaga} from './RootSaga.js';
 
+/* import-ы лучше будет разбить на отдельные группы */
+
 const sagaMiddleware = createSagaMiddleware();
 
 /* debug settings */
@@ -22,10 +24,14 @@ const composeEnhancers = (
 
 export default createStore(
     combineReducers({
+
         auth: authReducer,
-        tweets: tweetReducer,
+        tweets: tweetReducer, /* твиты все таки оставим твитами, не будем переделывать на посты. */
         errors: errorReducer
+
     }), composeEnhancers(applyMiddleware(
+
+        /* разобрарться с очередностью мидлваров, они следуют друг за другом , как в этом списке */
         thunkMiddleware,
         authMiddleware,
         setAxiosDefaults,
@@ -35,4 +41,4 @@ export default createStore(
     ))
 );
 
-sagaMiddleware.run(rootSaga, axiosInstance);
+sagaMiddleware.run(rootSaga, axiosInstance); // тут будем использовать обычный axios , по крайней мере пока.

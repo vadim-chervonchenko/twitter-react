@@ -9,9 +9,19 @@ import {
 } from './AuthActions';
 
 const initialState = {
+    isAuthorized: false, // это будем включать только , если пользователь авторизирован.
     user: {}
 };
 
+
+
+/* пересмотреть значение и initialState null == {} или initialState , разобраться , зачем вообще токен в state, а то как то не понятно на первый взгляд, че где и как.
+*
+* тем самым получиться сократить редьюсер и часть логики с фронта уберется. Разобраться как скрывать с фронта какой то контент, при помощи флагов авторизации
+*  с app_init немного не понятно , нужен ли он и куда лучше его запердолить.
+*
+*  Доработать initialState.
+* */
 const Reducer = (state = initialState, action) => {
     switch (action.type) {
         case success(REGISTER_REQUEST):

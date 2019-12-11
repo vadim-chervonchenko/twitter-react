@@ -17,7 +17,7 @@ export const addTweet = (content) => (
             request: {
                 url: 'tweets/',
                 method: 'post',
-                data: {
+                data: {  // тут лучше дату или что то другое
                     content
                 }
             }
@@ -58,7 +58,7 @@ export const updateTweet = (id, content) => (
                 }
             }
         },
-        meta: {
+        meta: { /* мету , нужно ли так передавать или нет, не понятно и что лучше передавать сюда , а что лучше в payload */
             id
         }
     }

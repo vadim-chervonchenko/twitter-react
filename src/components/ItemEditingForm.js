@@ -5,10 +5,12 @@ import {Button, Input, Form} from 'antd';
 
 const ItemEditingForm = (props) => {
 
+    /* скрытие формы лучше переделать и сделать более или менее интересно, а то пока не понятно как лучше. */
     const {formVisibilityToggle} = props;
     const formStyle = formVisibilityToggle ? '' : 'd-none';
     const {getFieldDecorator} = props.form;
 
+    /* обработчики для форм лучше вынести в отдельный файл и назвать их утилитами какими-то, а то чет они мне глаза мазолят */
     const onPressEnter = (e) => {
         if (e.ctrlKey || e.metaKey) {
             const value = props.form.getFieldValue('content');
@@ -20,6 +22,7 @@ const ItemEditingForm = (props) => {
         }
     };
 
+    /* в итоге получилась сложная хуйня переделать */
     const onUpdateItem = (e) => {
         e.preventDefault();
         const {itemId, formVisibilityChange} = props;
@@ -58,7 +61,4 @@ const ItemEditingForm = (props) => {
     );
 };
 
-export default connect(
-    null,
-    {updateTweet}
-)(Form.create({name: 'editForm'})(ItemEditingForm));
+export default connect(null, {updateTweet})(Form.create({name: 'editForm'})(ItemEditingForm)); // длинная хуйня, нужно переделать.

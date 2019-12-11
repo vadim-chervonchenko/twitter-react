@@ -8,11 +8,13 @@ import {
     SEARCH_QUERY
 } from './TweetActions';
 
+/* переделать  initialState и добавить флаги по необходимости */
 const initialState = {
     items: [],
     search: ''
 };
 
+/* переделать по образу и подобию редьюсера авторизации */
 const Reducer = (state = initialState, action) => {
     switch (action.type) {
         case success(ADD_REQUEST):

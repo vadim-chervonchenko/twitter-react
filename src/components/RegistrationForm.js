@@ -1,12 +1,15 @@
 import React from 'react';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.css'; /* стили ант дизайна , где лучше подключать, а то не понятно */
 import {Form, Input, Button, Icon} from 'antd';
 import {connect} from 'react-redux';
 import {registerUser} from '../store/auth/AuthActions';
 
 const RegistrationForm = (props) => {
+
     const {getFieldDecorator} = props.form;
 
+
+    /* обработчики для форм лучше вынести в отдельный файл и назвать их утилитами какими-то, а то чет они мне глаза мазолят */
     const onFormSubmit = (e) => {
         e.preventDefault();
         props.form.validateFieldsAndScroll((err, values) => {
@@ -59,9 +62,4 @@ const RegistrationForm = (props) => {
     );
 };
 
-export default connect(
-    null,
-    {
-        registerUser
-    }
-)(Form.create({name: 'registerForm'})(RegistrationForm));
+export default connect(null, {registerUser})(Form.create({name: 'registerForm'})(RegistrationForm)); /* переделать чутка */

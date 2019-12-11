@@ -6,10 +6,13 @@ import {logOut} from '../store/auth/AuthActions';
 import {notification} from 'antd';
 
 class Header extends Component {
+
+    /* тут тоже не могу понять так ли это делается или нет, нужно выяснить и как лучше обработать ошибки */
 	componentDidUpdate( prevProps, prevState, snapshot ) {
 		this.showErrors();
 	}
 
+	/* мне не знавиться как организованы ошибки, нужно разобраться как сделать лучше и доделать, а то пока не понятно */
 	showErrors = () => {
 		if ( this.props.notification !== '' ) {
 			notification.error( {
@@ -18,14 +21,16 @@ class Header extends Component {
 		}
 	};
 
+	/* это тоже нужно убрнать или разнести по отдельным функциям */
 	logout = () => {
 		localStorage.clear();
 		this.props.logOut();
 	};
 
 	render() {
-		const user = this.props.accessToken;
+		const user = this.props.accessToken; // переделать под isAuthorized
 
+        /* разобраться, как правильно скрывать компоненты на странице, при условии, что отдельные флаги скрыты */
 		return (
 			<div className="bg-light">
 				<div className="container">
@@ -75,12 +80,11 @@ class Header extends Component {
 	};
 }
 
-export default connect(
-	state => (
-		{
-			accessToken: state.auth.user.access_token,
-			notification: state.errors.errors
-		}
-	),
-	{logOut}
-)( Header );
+const mapStateToProps = (state) => {
+    return {
+        accessToken: state.auth.user.access_token,
+        notification: state.errors.errors
+    }
+};
+
+export default connect(mapStateToProps, {logOut})( Header );
