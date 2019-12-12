@@ -1,36 +1,27 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
-import {TwitterAppNavBar, TwitterAppNavBarItem} from '../styles/globals';
+import {AppNavBar, AppNavBarItem} from '../styles/globals';
 import {connect} from 'react-redux';
-import {logOut} from '../store/auth/AuthActions';
+import {logOut} from '../store/auth/authActions';
 import {notification} from 'antd';
 
 class Header extends Component {
-
-    /* тут тоже не могу понять так ли это делается или нет, нужно выяснить и как лучше обработать ошибки */
+    /* мне не знавиться как организованы ошибки, нужно разобраться как сделать лучше и доделать, а то пока не понятно */
 	componentDidUpdate( prevProps, prevState, snapshot ) {
 		this.showErrors();
 	}
 
-	/* мне не знавиться как организованы ошибки, нужно разобраться как сделать лучше и доделать, а то пока не понятно */
 	showErrors = () => {
 		if ( this.props.notification !== '' ) {
-			notification.error( {
+			notification.error({
 				message: this.props.notification
-			} );
+			});
 		}
 	};
 
-	/* это тоже нужно убрнать или разнести по отдельным функциям */
-	logout = () => {
-		localStorage.clear();
-		this.props.logOut();
-	};
-
 	render() {
-		const user = this.props.accessToken; // переделать под isAuthorized
+		const {isAuthorized, logOut} = this.props;
 
-        /* разобраться, как правильно скрывать компоненты на странице, при условии, что отдельные флаги скрыты */
 		return (
 			<div className="bg-light">
 				<div className="container">
@@ -41,38 +32,36 @@ class Header extends Component {
 							     alt=""/>
 							Tweeter react app
 						</a>
-						<TwitterAppNavBar className="navbar-nav">
-							{user && <TwitterAppNavBarItem className="nav-item">
+						<AppNavBar className="navbar-nav">
+							{isAuthorized && <AppNavBarItem className="nav-item">
 								<NavLink
 									className="nav-link"
 									to="/"
 									exact
 								>Home</NavLink>
-							</TwitterAppNavBarItem>}
-							<TwitterAppNavBarItem className="nav-item">
+							</AppNavBarItem>}
+							<AppNavBarItem className="nav-item">
 								<NavLink
 									className="nav-link"
 									to="/about"
 								>About</NavLink>
-							</TwitterAppNavBarItem>
-							{!user ?
-								<TwitterAppNavBarItem className="nav-item">
+							</AppNavBarItem>
+							{! isAuthorized ?
+								<AppNavBarItem className="nav-item">
 									<NavLink
 										className="nav-link"
-										to="/auth"
+										to="/login"
 									>Log in</NavLink>
-								</TwitterAppNavBarItem> :
-								<TwitterAppNavBarItem className="nav-item">
+								</AppNavBarItem> :
+								<AppNavBarItem className="nav-item">
 									<NavLink
 										className="nav-link"
 										to="/logout"
-										onClick={() => {
-											this.logout()
-										}}
+										onClick={() => { logOut() }}
 									>Log out</NavLink>
-								</TwitterAppNavBarItem>
+								</AppNavBarItem>
 							}
-						</TwitterAppNavBar>
+						</AppNavBar>
 					</nav>
 				</div>
 			</div>
@@ -82,7 +71,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        accessToken: state.auth.user.access_token,
+        isAuthorized: state.auth.isAuthorized,
         notification: state.errors.errors
     }
 };

@@ -1,7 +1,7 @@
-export const GETALL_REQUEST = 'TWEET_GETALL_REQUEST';
+export const GETALL_TWEETS = 'GETALL_TWEETS';
 export const getListTweets = () => {
     return {
-        type: GETALL_REQUEST,
+        type: GETALL_TWEETS,
         payload: {
             request: {
                 url: 'tweets/'
@@ -9,15 +9,15 @@ export const getListTweets = () => {
         }
     }
 };
-export const ADD_REQUEST = 'TWEET_ADD_REQUEST';
+export const ADD_TWEET = 'ADD_TWEET';
 export const addTweet = (content) => (
     {
-        type: ADD_REQUEST,
+        type: ADD_TWEET,
         payload: {
             request: {
                 url: 'tweets/',
                 method: 'post',
-                data: {  // тут лучше дату или что то другое
+                data: {
                     content
                 }
             }
@@ -27,10 +27,10 @@ export const addTweet = (content) => (
         }
     }
 );
-export const DELETE_REQUEST = 'TWEET_DELETE_REQUEST';
+export const DELETE_TWEET = 'DELETE_TWEET';
 export const delTweet = (id) => (
     {
-        type: DELETE_REQUEST,
+        type: DELETE_TWEET,
         payload: {
             request: {
                 url: `tweets/${id}`,
@@ -45,10 +45,10 @@ export const delTweet = (id) => (
         }
     }
 );
-export const UPDATE_REQUEST = 'TWEET_UPDATE_REQUEST';
+export const UPDATE_TWEET = 'UPDATE_TWEET';
 export const updateTweet = (id, content) => (
     {
-        type: UPDATE_REQUEST,
+        type: UPDATE_TWEET,
         payload: {
             request: {
                 url: `tweets/${id}`,
@@ -58,15 +58,15 @@ export const updateTweet = (id, content) => (
                 }
             }
         },
-        meta: { /* мету , нужно ли так передавать или нет, не понятно и что лучше передавать сюда , а что лучше в payload */
+        meta: {
             id
         }
     }
 );
-export const SEARCH_QUERY = 'SET_SEARCH_QUERY';
+export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY';
 export const setSearchQuery = (searchQuery) => (
     {
-        type: SEARCH_QUERY,
+        type: SET_SEARCH_QUERY,
         payload: {
             searchQuery
         }

@@ -1,34 +1,32 @@
-import './TweetActions';
+import './tweetActions';
 import {success} from 'redux-saga-requests';
 import {
-    ADD_REQUEST,
-    DELETE_REQUEST,
-    UPDATE_REQUEST,
-    GETALL_REQUEST,
-    SEARCH_QUERY
-} from './TweetActions';
+    ADD_TWEET,
+    DELETE_TWEET,
+    UPDATE_TWEET,
+    GETALL_TWEETS,
+    SET_SEARCH_QUERY
+} from './tweetActions';
 
-/* переделать  initialState и добавить флаги по необходимости */
 const initialState = {
     items: [],
     search: ''
 };
 
-/* переделать по образу и подобию редьюсера авторизации */
-const Reducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
-        case success(ADD_REQUEST):
+        case success(ADD_TWEET):
             return {
                 ...state,
                 items: [...state.items, action.payload.data]
             };
-        case success(DELETE_REQUEST):
+        case success(DELETE_TWEET):
             const deleteItemId = state.items.findIndex((item) => item.id === action.meta.id);
             return {
                 ...state,
                 items: [...state.items.slice(0, deleteItemId), ...state.items.slice(deleteItemId + 1)]
             };
-        case success(UPDATE_REQUEST):
+        case success(UPDATE_TWEET):
             const updateItemId = state.items.findIndex((item) => item.id === action.meta.id);
             const item = {...state.items[updateItemId], content: action.payload.data.content};
 
@@ -36,12 +34,12 @@ const Reducer = (state = initialState, action) => {
                 ...state,
                 items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)]
             };
-        case success(GETALL_REQUEST):
+        case success(GETALL_TWEETS):
             return {
                 ...state,
                 items: action.payload.data
             };
-        case SEARCH_QUERY:
+        case SET_SEARCH_QUERY:
             return {
                 ...state,
                 search: action.payload.searchQuery
@@ -50,5 +48,3 @@ const Reducer = (state = initialState, action) => {
             return state;
     }
 };
-
-export default Reducer;

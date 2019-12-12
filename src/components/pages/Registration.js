@@ -8,10 +8,10 @@ import {PageContainer} from '../../styles/globals';
 const Registration = ( props ) => {
     return (
         <Fragment>
-            {props.user && <Redirect to='/'/>}
+            {props.isAuthorized && <Redirect to='/'/>}
             <AppHeader/>
             <PageContainer>
-                <RegistrationForm { ...props }/> {/* если нужно, то сюда лучше передать все параметры ,чтобы использовать потом */}
+                <RegistrationForm { ...props }/>
             </PageContainer>
         </Fragment>
     );

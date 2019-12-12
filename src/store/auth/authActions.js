@@ -1,41 +1,43 @@
-export const REGISTER_REQUEST = 'USERS_REGISTER_REQUEST';
-export const registerUser = ({userEmail, lastName, userPassword}) => {
+export const REGISTER = 'REGISTER';
+export const registerUser = ({email, name, password}) => {
     return {
-        type: REGISTER_REQUEST,
+        type: REGISTER,
         payload: {
             request: {
                 url: 'register/',
                 method: 'post',
                 data: {
-                    email: userEmail,
-                    name: lastName,
-                    password: userPassword
-                }
-            }
-        }
-    }
-};
-export const LOGIN_REQUEST = 'USERS_LOGIN_REQUEST';
-export const loginUser = ({username, password}) => {
-    return {
-        type: LOGIN_REQUEST,
-        payload: {
-            request: {
-                url: 'login/',
-                method: 'post',
-                data: {
-                    email: username,
-                    password: password
+                    email,
+                    name,
+                    password
                 }
             }
         }
     }
 };
 
-export const USER_LOGOUT = 'USERS_LOGOUT';
+export const LOGIN = 'LOGIN';
+export const loginUser = ({email, password}) => {
+    return {
+        type: LOGIN,
+        payload: {
+            request: {
+                url: 'login/',
+                method: 'post',
+                data: {
+                    email,
+                    password
+                }
+            }
+        }
+    }
+};
+
+export const LOGOUT = 'LOGOUT';
+export const DELETE_AUTH_HEADER = 'DELETE_AUTH_HEADER';
 export const logOut = () => (dispatch) => {
     dispatch({
-        type: USER_LOGOUT,
+        type: LOGOUT,
         payload: {
             request: {
                 url: 'logout/',
@@ -43,12 +45,7 @@ export const logOut = () => (dispatch) => {
             }
         }
     });
-    dispatch(deleteAuthHeader());
-};
-
-export const DELETE_AUTH_HEADER = 'DELETE_AUTH_HEADER';
-export const deleteAuthHeader = () => {
-    return ({
+    dispatch({
         type: DELETE_AUTH_HEADER
     });
 };
@@ -78,21 +75,8 @@ export const setAuthHeader = (access_token) => {
 };
 
 export const APP_INIT = 'APP_INIT';
-export const appInit = () => async (dispatch) => {
-    try {
-        const access_token = localStorage.getItem('access_token');
-
-        if (access_token) {
-            dispatch({
-                type: APP_INIT,
-                payload: access_token
-            });
-            dispatch(setAuthHeader(access_token));
-            await dispatch(fetchUser());
-        }
-    } catch (error) {
-        console.log(error);
-    }
-};
+export const appInit = () => ({
+        type: APP_INIT
+});
 
 

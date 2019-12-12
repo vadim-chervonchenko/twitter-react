@@ -1,13 +1,13 @@
 import React, {Fragment} from 'react';
-import LoginForm from '../LoginForm.js';
 import {Redirect} from 'react-router-dom';
+import LoginForm from '../LoginForm.js';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
 
 const Authorization = ( props ) => {
 	return (
 		<Fragment>
-			{props.user && <Redirect to={'/'}/>}
+			{props.isAuthorized && <Redirect to={'/'}/>}
 			<AppHeader/>
 			<PageContainer>
 				<LoginForm {...props}/>

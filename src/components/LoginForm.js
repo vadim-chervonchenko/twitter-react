@@ -1,20 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import 'antd/dist/antd.css';
 import {Form, Input, Button, Icon} from 'antd';
-import {loginUser} from '../store/auth/AuthActions';
+import {loginUser} from '../store/auth/authActions';
 import {connect} from 'react-redux';
 
 const LoginForm = (props) => {
     const {getFieldDecorator} = props.form;
 
-    /* обработчики для форм лучше вынести в отдельный файл и назвать их утилитами какими-то, а то чет они мне глаза мазолят */
     const onFormSubmit = (e) => {
         e.preventDefault();
-
-        props.form.validateFieldsAndScroll((err, values) => {
+        props.form.validateFieldsAndScroll((err, { username: email, password }) => {
             if (!err) {
-                props.loginUser(values);
+                props.loginUser({ email, password });
             }
         });
     };
@@ -46,11 +43,11 @@ const LoginForm = (props) => {
             <Form.Item style={{textAlign: 'center'}}>
                 <Button type="primary" htmlType="submit">Log in</Button>
                 <p className="d-inline ml-4">
-                    <Link to="/signup">Sign up</Link>
+                    <Link to="/register">Sign up</Link>
                 </p>
             </Form.Item>
         </Form>
     );
 };
 
-export default connect(null, {loginUser})(Form.create({name: 'loginForm'})(LoginForm)); /* тоже переделать ,по возможности */
+export default connect(null, {loginUser})(Form.create({name: 'loginForm'})(LoginForm));

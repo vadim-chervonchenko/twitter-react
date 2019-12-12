@@ -1,7 +1,8 @@
 import React from 'react';
 import Navigation from './Navigation.js';
-import {appInit} from '../store/auth/AuthActions';
+import {appInit} from '../store/auth/authActions';
 import {connect} from 'react-redux';
+import 'antd/dist/antd.css';
 
 
 class App extends React.Component {

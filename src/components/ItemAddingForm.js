@@ -1,60 +1,79 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import 'antd/dist/antd.css';
-import {Form, Input, Button} from 'antd';
-import {addTweet} from '../store/tweet/TweetActions';
+import {Form, Button} from 'antd';
+import {addTweet} from '../store/tweet/tweetActions';
+import {Mentions} from 'antd';
 
-const ItemAddingForm = (props) => {
-
-
-    /* обработчики для форм лучше вынести в отдельный файл и назвать их утилитами какими-то, а то чет они мне глаза мазолят */
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        props.form.validateFields((err, values) => {
-            if (!err) {
-                props.addTweet(values.content);
-            }
-        });
-        props.form.resetFields();
-    };
-
-    const onPressEnter = (e) => {
-        if (e.ctrlKey || e.metaKey) {
-            const value = props.form.getFieldValue('content');
-            props.form.setFieldsValue({
-                content: value + '\n',
-            });
-        } else {
-            handleSubmit(e);
+class ItemAddingForm extends Component {
+    state = {
+        prefix: '@',
+        mockData: {
+            '@': ['afc163', 'zombiej', 'yesmeck', 'afc163', 'zombiej', 'yesmeck', 'afc163', 'zombiej', 'yesmeck', 'afc163', 'zombiej', 'yesmeck'],
+            '#': ['1.0', '2.0', '3.0'],
         }
     };
 
-    const {TextArea} = Input;
-    const {getFieldDecorator} = props.form;
+    onSearch = (_, prefix) => {
+        this.setState({prefix});
+    };
 
-    return (
-        <Form
-            onSubmit={handleSubmit}>
-            <Form.Item>
-                {getFieldDecorator('content', {
-                    rules: [{required: true, message: 'Please input post content', whitespace: true, min: 1}],
-                    initialValue: ''
-                })(
-                    <TextArea
-                        autoSize={{minRows: 4, maxRows: 10}}
-                        placeholder="Put your text here"
-                        autoFocus
-                        onPressEnter={onPressEnter}
-                    > </TextArea>
 
-                    /* тут как раз и будет размещать весь блок с автокомплитом, нужно подумать как это лучше сделать */
-                )}
-            </Form.Item>
-            <Form.Item style={{textAlign: 'center'}}>
-                <Button type="primary" htmlType="submit">Add Post</Button>
-            </Form.Item>
-        </Form>
-    );
-};
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                this.props.addTweet(values.content);
+            }
+        });
+        this.props.form.resetFields();
+    };
 
-export default connect( null, {addTweet} )( Form.create({name: 'addPost'} )(ItemAddingForm)); // длинная хуйня , может разобраться как лучше сократить и как лучше это сделать.
+    onPressEnter = (e) => {
+        if (e.ctrlKey || e.metaKey) {
+            const value = this.props.form.getFieldValue('content');
+            this.props.form.setFieldsValue({
+                content: value + '\n',
+            });
+        } else {
+            this.handleSubmit(e);
+        }
+    };
+
+    render() {
+        const {Option} = Mentions;
+        const {getFieldDecorator} = this.props.form;
+
+        return (
+            <Form
+                onSubmit={this.handleSubmit}>
+                <Form.Item>
+                    {getFieldDecorator('content', {
+                        rules: [{required: true, message: 'Please input post content', whitespace: true, min: 1}],
+                        initialValue: ''
+                    })(
+                        <Mentions
+                            rows="4"
+                            placeholder="Put your text here"
+                            autoFocus
+                            onPressEnter={this.onPressEnter}
+                            style={{width: '100%'}}
+                            prefix={['@', '#']}
+                            onSearch={this.onSearch}
+                        >
+                            {(this.state.mockData[this.state.prefix] || []).map(value => (
+                                <Option key={value} value={value}>
+                                    {value}
+                                </Option>
+                            ))}
+                        </Mentions>
+                    )}
+                </Form.Item>
+                <Form.Item style={{textAlign: 'center'}}>
+                    <Button type="primary" htmlType="submit">Add Post</Button>
+                </Form.Item>
+            </Form>
+        );
+    }
+}
+
+export default connect(null, {addTweet})(Form.create({name: 'addPost'})(ItemAddingForm));

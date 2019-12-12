@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import ItemEditForm from './ItemEditingForm';
 import {connect} from 'react-redux';
-import {TwitterListItemWrap} from '../styles/globals';
-import {delTweet} from '../store/tweet/TweetActions';
+import {ListItemWrap} from '../styles/globals';
+import {
+    delTweet,
+    updateTweet
+} from '../store/tweet/tweetActions';
 import moment from 'moment';
+import {Button, Input, Form} from 'antd';
 
 class TweetListItem extends Component {
-
-
-    /* тут печаль беда с названиями переменных и прочей лобудой, не совсем понятно зачем эти функции и че они делают и логика стэйта непонятная */
     state = {
         formVisibility: false
     };
@@ -19,28 +19,56 @@ class TweetListItem extends Component {
         });
     };
 
-    /* эта логика меня немного напрягает */
-    onUpdateItem = (content) => {
-        this.props.onUpdateItem(content);
-        this.setState({
-            formVisibility: !this.state.formVisibility
+    onUpdateItem = (e) => {
+        const {id, updateTweet} = this.props;
+
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                updateTweet(id, values.content);
+                this.toggleFormVisibility();
+            }
         });
     };
 
-    /* это тут нужно или нет , непонятно , можно сразу напрямую запилить и вызывать через стрелку */
-    deleteTweet = () => {
-        this.props.delTweet(this.props.id)
+    onPressEnter = (e) => {
+        if (e.ctrlKey || e.metaKey) {
+            const value = this.props.form.getFieldValue('content');
+            this.props.form.setFieldsValue({
+                content: value + '\n',
+            });
+        } else {
+            this.onUpdateItem(e);
+        }
     };
 
     render() {
-        const {content, id, user, created_at, updated_at} = this.props;
+        const {content, id, user, created_at, updated_at, delTweet} = this.props;
+        const { getFieldDecorator } = this.props.form;
 
         return (
-
-            /* название этой обертки, просто бесит */
-            <TwitterListItemWrap className="list-group-item twitter-item" key={id}>
-                <span>{content}</span>
-                <button onClick={this.deleteTweet}
+            <ListItemWrap className="list-group-item twitter-item" key={id}>
+                <span>  {
+                    (!this.state.formVisibility) ?
+                        content :
+                        <Form onSubmit={this.onUpdateItem}>
+                            <Form.Item>
+                                {getFieldDecorator('content', {
+                                    rules: [{required: true, message: 'Please input post content', whitespace: true, min: 1}],
+                                    initialValue: content
+                                })(
+                                    <Input
+                                        placeholder="Please edit your tweet"
+                                        className="form-control mb-3"
+                                        autoFocus
+                                        onPressEnter={this.onPressEnter}
+                                    />
+                                )}
+                                <Button type="primary" htmlType="submit">Edit tweet</Button>
+                            </Form.Item>
+                        </Form>
+                }</span>
+                <button onClick={() => delTweet(this.props.id)}
                         className="btn btn-outline-danger btn-sm float-right">
                     <i className="fa fa-trash-o"></i>
                 </button>
@@ -53,18 +81,9 @@ class TweetListItem extends Component {
                 <div className="pl-3">user : {user.name}</div>
                 <div className="pl-3">create post : {moment(created_at).fromNow()}</div>
                 <div className="pl-3">update post : {moment(updated_at).fromNow()}</div>
-                <ItemEditForm
-
-                    {/* параметры по ебанатски называются, нужно чет более или менее понятно использовать */}
-                    formVisibilityChange={this.toggleFormVisibility}
-                    formVisibilityToggle={this.state.formVisibility}
-                    onUpdateItem={this.onUpdateItem}
-                    editLabel={content}
-                    itemId={id}
-                />
-            </TwitterListItemWrap>
+            </ListItemWrap>
         );
     };
 }
 
-export default connect(null, {delTweet})(TweetListItem);
+export default connect(null, {delTweet, updateTweet})(Form.create({name: 'listItemForm'})(TweetListItem));

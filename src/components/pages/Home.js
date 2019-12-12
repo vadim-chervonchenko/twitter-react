@@ -1,24 +1,16 @@
 import React, {Fragment, Component} from 'react';
+import {connect} from 'react-redux';
 import ItemAddForm from '../ItemAddingForm';
 import TweetList from '../TweetList';
 import SearchPanel from '../SearchPanel';
-import {connect} from 'react-redux';
-import {getListTweets} from '../../store/tweet/TweetActions';
+import {getListTweets} from '../../store/tweet/tweetActions';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
+import {searchItems} from '../../utils/app';
 
 class Home extends Component {
 	componentDidMount() {
 		this.props.getListTweets();
-	};
-
-	searchItems = ( items = [], search = '' ) => {
-		if ( search.length === 0 ) {
-			return items;
-		}
-		return items.filter( ( item ) => {
-			return item.content.toLowerCase().indexOf( search.toLowerCase() ) > - 1;
-		} );
 	};
 
 	render() {
@@ -31,7 +23,7 @@ class Home extends Component {
 					<SearchPanel/>
 					<ItemAddForm/>
 					<TweetList
-						filteredTweets={this.searchItems( items, search )}
+						filteredTweets={searchItems( items, search )}
 					/>
 				</PageContainer>
 			</Fragment>
@@ -39,10 +31,4 @@ class Home extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-    return {
-        tweets: state.tweets
-    }
-};
-
-export default connect(mapStateToProps, {getListTweets})( Home );
+export default connect(({tweets}) => ({tweets}), {getListTweets})( Home );

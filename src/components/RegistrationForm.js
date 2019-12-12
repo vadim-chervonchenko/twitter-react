@@ -1,20 +1,17 @@
 import React from 'react';
-import 'antd/dist/antd.css'; /* стили ант дизайна , где лучше подключать, а то не понятно */
 import {Form, Input, Button, Icon} from 'antd';
 import {connect} from 'react-redux';
-import {registerUser} from '../store/auth/AuthActions';
+import {registerUser} from '../store/auth/authActions';
 
 const RegistrationForm = (props) => {
 
     const {getFieldDecorator} = props.form;
 
-
-    /* обработчики для форм лучше вынести в отдельный файл и назвать их утилитами какими-то, а то чет они мне глаза мазолят */
     const onFormSubmit = (e) => {
         e.preventDefault();
-        props.form.validateFieldsAndScroll((err, values) => {
+        props.form.validateFieldsAndScroll((err, { userEmail: email, lastName: name, userPassword: password  }) => {
             if (!err) {
-                props.registerUser(values);
+                props.registerUser({ email, name, password });
             }
         });
     };
@@ -29,7 +26,7 @@ const RegistrationForm = (props) => {
                     <Input
                         prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                         type="text"
-                        placeholder="UserEmail"
+                        placeholder="Email"
                     />,
                 )}
             </Form.Item>
@@ -40,7 +37,7 @@ const RegistrationForm = (props) => {
                     <Input
                         prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                         type="text"
-                        placeholder="lastName"
+                        placeholder="Name"
                     />,
                 )}
             </Form.Item>
@@ -51,7 +48,7 @@ const RegistrationForm = (props) => {
                     <Input
                         prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                         type="password"
-                        placeholder="userPassword"
+                        placeholder="Password"
                     />,
                 )}
             </Form.Item>
@@ -62,4 +59,4 @@ const RegistrationForm = (props) => {
     );
 };
 
-export default connect(null, {registerUser})(Form.create({name: 'registerForm'})(RegistrationForm)); /* переделать чутка */
+export default connect(null, {registerUser})(Form.create({name: 'registerForm'})(RegistrationForm));
