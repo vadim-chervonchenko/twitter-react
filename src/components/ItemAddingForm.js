@@ -8,7 +8,7 @@ class ItemAddingForm extends Component {
     state = {
         prefix: '@',
         mockData: {
-            '@': ['afc163', 'zombiej', 'yesmeck', 'afc163', 'zombiej', 'yesmeck', 'afc163', 'zombiej', 'yesmeck', 'afc163', 'zombiej', 'yesmeck'],
+            '@': ['afc163', 'zombiej', 'yesmeck', 'af163', 'zombej', 'ysmeck'],
             '#': ['1.0', '2.0', '3.0'],
         }
     };
@@ -29,13 +29,15 @@ class ItemAddingForm extends Component {
     };
 
     onPressEnter = (e) => {
-        if (e.ctrlKey || e.metaKey) {
-            const value = this.props.form.getFieldValue('content');
-            this.props.form.setFieldsValue({
-                content: value + '\n',
-            });
-        } else {
-            this.handleSubmit(e);
+        if (e.key === 'Enter') {
+            if (e.ctrlKey || e.metaKey) {
+                const value = this.props.form.getFieldValue('content');
+                this.props.form.setFieldsValue({
+                    content: value + '\n',
+                });
+            } else {
+                this.handleSubmit(e);
+            }
         }
     };
 
@@ -55,7 +57,7 @@ class ItemAddingForm extends Component {
                             rows="4"
                             placeholder="Put your text here"
                             autoFocus
-                            onPressEnter={this.onPressEnter}
+                            onKeyPress={this.onPressEnter}
                             style={{width: '100%'}}
                             prefix={['@', '#']}
                             onSearch={this.onSearch}

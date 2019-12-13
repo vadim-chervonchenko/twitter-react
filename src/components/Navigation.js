@@ -4,6 +4,8 @@ import About from './pages/About';
 import Authorization from './pages/Authorization';
 import Registration from './pages/Registration';
 import PrivateRoute from './PrivateRoute';
+import Hashtag from './pages/Hashtag';
+
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 
@@ -19,6 +21,10 @@ class Navigation extends Component {
                     <Route path={'/login'} render={() => <Authorization isAuthorized={isAuthorized} />}/>
                     <Route path={'/register'} render={() => <Registration isAuthorized={isAuthorized} />}/>
                     <Route path={'/logout'} render={() => <Authorization isAuthorized={isAuthorized} />}/>
+
+
+                    {/* отправлять по имени или id пока не понятно */}
+                    <Route path={'/hashtag/:name'} render={() => <Hashtag isAuthorized={isAuthorized} />}/>
                 </Switch>
             </Router>
         );

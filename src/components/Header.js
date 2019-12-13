@@ -3,21 +3,20 @@ import {NavLink} from 'react-router-dom';
 import {AppNavBar, AppNavBarItem} from '../styles/globals';
 import {connect} from 'react-redux';
 import {logOut} from '../store/auth/authActions';
-import {notification} from 'antd';
+/*import {notification} from 'antd';*/
 
 class Header extends Component {
-    /* мне не знавиться как организованы ошибки, нужно разобраться как сделать лучше и доделать, а то пока не понятно */
-	componentDidUpdate( prevProps, prevState, snapshot ) {
+	/*componentDidUpdate( prevProps, prevState, snapshot ) {
 		this.showErrors();
-	}
+	}*/
 
-	showErrors = () => {
+	/*showErrors = () => {
 		if ( this.props.notification !== '' ) {
 			notification.error({
 				message: this.props.notification
 			});
 		}
-	};
+	};*/
 
 	render() {
 		const {isAuthorized, logOut} = this.props;
@@ -72,7 +71,7 @@ class Header extends Component {
 const mapStateToProps = (state) => {
     return {
         isAuthorized: state.auth.isAuthorized,
-        notification: state.errors.errors
+        /*notification: state.errors.errors*/
     }
 };
 

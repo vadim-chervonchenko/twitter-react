@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case SET_ERROR:
             return {
-                ...state, errors: Math.random()
+                ...state, errors: ['ni rabotait', 'vse gavno', 'bulshit']
             };
         default:
             return state;

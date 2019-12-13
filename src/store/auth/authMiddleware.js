@@ -34,7 +34,7 @@ export const authMiddleware = (store) => next => async action => {
                     await next(fetchUser());
                 }
             } catch (error) {
-                next(setError(action.error.message));
+                next(setError(error.payload.response.data.message));
             }
             break;
         case LOGOUT:
