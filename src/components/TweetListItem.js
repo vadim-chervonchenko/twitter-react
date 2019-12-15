@@ -7,8 +7,8 @@ import {
 } from '../store/tweet/tweetActions';
 import moment from 'moment';
 import {Button, Input, Form} from 'antd';
-import {Link} from "react-router-dom";
-import uuid from 'uuid';
+/*import {Link} from "react-router-dom";
+import uuid from 'uuid';*/
 
 class TweetListItem extends Component {
     state = {
@@ -44,14 +44,7 @@ class TweetListItem extends Component {
         }
     };
 
-    /* нужно еще с тим разобраться до конца,
-     *
-     * 1) получать данные с сервака
-     * 2) сохранять данные тоже как то нужно
-     * 3) поменять текущий функционал на нормальный.
-     * 4) @ - мэншены , # - хештеги. ( при нажатии на такую дичь( ссылку ) выводить посты, в которых они упоминаются + сделать ссылку автора, чтобы выводились все его посты. )
-      * */
-    handledHashTag = (content) => {
+   /* handledHashTag = (content) => {
         const hashTagRegex = new RegExp(/(#\S*)/g);
 
         return content.split(" ").map((i) => {
@@ -59,19 +52,18 @@ class TweetListItem extends Component {
                  return <Link to="/hashtag/:name" key={uuid.v4()}>{i} </Link>;
              }
         });
-    };
+    };*/
 
     render() {
         const {content, id, user, created_at, updated_at, delTweet} = this.props;
         const { getFieldDecorator } = this.props.form;
-
-        const contentWithTags = this.handledHashTag(content);
+        /*const contentWithTags = this.handledHashTag(content);*/
 
         return (
             <ListItemWrap className="list-group-item twitter-item" key={id}>
                 <span>  {
                     (!this.state.formVisibility) ?
-                        contentWithTags :
+                        /*contentWithTags*/ content :
                         <Form onSubmit={this.onUpdateItem}>
                             <Form.Item>
                                 {getFieldDecorator('content', {

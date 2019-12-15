@@ -19,7 +19,7 @@ export const tweetMiddleware = (store) => (next) => async (action) => {
         case error(DELETE_TWEET):
         case error(UPDATE_TWEET):
         case error(GETALL_TWEETS):
-            next(setError(action.error.message));
+            next(setError(action.errors));
             break;
         default:
             break;

@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case SET_ERROR:
             return {
-                ...state, errors: ['ni rabotait', 'vse gavno', 'bulshit']
+                ...state, errors: action.payload.errors
             };
         default:
             return state;

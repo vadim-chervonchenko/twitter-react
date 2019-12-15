@@ -1,9 +1,9 @@
 export const SET_ERROR = 'SET_ERROR';
-export const setError = (message) => {
+export const setError = (errors) => {
     return ({
         type: SET_ERROR,
         payload: {
-            message
+            errors
         }
     });
 };
