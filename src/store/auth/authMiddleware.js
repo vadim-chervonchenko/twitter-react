@@ -8,7 +8,7 @@ import {
     setAuthHeader,
     LOGOUT
 } from './authActions';
-import {setError} from '../error/errorAction';
+import {setError} from '../error/errorActions';
 
 export const authMiddleware = (store) => next => async action => {
     switch (action.type) {
@@ -23,7 +23,10 @@ export const authMiddleware = (store) => next => async action => {
             break;
         case error(REGISTER):
         case error(LOGIN):
-            next(setError(action.errors));
+
+            console.log(action);
+
+            next(setError(action.payload.response.data.errors));
             break;
         case APP_INIT:
             try {
@@ -33,8 +36,8 @@ export const authMiddleware = (store) => next => async action => {
                     next(setAuthHeader(access_token));
                     await next(fetchUser());
                 }
-            } catch (error) {
-                next(setError(error));
+            } catch (errors) {
+                next(setError(errors));
             }
             break;
         case LOGOUT:

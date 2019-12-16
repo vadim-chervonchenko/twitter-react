@@ -1,5 +1,5 @@
 import {success, error} from "redux-saga-requests";
-import {setError} from '../error/errorAction';
+import {setError} from '../error/errorActions';
 import {
     ADD_TWEET,
     DELETE_TWEET,
@@ -19,7 +19,7 @@ export const tweetMiddleware = (store) => (next) => async (action) => {
         case error(DELETE_TWEET):
         case error(UPDATE_TWEET):
         case error(GETALL_TWEETS):
-            next(setError(action.errors));
+            next(setError(action.payload.response.data.errors));
             break;
         default:
             break;

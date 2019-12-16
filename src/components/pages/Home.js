@@ -31,4 +31,10 @@ class Home extends Component {
 	}
 }
 
-export default connect(({tweets}) => ({tweets}), {getListTweets})( Home );
+const mapStateToProps = (state) => {
+    return {
+        tweets: state.tweets
+    }
+};
+
+export default connect( mapStateToProps, {getListTweets} )( Home );

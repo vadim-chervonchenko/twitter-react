@@ -2,6 +2,7 @@ import React from 'react';
 import {Form, Input, Button, Icon} from 'antd';
 import {connect} from 'react-redux';
 import {registerUser} from '../store/auth/authActions';
+import {Link} from 'react-router-dom';
 
 const RegistrationForm = (props) => {
 
@@ -54,6 +55,9 @@ const RegistrationForm = (props) => {
             </Form.Item>
             <Form.Item style={{textAlign: 'center'}}>
                 <Button type="primary" htmlType="submit">Sign up</Button>
+                <p className="d-inline ml-4">
+                    <Link to="/login">Log in</Link>
+                </p>
             </Form.Item>
         </Form>
     );

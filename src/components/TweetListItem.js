@@ -7,8 +7,8 @@ import {
 } from '../store/tweet/tweetActions';
 import moment from 'moment';
 import {Button, Input, Form} from 'antd';
-/*import {Link} from "react-router-dom";
-import uuid from 'uuid';*/
+import {Link} from "react-router-dom";
+import uuid from 'uuid';
 
 class TweetListItem extends Component {
     state = {
@@ -44,26 +44,31 @@ class TweetListItem extends Component {
         }
     };
 
-   /* handledHashTag = (content) => {
+    /* потом можно будет разбить на две функции или так оставить, просто нужно сделать красиво */
+    handledHashTagMention = (content) => {
         const hashTagRegex = new RegExp(/(#\S*)/g);
+        const mentionRegex = new RegExp(/(@S*)/g);
 
         return content.split(" ").map((i) => {
              if ( hashTagRegex.test(i) ) {
-                 return <Link to="/hashtag/:name" key={uuid.v4()}>{i} </Link>;
+                 return <Link to={`/hashtag/${i.replace('#', '')}`} key={uuid.v4()}>{i} </Link>;
+             } else if ( mentionRegex.test(i) ) {
+                return  <Link to={`/mention/${i.replace('@', '')}`} key={uuid.v4()}>{i} </Link>;
              }
+             return `${i} `;
         });
-    };*/
+    };
 
     render() {
-        const {content, id, user, created_at, updated_at, delTweet} = this.props;
+        const {content, id, author, created_at, updated_at, delTweet} = this.props;
         const { getFieldDecorator } = this.props.form;
-        /*const contentWithTags = this.handledHashTag(content);*/
+        const contentWithTags = this.handledHashTagMention(content);
 
         return (
             <ListItemWrap className="list-group-item twitter-item" key={id}>
                 <span>  {
                     (!this.state.formVisibility) ?
-                        /*contentWithTags*/ content :
+                        contentWithTags :
                         <Form onSubmit={this.onUpdateItem}>
                             <Form.Item>
                                 {getFieldDecorator('content', {
@@ -91,7 +96,7 @@ class TweetListItem extends Component {
                         className="btn btn-outline-primary btn-sm mr-3 float-right">
                     <i className="fa fa-edit"></i>
                 </button>
-                <div className="pl-3">user : {user.name}</div>
+                <div className="pl-3">author : {author.name}</div>
                 <div className="pl-3">create post : {moment(created_at).fromNow()}</div>
                 <div className="pl-3">update post : {moment(updated_at).fromNow()}</div>
             </ListItemWrap>

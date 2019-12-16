@@ -1,4 +1,4 @@
-import {SET_ERROR} from './errorAction';
+import {SET_ERROR} from './errorActions';
 
 const initialState = {
     errors: []

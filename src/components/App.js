@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import 'antd/dist/antd.css';
 import ErrorNotification from './ErrorNotification';
 
-
 class App extends React.Component {
     componentDidMount() {
         this.props.appInit();
