@@ -23,7 +23,18 @@ export const authMiddleware = (store) => next => async action => {
             break;
         case error(REGISTER):
         case error(LOGIN):
-            next(setError(action.payload.response.data.errors));
+
+            /* костыль - переделать, иногде приходят  error,  а инога приходит message, возможно стоит запилить обработчик ошибок, который будет
+            * их встречать и обрабатывать */
+
+            let a = '';
+           if ( action.payload.response.data.errors ) {
+               a = action.payload.response.data.errors;
+           } else {
+               a = action.payload.response.data.message;
+           }
+
+            next(setError([a]));
             break;
         case APP_INIT:
             try {
@@ -34,7 +45,20 @@ export const authMiddleware = (store) => next => async action => {
                     await next(fetchUser());
                 }
             } catch (errors) {
-                next(setError([errors.payload.response.data.message]));
+
+                /* + ошибка сервера, ее тоже нужно обрабатывать response = undefined
+                * а ошибка в другом месте */
+
+                console.log(errors);
+
+                let a = '';
+                if ( errors.payload.response.data.errors ) {
+                    a = errors.payload.response.data.errors;
+                } else {
+                    a = errors.payload.response.data.message;
+                }
+
+                next(setError([a]));
             }
             break;
         case LOGOUT:

@@ -1,5 +1,5 @@
 export const GETALL_TWEETS = 'GETALL_TWEETS';
-export const getListTweets = (page = 1) => {
+export const getListTweets = (infScrollInit = false, page = 1) => {
     return {
         type: GETALL_TWEETS,
         payload: {

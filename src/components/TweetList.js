@@ -7,14 +7,17 @@ import {InfinityScrollSpinner} from '../styles/globals';
 
 import {getListTweets} from '../store/tweet/tweetActions';
 import {connect} from "react-redux";
+let nextPage = 0;
 
 const TweetList = (props) => {
     const {filteredTweets, getListTweets, lastPage} = props;
 
     const getTweets = async () => {
-        let nextPage = 0;
+
+        console.log('load');
+
         nextPage++;
-        await getListTweets(nextPage);
+        await getListTweets(false, nextPage);
     };
 
     return (
