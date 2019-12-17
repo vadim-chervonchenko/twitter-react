@@ -10,6 +10,7 @@ import {
 
 const initialState = {
     items: [],
+    lastPage: 1,
     search: ''
 };
 
@@ -35,9 +36,10 @@ export default (state = initialState, action) => {
                 items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)]
             };
         case success(GETALL_TWEETS):
+            const { data: items, last_page: lastPage } = action.payload.data;
+
             return {
-                ...state,
-                items: action.payload.data
+                ...state, items: [ ...state.items, ...items ], lastPage
             };
         case SET_SEARCH_QUERY:
             return {

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Form, Button} from 'antd';
 import {addTweet} from '../store/tweet/tweetActions';
+import {setError} from '../store/error/errorActions';
 import {Mentions} from 'antd';
 
 class ItemAddingForm extends Component {
@@ -23,6 +24,17 @@ class ItemAddingForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 this.props.addTweet(values.content);
+            } else {
+
+                /*  это нужно куда то вынести в отдельный функционал, если это воообще можно будет сделать. */
+
+                let errors = [];
+
+                for ( const error of err.content.errors ) {
+                    errors.push(error.message);
+                }
+
+               this.props.setError(errors);
             }
         });
         this.props.form.resetFields();
@@ -78,4 +90,4 @@ class ItemAddingForm extends Component {
     }
 }
 
-export default connect(null, {addTweet})(Form.create({name: 'addPost'})(ItemAddingForm));
+export default connect(null, {addTweet, setError})(Form.create({name: 'addPost'})(ItemAddingForm));

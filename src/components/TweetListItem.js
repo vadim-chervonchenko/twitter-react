@@ -5,6 +5,7 @@ import {
     delTweet,
     updateTweet
 } from '../store/tweet/tweetActions';
+import { setError } from '../store/error/errorActions';
 import moment from 'moment';
 import {Button, Input, Form} from 'antd';
 import {Link} from "react-router-dom";
@@ -29,6 +30,12 @@ class TweetListItem extends Component {
             if (!err) {
                 updateTweet(id, values.content);
                 this.toggleFormVisibility();
+            } else {
+                let errors = [];
+                for ( const error of err.content.errors ) {
+                    errors.push(error.message);
+                }
+                this.props.setError(errors);
             }
         });
     };
@@ -104,4 +111,4 @@ class TweetListItem extends Component {
     };
 }
 
-export default connect(null, {delTweet, updateTweet})(Form.create({name: 'listItemForm'})(TweetListItem));
+export default connect(null, {delTweet, updateTweet, setError})(Form.create({name: 'listItemForm'})(TweetListItem));

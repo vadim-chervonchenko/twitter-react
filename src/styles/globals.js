@@ -16,7 +16,9 @@ export const AppNavBarItem = styled.li`
 export const ListItemWrap = styled.li`
     margin-bottom: 10px;
 `;
-
+export const InfinityScrollSpinner = styled.div`
+    text-align: center;
+`;
 
 
 

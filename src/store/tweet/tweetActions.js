@@ -1,10 +1,10 @@
 export const GETALL_TWEETS = 'GETALL_TWEETS';
-export const getListTweets = () => {
+export const getListTweets = (page = 1) => {
     return {
         type: GETALL_TWEETS,
         payload: {
             request: {
-                url: 'tweets/'
+                url: `tweets/?page=${page}`
             }
         }
     }

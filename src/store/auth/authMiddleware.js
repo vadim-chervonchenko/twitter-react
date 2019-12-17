@@ -23,9 +23,6 @@ export const authMiddleware = (store) => next => async action => {
             break;
         case error(REGISTER):
         case error(LOGIN):
-
-            console.log(action);
-
             next(setError(action.payload.response.data.errors));
             break;
         case APP_INIT:
@@ -37,7 +34,7 @@ export const authMiddleware = (store) => next => async action => {
                     await next(fetchUser());
                 }
             } catch (errors) {
-                next(setError(errors));
+                next(setError([errors.payload.response.data.message]));
             }
             break;
         case LOGOUT:
