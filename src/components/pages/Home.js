@@ -6,7 +6,7 @@ import SearchPanel from '../SearchPanel';
 import {getListTweets} from '../../store/tweet/tweetActions';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
-import {searchItems} from '../../utils/app';
+import {searchItems} from '../../utils/searchItems';
 
 class Home extends Component {
 	componentDidMount() {

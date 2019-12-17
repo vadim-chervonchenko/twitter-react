@@ -8,16 +8,13 @@ import {InfinityScrollSpinner} from '../styles/globals';
 import {getListTweets} from '../store/tweet/tweetActions';
 import {connect} from "react-redux";
 
-let nextPage = 0;
-
 const TweetList = (props) => {
     const {filteredTweets, getListTweets, lastPage} = props;
 
     const getTweets = async () => {
+        let nextPage = 0;
         nextPage++;
         await getListTweets(nextPage);
-
-        console.log(nextPage);
     };
 
     return (
@@ -47,7 +44,7 @@ const TweetList = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        lastPage: state.tweets.lastPage
+        lastPage: state.tweets.pagination.lastPage
     }
 };
 

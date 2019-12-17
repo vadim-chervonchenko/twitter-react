@@ -31,10 +31,12 @@ class TweetListItem extends Component {
                 updateTweet(id, values.content);
                 this.toggleFormVisibility();
             } else {
+
                 let errors = [];
                 for ( const error of err.content.errors ) {
                     errors.push(error.message);
                 }
+
                 this.props.setError(errors);
             }
         });
@@ -51,7 +53,6 @@ class TweetListItem extends Component {
         }
     };
 
-    /* потом можно будет разбить на две функции или так оставить, просто нужно сделать красиво */
     handledHashTagMention = (content) => {
         const hashTagRegex = new RegExp(/(#\S*)/g);
         const mentionRegex = new RegExp(/(@S*)/g);

@@ -10,7 +10,11 @@ import {
 
 const initialState = {
     items: [],
-    lastPage: 1,
+    pagination: {
+        lastPage: 1,
+        perPage: 5,
+        nextPage: 1
+    },
     search: ''
 };
 
@@ -19,7 +23,7 @@ export default (state = initialState, action) => {
         case success(ADD_TWEET):
             return {
                 ...state,
-                items: [...state.items, action.payload.data]
+                items: [action.payload.data, ...state.items]
             };
         case success(DELETE_TWEET):
             const deleteItemId = state.items.findIndex((item) => item.id === action.meta.id);
@@ -36,10 +40,9 @@ export default (state = initialState, action) => {
                 items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)]
             };
         case success(GETALL_TWEETS):
-            const { data: items, last_page: lastPage } = action.payload.data;
-
+            const { data: items, last_page: lastPage, per_page: perPage } = action.payload.data;
             return {
-                ...state, items: [ ...state.items, ...items ], lastPage
+                ...state, items: [ ...state.items, ...items ], pagination: { ...state.pagination, lastPage, perPage }
             };
         case SET_SEARCH_QUERY:
             return {

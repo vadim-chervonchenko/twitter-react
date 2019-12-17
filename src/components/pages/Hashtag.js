@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {Redirect} from 'react-router-dom';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
-import {searchItems} from '../../utils/app';
+import {searchItems} from '../../utils/searchItems';
 import SearchPanel from '../SearchPanel';
 import TweetList from '../TweetList';
 import {connect} from 'react-redux';
