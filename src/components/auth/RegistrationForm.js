@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Input, Button, Icon} from 'antd';
 import {connect} from 'react-redux';
-import {registerUser} from '../store/auth/authActions';
+import {registerUser} from '../../store/auth/authActions';
 import {Link} from 'react-router-dom';
 
 const RegistrationForm = (props) => {

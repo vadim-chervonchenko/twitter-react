@@ -13,7 +13,7 @@ const initialState = {
     pagination: {
         lastPage: 1,
         perPage: 5,
-        nextPage: 1
+        currentPage: 1
     },
     search: ''
 };
@@ -39,18 +39,16 @@ export default (state = initialState, action) => {
                 ...state,
                 items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)]
             };
-
-            /* получается так
-            * скрол - ( каждую последующую партию мне нужно добавлять в state - эффект инфините скрола )
-            * edit, delete, add - ( либо работаем по стейтом, а потом получаем посты, просто получаем посты  ) - тут еще нужно делать так чтобы не провоцировать инфиниты скрол на подкрузку новых постов.
-            *  */
         case success(GETALL_TWEETS):
-            const { data: items, last_page: lastPage, per_page: perPage, current_page: currentPage } = action.payload.data;
-
-            let b = (currentPage === 1) ? [ ...items ] : [ ...state.items, ...items ];
+            const {
+                data: items,
+                last_page: lastPage,
+                per_page: perPage,
+                current_page: currentPage
+            } = action.payload.data;
 
             return {
-                ...state, items: b, pagination: { ...state.pagination, lastPage, perPage }
+                ...state, items: (currentPage === 1) ? items : [ ...state.items, ...items ], pagination: { ...state.pagination, lastPage, perPage, currentPage }
             };
         case SET_SEARCH_QUERY:
             return {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Form, Input, Button, Icon} from 'antd';
-import {loginUser} from '../store/auth/authActions';
+import {loginUser} from '../../store/auth/authActions';
 import {connect} from 'react-redux';
 
 const LoginForm = (props) => {
@@ -9,6 +9,7 @@ const LoginForm = (props) => {
 
     const onFormSubmit = (e) => {
         e.preventDefault();
+
         props.form.validateFieldsAndScroll((err, { username: email, password }) => {
             if (!err) {
                 props.loginUser({ email, password });

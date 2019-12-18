@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Redirect} from 'react-router-dom';
-import LoginForm from '../LoginForm.js';
+import LoginForm from '../auth/LoginForm.js';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
 

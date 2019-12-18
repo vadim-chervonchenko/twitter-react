@@ -13,7 +13,7 @@ export const tweetMiddleware = (store) => (next) => async (action) => {
         case success(ADD_TWEET):
         case success(DELETE_TWEET):
         case success(UPDATE_TWEET):
-            await next(getListTweets(true, 1));
+            await next(getListTweets());
             break;
         case error(ADD_TWEET):
         case error(DELETE_TWEET):

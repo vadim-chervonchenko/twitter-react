@@ -3,14 +3,13 @@ import {notification} from 'antd';
 
 const ErrorNotification = (props) => {
     const errors = props.errors.map((error) => {
-        notification.error({message: error})
+        notification.error({message: error});
+        return true;
     });
 
     return (
         <Fragment>
-            <div>
-                {errors}
-            </div>
+            {errors}
         </Fragment>
     );
 };

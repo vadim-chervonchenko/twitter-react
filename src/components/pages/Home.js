@@ -1,8 +1,8 @@
 import React, {Fragment, Component} from 'react';
 import {connect} from 'react-redux';
-import ItemAddForm from '../ItemAddingForm';
-import TweetList from '../TweetList';
-import SearchPanel from '../SearchPanel';
+import ItemAddForm from '../tweet/ItemAddingForm';
+import TweetList from '../tweet/TweetList';
+import SearchPanel from '../tweet/SearchPanel';
 import {getListTweets} from '../../store/tweet/tweetActions';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';

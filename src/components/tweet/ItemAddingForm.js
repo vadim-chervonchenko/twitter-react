@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Form, Button} from 'antd';
-import {addTweet} from '../store/tweet/tweetActions';
-import {setError} from '../store/error/errorActions';
+import {addTweet} from '../../store/tweet/tweetActions';
+import {setError} from '../../store/error/errorActions';
 import {Mentions} from 'antd';
 
 class ItemAddingForm extends Component {
@@ -18,26 +18,14 @@ class ItemAddingForm extends Component {
         this.setState({prefix});
     };
 
-
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 this.props.addTweet(values.content);
-            } else {
-
-                /*  это нужно куда то вынести в отдельный функционал, если это воообще можно будет сделать. */
-
-                let errors = [];
-
-                for ( const error of err.content.errors ) {
-                    errors.push(error.message);
-                }
-
-               this.props.setError(errors);
+                this.props.form.resetFields();
             }
         });
-        this.props.form.resetFields();
     };
 
     onPressEnter = (e) => {

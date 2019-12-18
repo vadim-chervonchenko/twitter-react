@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {Redirect} from 'react-router-dom';
-import '../RegistrationForm.js';
-import RegistrationForm from '../RegistrationForm';
+import '../auth/RegistrationForm.js';
+import RegistrationForm from '../auth/RegistrationForm';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
 

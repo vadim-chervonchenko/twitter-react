@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {ListItemWrap} from '../styles/globals';
+import {ListItemWrap} from '../../styles/globals';
 import {
     delTweet,
     updateTweet
-} from '../store/tweet/tweetActions';
-import { setError } from '../store/error/errorActions';
+} from '../../store/tweet/tweetActions';
+import { setError } from '../../store/error/errorActions';
 import moment from 'moment';
 import {Button, Input, Form} from 'antd';
 import {Link} from "react-router-dom";
@@ -30,14 +30,6 @@ class TweetListItem extends Component {
             if (!err) {
                 updateTweet(id, values.content);
                 this.toggleFormVisibility();
-            } else {
-
-                let errors = [];
-                for ( const error of err.content.errors ) {
-                    errors.push(error.message);
-                }
-
-                this.props.setError(errors);
             }
         });
     };
@@ -57,26 +49,28 @@ class TweetListItem extends Component {
         const hashTagRegex = new RegExp(/(#\S*)/g);
         const mentionRegex = new RegExp(/(@S*)/g);
 
-        return content.split(" ").map((i) => {
-             if ( hashTagRegex.test(i) ) {
-                 return <Link to={`/hashtag/${i.replace('#', '')}`} key={uuid.v4()}>{i} </Link>;
-             } else if ( mentionRegex.test(i) ) {
-                return  <Link to={`/mention/${i.replace('@', '')}`} key={uuid.v4()}>{i} </Link>;
-             }
-             return `${i} `;
+        return content.split(" ").map((item) => {
+            if (hashTagRegex.test(item)) {
+
+                /* тут в ссылку нужно записывать id, а не текст */
+                return <Link to={`/hashtag/${item.replace('#', '')}`} key={uuid.v4()}>{item} </Link>;
+            } else if (mentionRegex.test(item)) {
+                return <Link to={`/mention/${item.replace('@', '')}`} key={uuid.v4()}>{item} </Link>;
+            }
+            return `${item} `;
         });
     };
 
     render() {
         const {content, id, author, created_at, updated_at, delTweet} = this.props;
         const { getFieldDecorator } = this.props.form;
-        const contentWithTags = this.handledHashTagMention(content);
+        const contentWithTagsMentions = this.handledHashTagMention(content);
 
         return (
             <ListItemWrap className="list-group-item twitter-item" key={id}>
                 <span>  {
                     (!this.state.formVisibility) ?
-                        contentWithTags :
+                        contentWithTagsMentions :
                         <Form onSubmit={this.onUpdateItem}>
                             <Form.Item>
                                 {getFieldDecorator('content', {

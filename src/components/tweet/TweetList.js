@@ -1,35 +1,32 @@
 import React from 'react';
 import TwitterListItem from './TweetListItem';
-import {ListWrapper} from '../styles/globals';
+import {ListWrapper} from '../../styles/globals';
 import InfiniteScroll from 'react-infinite-scroller';
 import {Spin} from 'antd';
-import {InfinityScrollSpinner} from '../styles/globals';
+import {InfinityScrollSpinner} from '../../styles/globals';
 
-import {getListTweets} from '../store/tweet/tweetActions';
+import {getListTweets} from '../../store/tweet/tweetActions';
 import {connect} from "react-redux";
-let nextPage = 0;
+import uuid from "uuid";
 
 const TweetList = (props) => {
-    const {filteredTweets, getListTweets, lastPage} = props;
-
-    const getTweets = async () => {
-
-        console.log('load');
-
-        nextPage++;
-        await getListTweets(false, nextPage);
+    const { filteredTweets, getListTweets } = props;
+    const { lastPage, currentPage } = props.pagination;
+    const loadMoreTweets = async () => {
+        await getListTweets(currentPage + 1);
     };
+    const isHasMore = ( currentPage <= lastPage );
 
     return (
         <ListWrapper className="list-group">
             {
                 <InfiniteScroll
-                    pageStart={nextPage}
-                    loadMore={getTweets}
-                    hasMore={nextPage <= lastPage}
-                    threshold={100}
+                    pageStart={1}
+                    loadMore={loadMoreTweets}
+                    hasMore={isHasMore}
+                    threshold={50}
                     loader={
-                        <InfinityScrollSpinner>
+                        <InfinityScrollSpinner key={uuid.v4()}>
                             <Spin/>
                         </InfinityScrollSpinner>
                     }
@@ -47,7 +44,7 @@ const TweetList = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        lastPage: state.tweets.pagination.lastPage
+        pagination: state.tweets.pagination
     }
 };
 

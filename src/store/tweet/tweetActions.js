@@ -1,5 +1,5 @@
 export const GETALL_TWEETS = 'GETALL_TWEETS';
-export const getListTweets = (infScrollInit = false, page = 1) => {
+export const getListTweets = (page = 1) => {
     return {
         type: GETALL_TWEETS,
         payload: {
@@ -9,8 +9,33 @@ export const getListTweets = (infScrollInit = false, page = 1) => {
         }
     }
 };
+
+export const GET_TAG_TWEETS = 'GET_TAG_TWEETS';
+export const getHashTags = (tagName = '') => {
+    return {
+        type: GET_TAG_TWEETS,
+        payload: {
+            request: {
+                url: `/hashtag/${tagName}`
+            }
+        }
+    }
+};
+
+export const GET_MENTIONS = 'GET_MENTIONS';
+export const getMentions = (mentionName = '') => {
+    return {
+        type: GET_MENTIONS,
+        payload: {
+            request: {
+                url: `/mention/${mentionName}`
+            }
+        }
+    }
+};
+
 export const ADD_TWEET = 'ADD_TWEET';
-export const addTweet = (content) => (
+export const addTweet = (content = '') => (
     {
         type: ADD_TWEET,
         payload: {
