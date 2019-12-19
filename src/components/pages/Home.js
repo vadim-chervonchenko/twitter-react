@@ -6,35 +6,24 @@ import SearchPanel from '../tweet/SearchPanel';
 import {getListTweets} from '../../store/tweet/tweetActions';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
-import {searchItems} from '../../utils/searchItems';
 
 class Home extends Component {
-	componentDidMount() {
-		this.props.getListTweets();
-	};
+    componentDidMount() {
+        this.props.getListTweets();
+    };
 
-	render() {
-		const {items, search} = this.props.tweets;
-
-		return (
-			<Fragment>
-				<AppHeader/>
-				<PageContainer>
-					<SearchPanel/>
-					<ItemAddForm/>
-					<TweetList
-						filteredTweets={searchItems( items, search )}
-					/>
-				</PageContainer>
-			</Fragment>
-		);
-	}
+    render() {
+        return (
+            <Fragment>
+                <AppHeader/>
+                <PageContainer>
+                    <SearchPanel/>
+                    <ItemAddForm/>
+                    <TweetList/>
+                </PageContainer>
+            </Fragment>
+        );
+    }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        tweets: state.tweets
-    }
-};
-
-export default connect( mapStateToProps, {getListTweets} )( Home );
+export default connect(null, {getListTweets})(Home);

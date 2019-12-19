@@ -1,10 +1,12 @@
 export const GETALL_TWEETS = 'GETALL_TWEETS';
-export const getListTweets = (page = 1) => {
+export const getListTweets = (params = { page: 1 }) => {
+    const queryParams = Object.entries(params).map(item => item.join('=')).join('&'); // можно вынести в отдельный файл, чтобы юзать повторно
+
     return {
         type: GETALL_TWEETS,
         payload: {
             request: {
-                url: `tweets/?page=${page}`
+                url: `tweets/?${queryParams}`
             }
         }
     }

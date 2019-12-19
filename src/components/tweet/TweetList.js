@@ -6,16 +6,23 @@ import {Spin} from 'antd';
 import {InfinityScrollSpinner} from '../../styles/globals';
 
 import {getListTweets} from '../../store/tweet/tweetActions';
-import {connect} from "react-redux";
-import uuid from "uuid";
+import {connect} from 'react-redux';
+import uuid from 'uuid';
+import {searchItems} from '../../utils/searchItems';
 
 const TweetList = (props) => {
-    const { filteredTweets, getListTweets } = props;
-    const { lastPage, currentPage } = props.pagination;
+
+    const {
+        getListTweets,
+        pagination: {lastPage, currentPage},
+        tweets: {items, search},
+        queryParams
+    } = props;
+    const isHasMore = (currentPage <= lastPage);
+
     const loadMoreTweets = async () => {
-        await getListTweets(currentPage + 1);
+        await getListTweets({page: currentPage + 1, ...queryParams});
     };
-    const isHasMore = ( currentPage <= lastPage );
 
     return (
         <ListWrapper className="list-group">
@@ -31,7 +38,7 @@ const TweetList = (props) => {
                         </InfinityScrollSpinner>
                     }
                 >
-                    {filteredTweets.map((item) => {
+                    {searchItems(items, search).map((item) => {
                         return (
                             <TwitterListItem key={item.id} {...item} />
                         );
@@ -44,7 +51,8 @@ const TweetList = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        pagination: state.tweets.pagination
+        pagination: state.tweets.pagination,
+        tweets: state.tweets
     }
 };
 

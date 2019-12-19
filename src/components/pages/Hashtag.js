@@ -1,49 +1,38 @@
 import React, {Fragment, Component} from 'react';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
-import {searchItems} from '../../utils/searchItems';
 import {getHashTags} from '../../store/tweet/tweetActions';
 import SearchPanel from '../tweet/SearchPanel';
 import TweetList from '../tweet/TweetList';
 import {connect} from 'react-redux';
 
 class Hashtag extends Component {
-
     state = {
-        hashtagName: ''
+        hashTagName: ''
     };
 
     componentDidMount() {
+        const {name: hashTagName = ''} = this.props.match.params;
         this.setState({
-            hashtagName: this.props.match.params.name
+            hashTagName
         });
-
-        this.props.getHashTags(this.props.match.params.name);
+        this.props.getListTweets({page: 1, hashtag: hashTagName });
     }
 
     render() {
-        const {isAuthorized} = this.props;
-        const {items, search} = this.props.tweets;
+        const { hashTagName } = this.state;
 
         return (
             <PageContainer>
                 <Fragment>
                     <AppHeader/>
                     <SearchPanel/>
-                    <h1>HashTag page {isAuthorized}</h1>
-                    <TweetList
-                        filteredTweets={searchItems(items, search)}
-                    />
+                    <h1>All posts for hashtag: {hashTagName}</h1>
+                    <TweetList queryParams={{ hashtag: hashTagName}}/>
                 </Fragment>
             </PageContainer>
         );
     };
 }
 
-const mapStateToProps = (state) => {
-    return {
-        tweets: state.tweets
-    }
-};
-
-export default connect( mapStateToProps, { getHashTags } )( Hashtag );
+export default connect(null, {getHashTags})(Hashtag);

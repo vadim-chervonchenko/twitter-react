@@ -1,21 +1,56 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Form, Button} from 'antd';
-import {addTweet} from '../../store/tweet/tweetActions';
+import {addTweet, getHashTags, getMentions} from '../../store/tweet/tweetActions';
 import {setError} from '../../store/error/errorActions';
 import {Mentions} from 'antd';
+import debounce from 'lodash/debounce';
 
 class ItemAddingForm extends Component {
     state = {
-        prefix: '@',
-        mockData: {
-            '@': ['afc163', 'zombiej', 'yesmeck', 'af163', 'zombej', 'ysmeck'],
-            '#': ['1.0', '2.0', '3.0'],
-        }
+        search: '',
+        loading: false,
+        tags: [],
+        mentions: [],
+        prefix: '#'
     };
 
-    onSearch = (_, prefix) => {
-        this.setState({prefix});
+    loadMentionTagData = debounce(async (key, prefix) => {
+        const {search} = this.state;
+
+        try {
+            switch (prefix) {
+                case '#':
+                    const tags = await this.props.getHashTags(key);
+
+                    if (search !== key) return;
+                    this.setState({
+                        tags,
+                        loading: false,
+                        prefix
+                    });
+
+                    break;
+                case '@':
+                    const mentions = await this.props.getMentions(key);
+
+                    if (search !== key) return;
+                    this.setState({
+                        mentions,
+                        loading: false,
+                        prefix
+                    });
+
+                    break;
+            }
+        } catch (error) {
+            console.log('Something went wrong', error);
+        }
+    }, 800);
+
+    onSearch = (search, prefix) => {
+        this.setState({search, loading: true, tags: [], mentions: []});
+        this.loadMentionTagData(search, prefix);
     };
 
     handleSubmit = (e) => {
@@ -44,6 +79,7 @@ class ItemAddingForm extends Component {
     render() {
         const {Option} = Mentions;
         const {getFieldDecorator} = this.props.form;
+        const {prefix, tags, mentions} = this.state;
 
         return (
             <Form
@@ -62,11 +98,20 @@ class ItemAddingForm extends Component {
                             prefix={['@', '#']}
                             onSearch={this.onSearch}
                         >
-                            {(this.state.mockData[this.state.prefix] || []).map(value => (
-                                <Option key={value} value={value}>
-                                    {value}
-                                </Option>
-                            ))}
+                            {
+                                prefix === '#' ?
+                                    tags.map(value => (
+                                        <Option key={value} value={value}>
+                                            {value}
+                                        </Option>
+                                    ))
+                                    :
+                                    mentions.map(value => (
+                                        <Option key={value} value={value}>
+                                            {value}
+                                        </Option>
+                                    ))
+                            }
                         </Mentions>
                     )}
                 </Form.Item>
@@ -78,4 +123,9 @@ class ItemAddingForm extends Component {
     }
 }
 
-export default connect(null, {addTweet, setError})(Form.create({name: 'addPost'})(ItemAddingForm));
+export default connect(null, {
+    addTweet,
+    setError,
+    getHashTags,
+    getMentions
+})(Form.create({name: 'addPost'})(ItemAddingForm));
