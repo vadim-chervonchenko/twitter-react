@@ -34,6 +34,8 @@ class ItemAddingForm extends Component {
                 case '@':
                     const mentions = await this.props.getMentions(key);
 
+                    console.log(mentions);
+
                     if (search !== key) return;
                     this.setState({
                         mentions,
