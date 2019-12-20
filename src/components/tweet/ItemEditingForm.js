@@ -1,5 +1,7 @@
 import React from 'react';
 import {Button, Input, Form} from 'antd';
+import {connect} from 'react-redux';
+import {updateTweet} from '../../store/tweet/tweetActions';
 
 const ItemEditingForm = (props) => {
     const onUpdateItem = (e) => {
@@ -50,4 +52,4 @@ const ItemEditingForm = (props) => {
     )
 };
 
-export default (Form.create({name: 'listItemForm'})(ItemEditingForm));
+export default connect(null, {updateTweet})(Form.create({name: 'listItemForm'})(ItemEditingForm));

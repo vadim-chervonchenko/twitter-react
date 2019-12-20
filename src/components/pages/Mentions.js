@@ -1,38 +1,37 @@
-import React, {Fragment, Component} from 'react';
+import React, {Fragment, Component, useEffect} from 'react';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
-import SearchPanel from '../tweet/SearchPanel';
 import TweetList from '../tweet/TweetList';
 import {getListTweets} from '../../store/tweet/tweetActions';
 import {connect} from 'react-redux';
 
 class Mentions extends Component {
-    state = {
-        mentionName: ''
-    };
+	state = {
+		mentionName: ''
+	};
 
-    componentDidMount() {
-        const {name: mentionName = ''} = this.props.match.params;
-        this.setState({
-            mentionName
-        });
-        this.props.getListTweets({ page: 1, mention: mentionName });
-    }
+	componentDidMount() {
+		const {name: mentionName = ''} = this.props.match.params;
+		this.props.getListTweets( {mentions: mentionName} );
 
-    render() {
-        const { mentionName } = this.state;
+		this.setState( {
+			mentionName
+		});
+	}
 
-        return (
-            <PageContainer>
-                <Fragment>
-                    <AppHeader/>
-                    <SearchPanel/>
-                    <h1>All posts for mention: {mentionName}</h1>
-                    <TweetList queryParams={{ mention: mentionName}}/>
-                </Fragment>
-            </PageContainer>
-        );
-    }
+	render() {
+		const {mentionName} = this.state;
+
+		return (
+			<Fragment>
+				<AppHeader/>
+				<PageContainer>
+					<h5>All posts for mention: <strong>{mentionName}</strong></h5>
+					<TweetList/>
+				</PageContainer>
+			</Fragment>
+		);
+	}
 }
 
-export default connect(null, {getListTweets})(Mentions);
+export default connect( null, {getListTweets} )( Mentions );

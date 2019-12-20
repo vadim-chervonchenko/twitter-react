@@ -10,11 +10,6 @@ import {
 
 const initialState = {
     items: [],
-    pagination: {
-        lastPage: 1,
-        perPage: 5,
-        currentPage: 1
-    },
     search: ''
 };
 
@@ -40,15 +35,10 @@ export default (state = initialState, action) => {
                 items: [...state.items.slice(0, updateItemId), item, ...state.items.slice(updateItemId + 1)]
             };
         case success(GETALL_TWEETS):
-            const {
-                data: items,
-                last_page: lastPage,
-                per_page: perPage,
-                current_page: currentPage
-            } = action.payload.data;
+            const {data: items} = action.payload;
 
             return {
-                ...state, items: (currentPage === 1) ? items : [ ...state.items, ...items ], pagination: { ...state.pagination, lastPage, perPage, currentPage }
+                ...state, items
             };
         case SET_SEARCH_QUERY:
             return {

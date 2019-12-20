@@ -1,6 +1,7 @@
 export const GETALL_TWEETS = 'GETALL_TWEETS';
-export const getListTweets = (params = { page: 1 }) => {
-    const queryParams = Object.entries(params).map(item => item.join('=')).join('&'); // можно вынести в отдельный файл, чтобы юзать повторно
+export const getListTweets = (params = {}) => {
+
+    const queryParams = Object.entries(params).map(item => item.join('=')).join('&');
 
     return {
         type: GETALL_TWEETS,
@@ -20,7 +21,8 @@ export const getHashTags = (tagName = '') => {
             request: {
                 url: `/hashtag/${tagName}`
             }
-        }
+        },
+        meta: {asPromise: true}
     }
 };
 
@@ -32,7 +34,8 @@ export const getMentions = (mentionName = '') => {
             request: {
                 url: `/mention/${mentionName}`
             }
-        }
+        },
+        meta: {asPromise: true}
     }
 };
 

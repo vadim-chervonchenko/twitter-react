@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {ListItemWrap} from '../../styles/globals';
-import {
-    delTweet,
-    updateTweet
-} from '../../store/tweet/tweetActions';
+import {delTweet} from '../../store/tweet/tweetActions';
 import {setError} from '../../store/error/errorActions';
 import moment from 'moment';
 import {Link} from "react-router-dom";
@@ -48,6 +45,7 @@ class TweetListItem extends Component {
                         <ItemEditingForm
                             toggleFormVisibility={this.toggleFormVisibility}
                             content={content}
+                            id={this.props.id}
                         />
                 }</span>
                 <button onClick={() => delTweet(this.props.id)}
@@ -68,4 +66,4 @@ class TweetListItem extends Component {
     };
 }
 
-export default connect(null, {delTweet, updateTweet, setError})(TweetListItem);
+export default connect(null, {delTweet, setError})(TweetListItem);

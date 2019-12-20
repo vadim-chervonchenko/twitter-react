@@ -17,7 +17,6 @@ class ItemAddingForm extends Component {
 
     loadMentionTagData = debounce(async (key, prefix) => {
         const {search} = this.state;
-
         try {
             switch (prefix) {
                 case '#':
@@ -25,7 +24,7 @@ class ItemAddingForm extends Component {
 
                     if (search !== key) return;
                     this.setState({
-                        tags,
+                        tags: tags.payload.data,
                         loading: false,
                         prefix
                     });
@@ -34,11 +33,9 @@ class ItemAddingForm extends Component {
                 case '@':
                     const mentions = await this.props.getMentions(key);
 
-                    console.log(mentions);
-
                     if (search !== key) return;
                     this.setState({
-                        mentions,
+                        mentions: mentions.payload.data,
                         loading: false,
                         prefix
                     });
@@ -81,7 +78,7 @@ class ItemAddingForm extends Component {
     render() {
         const {Option} = Mentions;
         const {getFieldDecorator} = this.props.form;
-        const {prefix, tags, mentions} = this.state;
+        const {prefix, tags, mentions, loading} = this.state;
 
         return (
             <Form
@@ -93,6 +90,7 @@ class ItemAddingForm extends Component {
                     })(
                         <Mentions
                             rows="4"
+                            loading={loading}
                             placeholder="Put your text here"
                             autoFocus
                             onKeyPress={this.onPressEnter}
@@ -100,8 +98,7 @@ class ItemAddingForm extends Component {
                             prefix={['@', '#']}
                             onSearch={this.onSearch}
                         >
-                            {
-                                prefix === '#' ?
+                            {(prefix === '#') ?
                                     tags.map(value => (
                                         <Option key={value} value={value}>
                                             {value}
@@ -112,8 +109,7 @@ class ItemAddingForm extends Component {
                                         <Option key={value} value={value}>
                                             {value}
                                         </Option>
-                                    ))
-                            }
+                                    ))}
                         </Mentions>
                     )}
                 </Form.Item>
