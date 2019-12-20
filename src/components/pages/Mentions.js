@@ -1,4 +1,4 @@
-import React, {Fragment, Component, useEffect} from 'react';
+import React, {Fragment, Component} from 'react';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
 import TweetList from '../tweet/TweetList';

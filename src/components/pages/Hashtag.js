@@ -14,9 +14,9 @@ class Hashtag extends Component {
 		const {name: hashTagName} = this.props.match.params;
 		this.props.getListTweets({hashtag: hashTagName });
 
-		this.setState( {
+		this.setState({
 			hashTagName: hashTagName
-		} );
+		});
 	}
 
 	render() {

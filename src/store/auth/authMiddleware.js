@@ -1,7 +1,5 @@
 import {success, error} from 'redux-saga-requests';
 import {AuthService} from '../../storage/authService';
-import {getErrors} from '../../utils/getErrors';
-
 import {
     REGISTER,
     LOGIN,
@@ -25,9 +23,7 @@ export const authMiddleware = (store) => next => async action => {
             break;
         case error(REGISTER):
         case error(LOGIN):
-            next(setError(
-                getErrors(action.payload.response.data)
-            ));
+            next(setError(action.payload.response));
             break;
         case APP_INIT:
             try {
@@ -38,9 +34,7 @@ export const authMiddleware = (store) => next => async action => {
                     await next(fetchUser());
                 }
             } catch (errors) {
-                next(setError(
-                    getErrors(errors.payload.response.data)
-                ));
+                next(setError(errors.payload.response));
             }
             break;
         case LOGOUT:
