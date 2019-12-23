@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Form, Button} from 'antd';
 import {addTweet, getHashTags, getMentions} from '../../store/tweet/tweetActions';
-import {setError} from '../../store/error/errorActions';
 import {Mentions} from 'antd';
 import debounce from 'lodash/debounce';
 
@@ -123,7 +122,6 @@ class ItemAddingForm extends Component {
 
 export default connect(null, {
     addTweet,
-    setError,
     getHashTags,
     getMentions
 })(Form.create({name: 'addPost'})(ItemAddingForm));

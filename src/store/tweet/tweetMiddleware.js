@@ -1,4 +1,4 @@
-import {error} from "redux-saga-requests";
+import {error} from 'redux-saga-requests';
 import {setError} from '../error/errorActions';
 import {
     ADD_TWEET,

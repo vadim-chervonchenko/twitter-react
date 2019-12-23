@@ -47,9 +47,12 @@ class TweetListItem extends Component {
                     actions={[
                         <Icon type="setting" key="setting"/>,
                         <Icon type="delete" key="delete" onClick={() =>
-                            delTweet(this.props.id)
+                            delTweet( this.props.id )
+                        }/>,
+                        <Icon type="edit" key="edit" onClick={() =>
+                            this.toggleFormVisibility()
                         }/>
-                    ]}
+                        ]}
                     key={id}
                 >
                     <Meta
@@ -62,9 +65,7 @@ class TweetListItem extends Component {
                         title={`Author : ${author.name}`}
                         description={moment(created_at).fromNow()}
                     />
-                    <PostContent
-                        onClick={this.toggleFormVisibility}
-                    >
+                    <PostContent>
                         {(!this.state.formVisibility) ?
                             contentWithTagsMentions
                             :
