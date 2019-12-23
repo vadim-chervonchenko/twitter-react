@@ -9,6 +9,9 @@ const ItemEditingForm = (props) => {
 
         e.preventDefault();
         props.form.validateFields((err, values) => {
+
+            console.log('edit');
+
             if (!err) {
                 updateTweet(id, values.content);
                 props.toggleFormVisibility();

@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {ListItemWrap} from '../../styles/globals';
+import {ListItemWrap, PostContent} from '../../styles/globals';
 import {delTweet} from '../../store/tweet/tweetActions';
 import {setError} from '../../store/error/errorActions';
 import moment from 'moment';
 import {Link} from "react-router-dom";
 import uuid from 'uuid';
 import ItemEditingForm from './ItemEditingForm';
+import {Card, Icon, Avatar} from 'antd';
+import {getAvatarColor} from '../../utils/colors';
+
 
 class TweetListItem extends Component {
     state = {
@@ -34,33 +37,44 @@ class TweetListItem extends Component {
     };
 
     render() {
-        const {content, id, author, created_at, updated_at, delTweet} = this.props;
+        const {content, id, author, created_at, delTweet} = this.props;
         const contentWithTagsMentions = this.handledHashTagMention(content);
+        const {Meta} = Card;
 
         return (
-            <ListItemWrap className="list-group-item twitter-item" key={id}>
-                <span>  {
-                    (!this.state.formVisibility) ?
-                        contentWithTagsMentions :
-                        <ItemEditingForm
-                            toggleFormVisibility={this.toggleFormVisibility}
-                            content={content}
-                            id={this.props.id}
-                        />
-                }</span>
-                <button onClick={() => delTweet(this.props.id)}
-                        className="btn btn-outline-danger btn-sm float-right">
-                    <i className="fa fa-trash-o"></i>
-                </button>
-                <button onClick={() => {
-                    this.toggleFormVisibility()
-                }}
-                        className="btn btn-outline-primary btn-sm mr-3 float-right">
-                    <i className="fa fa-edit"></i>
-                </button>
-                <div className="pl-3">author : {author.name}</div>
-                <div className="pl-3">create post : {moment(created_at).fromNow()}</div>
-                <div className="pl-3">update post : {moment(updated_at).fromNow()}</div>
+            <ListItemWrap>
+                <Card
+                    actions={[
+                        <Icon type="setting" key="setting"/>,
+                        <Icon type="delete" key="delete" onClick={() =>
+                            delTweet(this.props.id)
+                        }/>
+                    ]}
+                    key={id}
+                >
+                    <Meta
+                        avatar={
+                            <Avatar
+                                style={{backgroundColor: getAvatarColor(author.name)}}
+                            >
+                                {author.name[0].toUpperCase()}
+                            </Avatar>}
+                        title={`Author : ${author.name}`}
+                        description={moment(created_at).fromNow()}
+                    />
+                    <PostContent
+                        onClick={this.toggleFormVisibility}
+                    >
+                        {(!this.state.formVisibility) ?
+                            contentWithTagsMentions
+                            :
+                            <ItemEditingForm
+                                toggleFormVisibility={this.toggleFormVisibility}
+                                content={content}
+                                id={this.props.id}
+                            />}
+                    </PostContent>
+                </Card>
             </ListItemWrap>
         );
     };

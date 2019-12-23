@@ -1,14 +1,14 @@
 import {SET_ERROR} from './errorActions';
 
 const initialState = {
-    errors: []
+    errorsArr: []
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case SET_ERROR:
             return {
-                ...state, errors: action.payload.errors
+                ...state, errorsArr: action.payload.errors
             };
         default:
             return state;

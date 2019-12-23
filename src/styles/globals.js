@@ -14,10 +14,13 @@ export const AppNavBarItem = styled.li`
      margin-left: 10px;
 `;
 export const ListItemWrap = styled.li`
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 `;
 export const InfinityScrollSpinner = styled.div`
     text-align: center;
+`;
+export const PostContent = styled.div`
+    margin-top: 25px;
 `;
 
 

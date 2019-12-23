@@ -26,7 +26,7 @@ class Hashtag extends Component {
 			<Fragment>
 				<AppHeader/>
 				<PageContainer>
-					<h5>All posts for hashtag: <strong>{hashTagName}</strong></h5>
+					<h5 className="mb-4">All posts for hashtag: <strong>{hashTagName}</strong></h5>
 					<TweetList/>
 				</PageContainer>
 			</Fragment>
