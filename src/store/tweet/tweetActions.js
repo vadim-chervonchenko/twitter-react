@@ -1,6 +1,5 @@
 export const GETALL_TWEETS = 'GETALL_TWEETS';
 export const getListTweets = (params = {}) => {
-
     const queryParams = Object.entries(params).map(item => item.join('=')).join('&');
 
     return {
@@ -76,7 +75,7 @@ export const delTweet = (id) => (
     }
 );
 export const UPDATE_TWEET = 'UPDATE_TWEET';
-export const updateTweet = (id, content) => (
+export const updateTweet = (id, content, listId) => (
     {
         type: UPDATE_TWEET,
         payload: {
@@ -84,7 +83,7 @@ export const updateTweet = (id, content) => (
                 url: `tweets/${id}`,
                 method: 'put',
                 data: {
-                    id, content
+                    id, content, listId
                 }
             }
         },
@@ -102,3 +101,10 @@ export const setSearchQuery = (searchQuery) => (
         }
     }
 );
+export const EMPTY_POSTS = 'EMPTY_POSTS';
+export const emptyPosts = () => (
+    {
+        type: EMPTY_POSTS
+    }
+);
+

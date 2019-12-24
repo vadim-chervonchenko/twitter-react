@@ -18,7 +18,6 @@ export default (state = initialState, action) => {
         case success(REGISTER):
         case success(LOGIN):
             return {
-                ...state,
                 user: action.payload.data
             };
         case LOGOUT:
@@ -27,11 +26,10 @@ export default (state = initialState, action) => {
             };
         case APP_INIT:
             return {
-                ...state
+                ...initialState
             };
         case success(FETCH_USER):
             return {
-                ...state,
                 user: action.payload.data,
                 isAuthorized: true
             };

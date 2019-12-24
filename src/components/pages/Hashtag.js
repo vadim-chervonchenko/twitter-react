@@ -1,7 +1,7 @@
 import React, {Fragment, Component} from 'react';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
-import {getListTweets} from '../../store/tweet/tweetActions';
+import {getListTweets, emptyPosts} from '../../store/tweet/tweetActions';
 import TweetList from '../tweet/TweetList';
 import {connect} from 'react-redux';
 
@@ -12,7 +12,9 @@ class Hashtag extends Component {
 
 	componentDidMount() {
 		const {name: hashTagName} = this.props.match.params;
+
 		this.props.getListTweets({hashtag: hashTagName });
+        this.props.emptyPosts();
 
 		this.setState({
 			hashTagName: hashTagName
@@ -34,4 +36,4 @@ class Hashtag extends Component {
 	};
 }
 
-export default connect( null, {getListTweets} )( Hashtag );
+export default connect( null, {getListTweets, emptyPosts} )( Hashtag );

@@ -2,7 +2,7 @@ import React, {Fragment, Component} from 'react';
 import AppHeader from '../Header';
 import {PageContainer} from '../../styles/globals';
 import TweetList from '../tweet/TweetList';
-import {getListTweets} from '../../store/tweet/tweetActions';
+import {getListTweets, emptyPosts} from '../../store/tweet/tweetActions';
 import {connect} from 'react-redux';
 
 class Mentions extends Component {
@@ -12,7 +12,9 @@ class Mentions extends Component {
 
 	componentDidMount() {
 		const {name: mentionName = ''} = this.props.match.params;
+
 		this.props.getListTweets( {mentions: mentionName} );
+		this.props.emptyPosts();
 
 		this.setState( {
 			mentionName
@@ -34,4 +36,4 @@ class Mentions extends Component {
 	}
 }
 
-export default connect( null, {getListTweets} )( Mentions );
+export default connect( null, {getListTweets, emptyPosts} )( Mentions );

@@ -5,7 +5,6 @@ import {delTweet} from '../../store/tweet/tweetActions';
 import {setError} from '../../store/error/errorActions';
 import moment from 'moment';
 import {Link} from "react-router-dom";
-import uuid from 'uuid';
 import ItemEditingForm from './ItemEditingForm';
 import {Card, Icon, Avatar} from 'antd';
 import {getAvatarColor} from '../../utils/colors';
@@ -23,17 +22,20 @@ class TweetListItem extends Component {
     };
 
     handledHashTagMention = (content) => {
-        const hashTagRegex = new RegExp(/(#\S*)/g);
-        const mentionRegex = new RegExp(/(@S*)/g);
+        const regAll = /([#@]\w\S*)/g;
+        const regHashteg = /([#]\w\S*)/g;
+        const regMention= /([@]\w\S*)/g;
+        const parts = content.split(regAll);
 
-        return content.split(" ").map((item) => {
-            if (hashTagRegex.test(item)) {
-                return <Link to={`/hashtag/${item.replace('#', '')}`} key={uuid.v4()}>{item} </Link>;
-            } else if (mentionRegex.test(item)) {
-                return <Link to={`/mention/${item.replace('@', '')}`} key={uuid.v4()}>{item} </Link>;
+        return parts.map(part => {
+            if (part.match(regHashteg)){
+                return <Link key={part} to={`/hashtag/${part.replace('#','')}`} >{part}</Link>
+            } else if (part.match(regMention)) {
+                return <Link key={part} to={`/mention/${part.replace('@','')}`} >{part}</Link>
+            } else {
+                return part
             }
-            return `${item} `;
-        });
+        })
     };
 
     render() {
@@ -62,7 +64,7 @@ class TweetListItem extends Component {
                             >
                                 {author.name[0].toUpperCase()}
                             </Avatar>}
-                        title={`Author : ${author.name}`}
+                        title={`user : ${author.name}`}
                         description={moment(created_at).fromNow()}
                     />
                     <PostContent>
