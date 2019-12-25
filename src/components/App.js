@@ -7,7 +7,7 @@ import ErrorNotification from './ErrorNotification';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 class App extends React.Component {
-    componentDidMount() {
+    componentWillMount() {
         this.props.appInit();
     }
 

@@ -39,22 +39,24 @@ class TweetListItem extends Component {
     };
 
     render() {
-        const {content, id, author, created_at, delTweet} = this.props;
+        const {content, id, author, created_at, delTweet, user} = this.props;
+        const isPostYour = ( author.id === user.id );
         const contentWithTagsMentions = this.handledHashTagMention(content);
         const {Meta} = Card;
+
+        const authUser = [
+            <Icon type="setting" key="setting"/>,
+            <Icon type="delete" key="delete" onClick={() => delTweet( this.props.id )}/>,
+            <Icon type="edit" key="edit" onClick={() => this.toggleFormVisibility()}/>
+        ];
+        const notAuthUser = [
+            <Icon type="setting" key="setting"/>,
+        ];
 
         return (
             <ListItemWrap>
                 <Card
-                    actions={[
-                        <Icon type="setting" key="setting"/>,
-                        <Icon type="delete" key="delete" onClick={() =>
-                            delTweet( this.props.id )
-                        }/>,
-                        <Icon type="edit" key="edit" onClick={() =>
-                            this.toggleFormVisibility()
-                        }/>
-                        ]}
+                    actions={isPostYour ? authUser : notAuthUser}
                     key={id}
                 >
                     <Meta
@@ -83,4 +85,10 @@ class TweetListItem extends Component {
     };
 }
 
-export default connect(null, {delTweet, setError})(TweetListItem);
+const mapStateToProps = ( state ) => {
+    return {
+        user: state.auth.user
+    }
+};
+
+export default connect(mapStateToProps, {delTweet, setError})(TweetListItem);

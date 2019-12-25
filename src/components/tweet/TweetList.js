@@ -26,7 +26,6 @@ const TweetList = ( props ) => {
 
 const mapStateToProps = ( state ) => {
 	return {
-		pagination: state.tweets.pagination,
 		tweets: state.tweets
 	}
 };
