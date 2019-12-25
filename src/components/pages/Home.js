@@ -4,7 +4,7 @@ import ItemAddForm from '../tweet/ItemAddingForm';
 import TweetList from '../tweet/TweetList';
 import SearchPanel from '../tweet/SearchPanel';
 import {getListTweets} from '../../store/tweet/tweetActions';
-import AppHeader from '../Header';
+import AppHeader from '../header/Header';
 import {PageContainer} from '../../styles/globals';
 
 class Home extends Component {

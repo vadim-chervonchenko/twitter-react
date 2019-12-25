@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import AppHeader from '../Header';
+import AppHeader from '../header/Header';
 import {PageContainer} from '../../styles/globals';
 
 const About = () => {

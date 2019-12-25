@@ -1,5 +1,5 @@
 import React, {Fragment, Component} from 'react';
-import AppHeader from '../Header';
+import AppHeader from '../header/Header';
 import {PageContainer} from '../../styles/globals';
 import {getListTweets, emptyPosts} from '../../store/tweet/tweetActions';
 import TweetList from '../tweet/TweetList';

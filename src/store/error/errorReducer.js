@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case SET_ERROR:
             return {
-                ...state, errorsArr: action.payload.errors
+               errorsArr: action.payload.errors
             };
         default:
             return state;

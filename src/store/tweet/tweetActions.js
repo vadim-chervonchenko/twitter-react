@@ -11,7 +11,6 @@ export const getListTweets = (params = {}) => {
         }
     }
 };
-
 export const GET_TAG_TWEETS = 'GET_TAG_TWEETS';
 export const getHashTags = (tagName = '') => {
     return {
@@ -24,7 +23,6 @@ export const getHashTags = (tagName = '') => {
         meta: {asPromise: true}
     }
 };
-
 export const GET_MENTIONS = 'GET_MENTIONS';
 export const getMentions = (mentionName = '') => {
     return {
@@ -37,7 +35,6 @@ export const getMentions = (mentionName = '') => {
         meta: {asPromise: true}
     }
 };
-
 export const ADD_TWEET = 'ADD_TWEET';
 export const addTweet = (content = '') => (
     {

@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {Redirect} from 'react-router-dom';
 import '../auth/RegistrationForm.js';
 import RegistrationForm from '../auth/RegistrationForm';
-import AppHeader from '../Header';
+import AppHeader from '../header/Header';
 import {PageContainer} from '../../styles/globals';
 
 const Registration = ( props ) => {

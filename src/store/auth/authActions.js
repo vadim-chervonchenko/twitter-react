@@ -15,7 +15,6 @@ export const registerUser = ({email, name, password}) => {
         }
     }
 };
-
 export const LOGIN = 'LOGIN';
 export const loginUser = ({email, password}) => {
     return {
@@ -32,7 +31,6 @@ export const loginUser = ({email, password}) => {
         }
     }
 };
-
 export const LOGOUT = 'LOGOUT';
 export const DELETE_AUTH_HEADER = 'DELETE_AUTH_HEADER';
 export const logOut = () => (dispatch) => {
@@ -49,7 +47,6 @@ export const logOut = () => (dispatch) => {
         type: DELETE_AUTH_HEADER
     });
 };
-
 export const FETCH_USER = 'FETCH_USER';
 export const fetchUser = () => {
     return ({
@@ -65,7 +62,6 @@ export const fetchUser = () => {
         }
     })
 };
-
 export const SET_AUTH_HEADER = 'SET_AUTH_HEADER';
 export const setAuthHeader = (access_token) => {
     return ({
@@ -73,7 +69,6 @@ export const setAuthHeader = (access_token) => {
         payload: access_token
     })
 };
-
 export const APP_INIT = 'APP_INIT';
 export const appInit = () => ({
         type: APP_INIT
