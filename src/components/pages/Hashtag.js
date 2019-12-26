@@ -12,14 +12,24 @@ class Hashtag extends Component {
 
 	componentDidMount() {
 		const {name: hashTagName} = this.props.match.params;
+        this.getHashTagPosts(hashTagName);
+	}
 
-		this.props.getListTweets({hashtag: hashTagName });
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.match.params.name!==this.props.match.params.name) {
+            const {name: hashTagName} = this.props.match.params;
+            this.getHashTagPosts(hashTagName);
+        }
+    }
+
+    getHashTagPosts = (hashTagName) => {
+        this.props.getListTweets({hashtag: hashTagName });
         this.props.emptyPosts();
 
-		this.setState({
-			hashTagName: hashTagName
-		});
-	}
+        this.setState({
+            hashTagName: hashTagName
+        });
+    };
 
 	render() {
 		const {hashTagName} = this.state;

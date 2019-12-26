@@ -10,16 +10,26 @@ class Mentions extends Component {
 		mentionName: ''
 	};
 
-	componentDidMount() {
-		const {name: mentionName = ''} = this.props.match.params;
+    componentDidMount() {
+        const {name: mentionName = ''} = this.props.match.params;
+        this.getMentionPosts(mentionName);
+    }
 
-		this.props.getListTweets( {mentions: mentionName} );
-		this.props.emptyPosts();
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.match.params.name!==this.props.match.params.name) {
+            const {name: mentionName = ''} = this.props.match.params;
+            this.getMentionPosts(mentionName);
+        }
+    }
 
-		this.setState( {
-			mentionName
-		});
-	}
+    getMentionPosts = (mentionName) => {
+        this.props.getListTweets( {mentions: mentionName} );
+        this.props.emptyPosts();
+
+        this.setState( {
+            mentionName
+        });
+    };
 
 	render() {
 		const {mentionName} = this.state;
